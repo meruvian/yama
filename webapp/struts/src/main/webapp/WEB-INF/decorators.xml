@@ -1,0 +1,15 @@
+<decorators>
+	<excludes>
+		<pattern>/styles/*</pattern>
+		<pattern>/scripts/*</pattern>
+		<pattern>/images/*</pattern>
+		<pattern>*.json</pattern>
+		<pattern>*.xml</pattern>
+	</excludes>
+
+	<decorator name="layout" page="/org/meruvian/yama/view/decorator.ftl">
+		<pattern>/</pattern>
+		<pattern>/module/*</pattern>
+		<pattern>/home</pattern>
+	</decorator>
+</decorators> 
