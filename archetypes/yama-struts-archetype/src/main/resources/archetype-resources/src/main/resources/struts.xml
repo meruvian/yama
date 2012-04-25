@@ -1,0 +1,72 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<bean type="com.opensymphony.xwork2.ActionProxyFactory" name="yama" class="org.meruvian.yama.rest.DefaultActionProxyFactory" />
+
+	<bean type="org.apache.struts2.rest.handler.ContentTypeHandler" name="jackson" class="org.meruvian.yama.rest.handler.JacksonJsonHandler" />
+	<bean type="org.apache.struts2.rest.handler.ContentTypeHandler" name="xstream" class="org.meruvian.yama.rest.handler.XstreamXmlHandler" />
+
+	<constant name="struts.enable.SlashesInActionNames" value="true" />
+	<constant name="struts.mapper.alwaysSelectFullNamespace" value="true" />
+	<constant name="struts.convention.action.mapAllMatches" value="true" />
+	<constant name="struts.convention.action.suffix" value="Action" />
+	<constant name="struts.convention.action.mapAllMatches" value="true" />
+	<constant name="struts.convention.default.parent.package" value="yama-default" />
+	<constant name="struts.convention.result.path" value="/" />
+
+	<constant name="struts.rest.handlerOverride.json" value="jackson" />
+	<constant name="struts.rest.handlerOverride.xml" value="xstream" />
+
+	<constant name="struts.actionProxyFactory" value="yama" />
+
+	<package name="yama-default" extends="struts-default">
+		<interceptors>
+			<interceptor-stack name="adminStack">
+				<interceptor-ref name="exception" />
+				<interceptor-ref name="logger" />
+				<interceptor-ref name="timer" />
+				<interceptor-ref name="alias" />
+				<interceptor-ref name="servletConfig" />
+				<interceptor-ref name="prepare" />
+				<interceptor-ref name="chain" />
+				<interceptor-ref name="scopedModelDriven" />
+				<interceptor-ref name="modelDriven" />
+				<interceptor-ref name="fileUpload" />
+				<interceptor-ref name="checkbox" />
+				<interceptor-ref name="multiselect" />
+				<interceptor-ref name="staticParams" />
+				<interceptor-ref name="actionMappingParams" />
+				<interceptor-ref name="params">
+					<param name="excludeParams">dojo${symbol_escape}..*,^struts${symbol_escape}..*</param>
+				</interceptor-ref>
+				<interceptor-ref name="store">
+					<param name="operationMode">AUTOMATIC</param>
+				</interceptor-ref>
+				<interceptor-ref name="conversionError" />
+				<interceptor-ref name="validation">
+					<param name="validateAnnotatedMethodOnly">true</param>
+					<param name="excludeMethods">input,back,cancel,browse</param>
+				</interceptor-ref>
+				<interceptor-ref name="workflow">
+					<param name="excludeMethods">input,back,cancel,browse</param>
+				</interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+
+		<default-interceptor-ref name="adminStack" />
+		<default-class-ref class="org.meruvian.yama.actions.DefaultAction" />
+
+		<global-results>
+			<result name="login" type="redirect">/logout</result>
+			<result name="home" type="redirect">/home</result>
+		</global-results>
+	</package>
+	
+	<include file="struts-${artifactId}.xml" />
+</struts>

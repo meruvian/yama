@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.meruvian.yama</groupId>
-	<artifactId>yama-parent</artifactId>
+	<artifactId>yama</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Meruvian Yama</name>
@@ -116,5 +116,6 @@
 	<modules>
 		<module>persistence</module>
 		<module>webapp</module>
+		<module>archetypes</module>
 	</modules>
 </project>
