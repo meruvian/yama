@@ -52,7 +52,34 @@
 					<source>1.6</source>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>sign-artifacts</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>sign</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-release-plugin</artifactId>
+					<version>2.1</version>
+					<configuration>
+						<mavenExecutorId>forked-path</mavenExecutorId>
+						<useReleaseProfile>false</useReleaseProfile>
+						<arguments>-Pjvnet-release</arguments>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
 
 	<dependencies>
@@ -103,17 +130,46 @@
 
 	<distributionManagement>
 		<repository>
-			<id>yama-release</id>
-			<name>Yama Release Repository</name>
+			<id>jvnet-nexus-staging</id>
+			<name>Java.net Release Repository</name>
 			<url>https://maven.java.net/service/local/staging/deploy/maven2</url>
 		</repository>
 		<snapshotRepository>
-			<id>yama-snapshot</id>
-			<name>Yama Snapshot Repository</name>
+			<id>jvnet-nexus-snapshots</id>
+			<name>Java.net Snapshot Repository</name>
 			<url>https://maven.java.net/content/repositories/snapshots</url>
 		</snapshotRepository>
 	</distributionManagement>
-
+	
+	<profiles>
+		<profile>
+			<id>jvnet-release</id>
+			<activation>
+				<property>
+					<name>performRelease</name>
+					<value>true</value>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>sign-artifacts</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+	
 	<modules>
 		<module>persistence</module>
 		<module>webapp</module>
