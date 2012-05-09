@@ -1,9 +1,8 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.meruvian.yama</groupId>
 	<artifactId>yama</artifactId>
-	<version>1.0-SNAPSHOT</version>
+	<version>1.0</version>
 	<packaging>pom</packaging>
 	<name>Meruvian Yama</name>
 	<description>Meruvian Yama is a part of Meruvian Integrated Platform. An integrated platform to create Java WebApp based on Struts2, SpringMVC, JPA and many others popular framework fastly and easily.</description>
@@ -31,9 +30,9 @@
 	</issueManagement>
 
 	<scm>
-		<connection>scm:svn:https://svn.java.net/svn/yama~yama-repo/trunk</connection>
-		<developerConnection>scm:svn:https://svn.java.net/svn/yama~yama-repo/trunk</developerConnection>
-		<url>http://java.net/projects/yama/sources/yama-repo/show</url>
+		<connection>scm:svn:https://svn.java.net/svn/yama~yama-repo/tags/yama-1.0</connection>
+		<developerConnection>scm:svn:https://svn.java.net/svn/yama~yama-repo/tags/yama-1.0</developerConnection>
+		<url>http://java.net/projects/yama/sources/yama-repo/show/tags/yama-1.0</url>
 	</scm>
 
 	<organization>
