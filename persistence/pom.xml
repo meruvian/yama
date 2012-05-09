@@ -3,7 +3,7 @@
 	<parent>
 		<artifactId>yama</artifactId>
 		<groupId>org.meruvian.yama</groupId>
-		<version>1.0-SNAPSHOT</version>
+		<version>1.0</version>
 	</parent>
 	<groupId>org.meruvian.yama</groupId>
 	<artifactId>yama-persistence</artifactId>
@@ -11,9 +11,9 @@
 	<description>Provides default JPA data access object template</description>
 	
 	<scm>
-		<connection>scm:svn:https://svn.java.net/svn/yama~yama-repo/trunk/persistence</connection>
-		<developerConnection>scm:svn:https://svn.java.net/svn/yama~yama-repo/trunk/persistence</developerConnection>
-		<url>http://java.net/projects/yama/sources/yama-repo/show</url>
+		<connection>scm:svn:https://svn.java.net/svn/yama~yama-repo/tags/yama-1.0/persistence</connection>
+		<developerConnection>scm:svn:https://svn.java.net/svn/yama~yama-repo/tags/yama-1.0/persistence</developerConnection>
+		<url>http://java.net/projects/yama/sources/yama-repo/show/tags/yama-1.0/show</url>
 	</scm>
 	
 	<dependencies>
