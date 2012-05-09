@@ -3,7 +3,7 @@
 	<parent>
 		<artifactId>yama</artifactId>
 		<groupId>org.meruvian.yama</groupId>
-		<version>1.0.1-SNAPSHOT</version>
+		<version>1.0-SNAPSHOT</version>
 	</parent>
 	<groupId>org.meruvian.yama</groupId>
 	<artifactId>yama-persistence</artifactId>

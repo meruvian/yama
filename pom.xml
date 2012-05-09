@@ -2,10 +2,16 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.meruvian.yama</groupId>
 	<artifactId>yama</artifactId>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>1.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Meruvian Yama</name>
 	<description>Meruvian Yama is a part of Meruvian Integrated Platform. An integrated platform to create Java WebApp based on Struts2, SpringMVC, JPA and many others popular framework fastly and easily.</description>
+	
+	<parent>
+		<artifactId>jvnet-parent</artifactId>
+		<groupId>net.java</groupId>
+		<version>3</version>
+	</parent>
 
 	<properties>
 		<struts2.version>2.3.1.2</struts2.version>
@@ -39,7 +45,30 @@
 		<name>Meruvian</name>
 		<url>http://www.meruvian.org</url>
 	</organization>
-
+	
+	<developers>
+		<developer>
+			<id>fthamura</id>
+			<name>Frans Thamura</name>
+			<email>frans@meruvian.org</email>
+		</developer>
+		<developer>
+			<id>vickyfaizal</id>
+			<name>Vicky Faizal</name>
+			<email>vicky.faizal@meruvian.org</email>
+		</developer>
+		<developer>
+			<id>dianw</id>
+			<name>Dian Aditya</name>
+			<email>dian.aditya@meruvian.org</email>
+		</developer>
+		<developer>
+			<id>diasa</id>
+			<name>Dias Nurul Arifin</name>
+			<email>dias.arifin@meruvian.org</email>
+		</developer>
+	</developers>
+	
 	<build>
 		<plugins>
 			<plugin>
@@ -51,34 +80,7 @@
 					<source>1.6</source>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-gpg-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>sign-artifacts</id>
-						<phase>verify</phase>
-						<goals>
-							<goal>sign</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
 		</plugins>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-release-plugin</artifactId>
-					<version>2.1</version>
-					<configuration>
-						<mavenExecutorId>forked-path</mavenExecutorId>
-						<useReleaseProfile>false</useReleaseProfile>
-						<arguments>-Pjvnet-release</arguments>
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
 	</build>
 
 	<dependencies>
@@ -140,13 +142,18 @@
 		</snapshotRepository>
 	</distributionManagement>
 	
+	<modules>
+		<module>persistence</module>
+		<module>webapp</module>
+		<module>archetypes</module>
+	</modules>
+	
 	<profiles>
 		<profile>
-			<id>jvnet-release</id>
+			<id>release</id>
 			<activation>
 				<property>
-					<name>performRelease</name>
-					<value>true</value>
+					<name>release</name>
 				</property>
 			</activation>
 			<build>
@@ -154,13 +161,14 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-gpg-plugin</artifactId>
+						<version>1.4</version>
 						<executions>
 							<execution>
-								<id>sign-artifacts</id>
-								<phase>verify</phase>
+								<id>sign-artifact</id>
 								<goals>
 									<goal>sign</goal>
 								</goals>
+								<phase>verify</phase>
 							</execution>
 						</executions>
 					</plugin>
@@ -168,10 +176,4 @@
 			</build>
 		</profile>
 	</profiles>
-	
-	<modules>
-		<module>persistence</module>
-		<module>webapp</module>
-		<module>archetypes</module>
-	</modules>
 </project>
