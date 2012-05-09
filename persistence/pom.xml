@@ -10,6 +10,13 @@
 	<artifactId>yama-persistence</artifactId>
 	<name>Yama Persistence</name>
 	<description>Provides default JPA data access object template</description>
+	
+	<scm>
+		<connection>scm:svn:https://svn.java.net/svn/yama~yama-repo/trunk/persistence</connection>
+		<developerConnection>scm:svn:https://svn.java.net/svn/yama~yama-repo/trunk/persistence</developerConnection>
+		<url>http://java.net/projects/yama/sources/yama-repo/show</url>
+	</scm>
+	
 	<dependencies>
 		<dependency>
 			<groupId>org.hibernate</groupId>

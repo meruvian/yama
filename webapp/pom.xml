@@ -11,7 +11,13 @@
 	<packaging>pom</packaging>
 
 	<name>Yama Webapp</name>
-
+	
+	<scm>
+		<connection>scm:svn:https://svn.java.net/svn/yama~yama-repo/trunk/webapp</connection>
+		<developerConnection>scm:svn:https://svn.java.net/svn/yama~yama-repo/trunk/webapp</developerConnection>
+		<url>http://java.net/projects/yama/sources/yama-repo/show</url>
+	</scm>
+	
 	<build>
 		<plugins>
 			<plugin>

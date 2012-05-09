@@ -13,6 +13,12 @@
 	<packaging>war</packaging>
 	<name>Yama Struts</name>
 
+	<scm>
+		<connection>scm:svn:https://svn.java.net/svn/yama~yama-repo/trunk/webapp/struts</connection>
+		<developerConnection>scm:svn:https://svn.java.net/svn/yama~yama-repo/trunk/webapp/struts</developerConnection>
+		<url>http://java.net/projects/yama/sources/yama-repo/show</url>
+	</scm>
+
 	<dependencies>
 		<!-- Unit Test -->
 		<dependency>
@@ -27,6 +33,12 @@
 			<groupId>org.apache.struts</groupId>
 			<artifactId>struts2-core</artifactId>
 			<version>${struts2.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>com.sun</groupId>
+					<artifactId>tools</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.struts</groupId>
