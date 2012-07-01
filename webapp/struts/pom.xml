@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<artifactId>yama-webapp</artifactId>
 		<groupId>org.meruvian.yama</groupId>
-		<version>1.0.1-SNAPSHOT</version>
+		<version>1.0.1</version>
 	</parent>
 
 	<groupId>org.meruvian.yama</groupId>
@@ -14,9 +13,9 @@
 	<name>Yama Struts</name>
 
 	<scm>
-		<connection>scm:svn:https://svn.java.net/svn/yama~yama-repo/trunk/webapp/struts</connection>
-		<developerConnection>scm:svn:https://svn.java.net/svn/yama~yama-repo/trunk/webapp/struts</developerConnection>
-		<url>http://java.net/projects/yama/sources/yama-repo/show</url>
+		<connection>scm:svn:https://svn.java.net/svn/yama~yama-repo/tags/yama-1.0.1/webapp/struts</connection>
+		<developerConnection>scm:svn:https://svn.java.net/svn/yama~yama-repo/tags/yama-1.0.1/webapp/struts</developerConnection>
+		<url>http://java.net/projects/yama/sources/yama-repo/show/tags/yama-1.0.1/yama-repo/show</url>
 	</scm>
 
 	<dependencies>
