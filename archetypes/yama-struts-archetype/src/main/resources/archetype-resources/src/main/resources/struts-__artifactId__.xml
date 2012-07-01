@@ -8,8 +8,14 @@
     "http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
 	<package name="index" extends="yama-default" namespace="/">
-		<action name="home">
+		<action name="" class="org.meruvian.yama.security.login.actions.LoginAction">
+			<result name="INDEX" type="freemarker">/org/meruvian/yama/view/index.ftl</result>
+		</action>
+		<action name="welcome">
 			<result type="freemarker">/org/meruvian/yama/view/home.ftl</result>
+		</action>
+		<action name="home">
+			<result type="freemarker">/org/meruvian/yama/view/decorator.ftl</result>
 		</action>
 	</package>
 </struts>

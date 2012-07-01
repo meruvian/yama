@@ -12,7 +12,7 @@
 			classpath:/applicationContext-security.xml
 		</param-value>
 	</context-param>
-	
+
 	<filter>
 		<filter-name>openEntityManagerInView</filter-name>
 		<filter-class>org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter</filter-class>
@@ -42,7 +42,7 @@
 		<filter-name>openEntityManagerInView</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-	
+
 	<filter-mapping>
 		<filter-name>springSecurityFilterChain</filter-name>
 		<url-pattern>/*</url-pattern>
@@ -53,13 +53,13 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
-	<filter-mapping>
-		<filter-name>sitemesh</filter-name>
-		<url-pattern>/*</url-pattern>
-		<dispatcher>REQUEST</dispatcher>
-		<dispatcher>FORWARD</dispatcher>
-		<dispatcher>INCLUDE</dispatcher>
-	</filter-mapping>
+	<!-- <filter-mapping> -->
+	<!-- <filter-name>sitemesh</filter-name> -->
+	<!-- <url-pattern>/*</url-pattern> -->
+	<!-- <dispatcher>REQUEST</dispatcher> -->
+	<!-- <dispatcher>FORWARD</dispatcher> -->
+	<!-- <dispatcher>INCLUDE</dispatcher> -->
+	<!-- </filter-mapping> -->
 
 	<filter-mapping>
 		<filter-name>struts-execute</filter-name>

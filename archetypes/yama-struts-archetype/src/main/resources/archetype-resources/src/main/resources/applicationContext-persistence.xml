@@ -21,15 +21,13 @@
 	<bean id="entityManagerFactory"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
 		p:dataSource-ref="dataSource" p:persistenceProviderClass="org.hibernate.ejb.HibernatePersistence">
-		<property name="jpaProperties">
-			<props>
-				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect</prop>
-				<prop key="hibernate.hbm2ddl.auto">update</prop>
-				<prop key="hibernate.show_sql">true</prop>
-			</props>
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"
+				p:generateDdl="true" p:showSql="true" p:databasePlatform="org.hibernate.dialect.MySQLDialect" />
 		</property>
 		<property name="packagesToScan">
 			<array>
+				<value>org.meruvian.yama.security.user</value>
 				<value>org.meruvian.yama.persistence</value>
 			</array>
 		</property>
