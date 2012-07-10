@@ -7,23 +7,11 @@
     "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
     "http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
-	<bean type="com.opensymphony.xwork2.ActionProxyFactory" name="yama" class="org.meruvian.yama.rest.DefaultActionProxyFactory" />
-
-	<bean type="org.apache.struts2.rest.handler.ContentTypeHandler" name="jackson" class="org.meruvian.yama.rest.handler.JacksonJsonHandler" />
-	<bean type="org.apache.struts2.rest.handler.ContentTypeHandler" name="xstream" class="org.meruvian.yama.rest.handler.XstreamXmlHandler" />
-
 	<constant name="struts.enable.SlashesInActionNames" value="true" />
 	<constant name="struts.mapper.alwaysSelectFullNamespace" value="true" />
-	<constant name="struts.convention.action.mapAllMatches" value="true" />
-	<constant name="struts.convention.action.suffix" value="Action" />
-	<constant name="struts.convention.action.mapAllMatches" value="true" />
-	<constant name="struts.convention.default.parent.package" value="yama-default" />
-	<constant name="struts.convention.result.path" value="/" />
-
-	<constant name="struts.rest.handlerOverride.json" value="jackson" />
-	<constant name="struts.rest.handlerOverride.xml" value="xstream" />
-
-	<constant name="struts.actionProxyFactory" value="yama" />
+	<constant name="struts.enable.DynamicMethodInvocation" value="false" />
+	<constant name="struts.devMode" value="true" />
+	<constant name="struts.custom.i18n.resources" value="global" />
 
 	<package name="yama-default" extends="struts-default">
 		<interceptors>

@@ -15,7 +15,11 @@
  */
 package org.meruvian.yama.security.login.actions;
 
+import javax.inject.Inject;
+
 import org.meruvian.yama.actions.DefaultAction;
+import org.meruvian.yama.security.BackendUserService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -24,12 +28,23 @@ import org.springframework.security.core.context.SecurityContextHolder;
  * 
  */
 public class LoginAction extends DefaultAction {
+	@Inject
+	private BackendUserService userService;
+
+	@Value("${init.user}")
+	private boolean init;
+
 	@Override
 	public String execute() throws Exception {
-
 		Authentication authentication = SecurityContextHolder.getContext()
 				.getAuthentication();
 		Object principal = authentication.getPrincipal();
+
+		if (init) {
+			if (userService.rowCount() < 1) {
+				userService.initUser();
+			}
+		}
 
 		if (principal instanceof String
 				&& principal.toString().equals("anonymousUser")) {

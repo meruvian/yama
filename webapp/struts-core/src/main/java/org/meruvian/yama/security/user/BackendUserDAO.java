@@ -15,16 +15,12 @@
  */
 package org.meruvian.yama.security.user;
 
-import javax.inject.Inject;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.meruvian.yama.persistence.LogInformation;
 import org.meruvian.yama.persistence.LogInformation.StatusFlag;
 import org.meruvian.yama.persistence.access.PersistenceDAO;
-import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -34,9 +30,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class BackendUserDAO extends PersistenceDAO<BackendUser> {
 	private static final Log LOG = LogFactory.getLog(BackendUserDAO.class);
-
-	@Inject
-	private PasswordEncoder passwordEncoder;
 
 	public BackendUser getUserByUsername(String username) {
 		TypedQuery<BackendUser> query = createQuery(BackendUser.class, "d",

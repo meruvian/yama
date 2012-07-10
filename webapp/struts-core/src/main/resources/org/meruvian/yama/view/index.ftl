@@ -5,9 +5,9 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title><@s.text name="frontend.title" /></title>
 		
-		<script type="text/javascript" src="<@s.url value="/static/jquery/jquery.min.js" />"></script>
-		<script type="text/javascript" src="<@s.url value="/static/jquery/jquery.address.min.js" />"></script>
-		<script type="text/javascript" src="<@s.url value="/scripts/inca.ext.js" />"></script>
+		<script type="text/javascript" src="<@s.url value="/scripts/jquery/jquery.min.js" />"></script>
+		<script type="text/javascript" src="<@s.url value="/scripts/jquery/jquery.address.min.js" />"></script>
+		<script type="text/javascript" src="<@s.url value="/scripts/scripts/inca.ext.js" />"></script>
 		<@sb.head compressed="true" />
 		<@s.url value="" forceAddSchemeHostAndPort="true" var="ctx" />
 		<style type="text/css">
@@ -34,14 +34,7 @@
 					<a class="brand" href="<@s.url value="/" />"><@s.text name="frontend.header.text" /></a>
 					<div class="nav-collapse">
 						<ul class="nav">
-							<li class="active"><a href='<@s.url value="/home" />'><i class="icon-home icon-white"></i> Home</a></li>
-							<#if request.session.getAttribute("SPRING_SECURITY_CONTEXT")??>
-								<li>
-									<a href="<@s.url value="/logout" />">
-										<@s.text name="frontent.logout.text" />
-									</a>
-								</li>
-							</#if>
+							<#include "/view/menu.ftl" />
 						</ul>
 					</div>
 				</div>
@@ -49,26 +42,39 @@
 		</div>
 		
 		<div class="container content" id="content">
-<header>
-	<h1>Login</h1>
-</header>
-<div class="row">
-	<div class="span12">
-		<@s.form theme="bootstrap" action="/login" cssClass="form-horizontal">
-		<@s.actionmessage theme="bootstrap" />
-		<@s.textfield label="Username" name="username" cssClass="span3" /> 
-		<@s.password label="Password" name="password" cssClass="span3" />
-		<div class="form-actions" style="background-color: transparent;">
-			<button value="Save" class="btn btn-primary">Login</button>
-		</div>
-		</@s.form>
-	</div>
-</div>
+			<div class="row">
+				<div class="span12">
+					<div class="modal" style="position: relative; top: auto; left: auto; margin: 0 auto; z-index: 1; max-width: 100%;">
+						<div class="modal-header">
+							<h2>Login</h2>
+						</div>
+						<div class="modal-body">
+							<@s.form id="login-form" theme="bootstrap" action="/login" cssClass="form-horizontal">
+								<@s.actionmessage theme="bootstrap" />
+								<@s.textfield label="Username" name="username" cssClass="span3" /> 
+								<@s.password label="Password" name="password" cssClass="span3" />
+								<div class="form-actions hide">
+									<button value="Save" class="btn btn-primary">Login</button>
+								</div>
+							</@s.form>
+						</div>
+						<div class="modal-footer">
+							<button value="Save" id="login-btn" class="btn btn-primary">Login</button>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 		<footer class="footer modal-footer">
 			<div class="container">
 				<@s.text name="frontend.footer.text" />
 			</div>
 		</footer>
+		<script type="text/javascript">
+		$(function() {
+			$('input[name=username]').focus();
+			$('#login-btn').click(function() { $('#login-form').submit(); });
+		});
+		</script>
 	</body>
 </html>

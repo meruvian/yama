@@ -15,19 +15,16 @@
  */
 package org.meruvian.yama.actions;
 
-import org.apache.struts2.rest.RestActionSupport;
 import org.meruvian.yama.actions.model.DefaultModelParam;
 import org.meruvian.yama.actions.model.ModelParam;
 
-import com.opensymphony.xwork2.ModelDriven;
+import com.opensymphony.xwork2.ActionSupport;
 
 /**
  * @author Dian Aditya
  * 
  */
-public class DefaultAction extends RestActionSupport implements
-		ModelDriven<Object> {
-
+public class DefaultAction extends ActionSupport {
 	public static final String INDEX = "INDEX";
 	public static final String CREATE = "CREATE";
 	public static final String NEW = "NEW";
@@ -45,5 +42,4 @@ public class DefaultAction extends RestActionSupport implements
 	public Object getModel() {
 		return model == null ? parameter : model;
 	}
-
 }

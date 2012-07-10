@@ -1,11 +1,15 @@
 (function(w) {
 	w.inca = {};
 
-	w.inca.init = function() {
+	w.inca.init = function(content) {
+		if (content == null || content == undefined) {
+			content = '#content';
+		}
+		
 		$('#loading').width($(window).width());
 		$('#loading').height($(window).height());
 
-		$('#content').find('a').each(function() {
+		$(content).find('a').each(function() {
 			if ($(this).attr('href') != null) {
 				var href = $(this).attr('href');
 				var namespace = location.hash.substring(0, location.hash.lastIndexOf("/")) + "/";
@@ -23,7 +27,7 @@
 			}
 		});
 
-		$('#content').find('style').each(function() {
+		$(content).find('style').each(function() {
 			var href = $(this).attr('href');
 			href = href == undefined ? '' : href;
 
@@ -33,7 +37,7 @@
 			}
 		});
 
-		$('#content').find('script, img').each(function() {
+		$(content).find('script, img').each(function() {
 			var href = $(this).attr('src');
 			href = href == undefined ? '' : href;
 
@@ -43,7 +47,7 @@
 			}
 		});
 
-		$('#content').find('a.button').each(function() {
+		$(content).find('a.button').each(function() {
 			$(this).prev('button.abutton').remove();
 
 			var anchor = $(this);
@@ -58,18 +62,15 @@
 			anchor.before(btn);
 		});
 
-		$('#content').find('form').submit(function() {
-			var requestMethod = $(this).attr('method');
-			var href = $(this).attr('action');
-			href = href == undefined ? '' : href;
-			var namespace = ajax.fullContextPath;
-			namespace += location.hash.substring(2, location.hash.lastIndexOf("/")) + "/";
-			if ($(this).attr('target') != '_blank') {
-				if (href.charCodeAt(0) != 47) {
-					href = namespace + href;
-				}
+		$(content).find('form').each(function() {
+			$(this).submit(function() {
+				var requestMethod = $(this).attr('method');
+				var href = $(this).attr('action');
+				href = href == undefined ? '' : href;
+				var namespace = ajax.fullContextPath;
+				namespace += location.hash.substring(2, location.hash.lastIndexOf("/")) + "/";
 				
-				jQuery.ajax({
+				var ajaxOption = {
 					type : requestMethod,
 					data : $(this).serialize(),
 					url : href,
@@ -84,16 +85,23 @@
 
 						$('#content').empty().html(data);
 
-						window.inca.init();
+						window.inca.init('#content');
 					}
-				});
-				return false;
-			} else {
+				};
+				
+				if (href.charCodeAt(0) != 47) {
+					href = namespace + href;
+				}
 
-			}
+				if ($.fn.ajaxSubmit) {
+					$(this).ajaxSubmit(ajaxOption);
+				} else {
+					$.ajax(ajaxOption);
+				}
+				
+				return false;
+			});
 		});
-		
-		SyntaxHighlighter.all();
 	};
 })(window);
 

@@ -5,8 +5,9 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title><@s.text name="frontend.title" /></title>
 		
-		<script type="text/javascript" src="<@s.url value="/static/jquery/jquery.min.js" />"></script>
-		<script type="text/javascript" src="<@s.url value="/static/jquery/jquery.address.min.js" />"></script>
+		<script type="text/javascript" src="<@s.url value="/scripts/jquery/jquery.min.js" />"></script>
+		<script type="text/javascript" src="<@s.url value="/scripts/jquery/jquery.address.min.js" />"></script>
+		<script type="text/javascript" src="<@s.url value="/scripts/jquery/jquery.form.js" />"></script>
 		<script type="text/javascript" src="<@s.url value="/scripts/inca.ext.js" />"></script>
 		<script type="text/javascript">
 		var ajax = {};
@@ -27,7 +28,7 @@
 					
 					$('#content').empty().html(data);
 					
-					window.inca.init();
+					window.inca.init('#content');
 				},
 				error : function(jqXHR, textStatus, errorThrown) {
 					$('#content').empty();
@@ -94,14 +95,7 @@
 					<a class="brand" href="<@s.url value="/" />"><@s.text name="frontend.header.text" /></a>
 					<div class="nav-collapse">
 						<ul class="nav">
-							<li class="active"><a href='<@s.url value="/home" />'><i class="icon-home icon-white"></i> Home</a></li>
-							<#if request.session.getAttribute("SPRING_SECURITY_CONTEXT")??>
-								<li>
-									<a href="<@s.url value="/logout" />">
-										<@s.text name="frontent.logout.text" />
-									</a>
-								</li>
-							</#if>
+							<#include "/view/menu.ftl" />
 						</ul>
 					</div>
 				</div>

@@ -15,4 +15,10 @@
 			<result type="freemarker">/org/meruvian/yama/view/decorator.ftl</result>
 		</action>
 	</package>
+	<package name="security" extends="yama-default" namespace="/security">
+		<action name="password" class="org.meruvian.yama.security.login.actions.SecurityAction">
+			<result name="input" type="freemarker">/org/meruvian/yama/view/security/change-password-form.ftl</result>
+			<result name="success" type="freemarker">/org/meruvian/yama/view/security/change-password-success.ftl</result>
+		</action>
+	</package>
 </struts>

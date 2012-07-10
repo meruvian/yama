@@ -24,6 +24,7 @@ import java.lang.annotation.Target;
  * @author Dian Aditya
  * 
  */
+@Deprecated
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ActionParam {

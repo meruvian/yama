@@ -13,17 +13,8 @@
 	</bean>
 
 	<sc:http use-expressions="true">
-		<sc:intercept-url pattern="/module/*/new" access="hasRole('ADMINISTRATOR')" />
-		<sc:intercept-url pattern="/module/*/delete" access="hasRole('ADMINISTRATOR')" />
-		<sc:intercept-url pattern="/module/*/edit" access="hasRole('ADMINISTRATOR')" />
-		<sc:intercept-url pattern="/module/*" access="hasRole('ADMINISTRATOR')"
-			method="POST" />
-		<sc:intercept-url pattern="/module/*" access="hasRole('ADMINISTRATOR')"
-			method="PUT" />
-		<sc:intercept-url pattern="/module/*" access="hasRole('ADMINISTRATOR')"
-			method="DELETE" />
-		<sc:intercept-url pattern="/module/*"
-			access="isAnonymous() or hasRole('ADMINISTRATOR')" method="GET" />
+		<sc:intercept-url pattern="/module/*" access="hasRole('ADMINISTRATOR')" />
+		<sc:intercept-url pattern="/security/*" access="hasRole('ADMINISTRATOR')" />
 		<sc:intercept-url pattern="/home" access="hasRole('ADMINISTRATOR')" />
 
 		<sc:form-login login-page="/" default-target-url="/home"
@@ -33,21 +24,21 @@
 			invalidate-session="true" />
 	</sc:http>
 
-	<sc:authentication-manager>
-		<sc:authentication-provider>
-			<sc:user-service>
-				<sc:user name="admin" password="admin" authorities="ADMINISTRATOR" />
-			</sc:user-service>
-		</sc:authentication-provider>
-	</sc:authentication-manager>
+	<!-- <sc:authentication-manager> -->
+	<!-- <sc:authentication-provider> -->
+	<!-- <sc:user-service> -->
+	<!-- <sc:user name="admin" password="admin" authorities="ADMINISTRATOR" 
+		/> -->
+	<!-- </sc:user-service> -->
+	<!-- </sc:authentication-provider> -->
+	<!-- </sc:authentication-manager> -->
 
 	<bean id="userService" class="org.meruvian.yama.security.UserService" />
 
 	<!-- Database authentication -->
-	<!-- <sc:authentication-manager> -->
-	<!-- <sc:authentication-provider -->
-	<!-- user-service-ref="userService"> -->
-	<!-- <sc:password-encoder ref="passwordEncoder" /> -->
-	<!-- </sc:authentication-provider> -->
-	<!-- </sc:authentication-manager> -->
+	<sc:authentication-manager>
+		<sc:authentication-provider user-service-ref="userService">
+			<sc:password-encoder ref="passwordEncoder" />
+		</sc:authentication-provider>
+	</sc:authentication-manager>
 </beans>

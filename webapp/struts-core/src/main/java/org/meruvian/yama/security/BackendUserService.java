@@ -19,6 +19,8 @@ import java.util.Date;
 
 import javax.inject.Inject;
 
+import org.meruvian.yama.persistence.access.PersistenceDAO;
+import org.meruvian.yama.persistence.access.PersistenceManager;
 import org.meruvian.yama.security.user.BackendUser;
 import org.meruvian.yama.security.user.BackendUserDAO;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
@@ -32,7 +34,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional(readOnly = true)
-public class BackendUserService {
+public class BackendUserService extends PersistenceManager<BackendUser> {
 	@Inject
 	private BackendUserDAO dao;
 
@@ -48,7 +50,17 @@ public class BackendUserService {
 	}
 
 	@Transactional
-	public BackendUser save(BackendUser user) {
+	public void initUser() {
+		BackendUser user = new BackendUser();
+		user.setUsername("admin");
+		user.setPassword(encoder.encodePassword("admin", null));
+		user.setRole("ADMINISTRATOR");
+
+		saveBackenUser(user);
+	}
+
+	@Transactional
+	public BackendUser saveBackenUser(BackendUser user) {
 		if (user.getId() == null) {
 			dao.persist(user);
 		} else {
@@ -74,5 +86,10 @@ public class BackendUserService {
 		dao.persist(user);
 
 		return user;
+	}
+
+	@Override
+	protected PersistenceDAO<BackendUser> getDao() {
+		return dao;
 	}
 }

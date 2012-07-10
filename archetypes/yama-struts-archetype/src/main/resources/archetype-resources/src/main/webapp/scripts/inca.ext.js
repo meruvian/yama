@@ -92,8 +92,6 @@
 
 			}
 		});
-		
-		SyntaxHighlighter.all();
 	};
 })(window);
 
