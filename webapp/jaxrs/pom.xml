@@ -5,7 +5,7 @@
 	<parent>
 		<artifactId>yama-webapp</artifactId>
 		<groupId>org.meruvian.yama</groupId>
-		<version>1.0.3-SNAPSHOT</version>
+		<version>1.0.3</version>
 	</parent>
 
 	<artifactId>yama-jaxrs</artifactId>
@@ -13,9 +13,9 @@
 	<name>Yama JAX-RS</name>
 
 	<scm>
-		<connection>scm:svn:https://svn.java.net/svn/yama~yama-repo/trunk/webapp/jaxrs</connection>
-		<developerConnection>scm:svn:https://svn.java.net/svn/yama~yama-repo/trunk/webapp/jaxrs</developerConnection>
-		<url>http://java.net/projects/yama/sources/yama-repo/show</url>
+		<connection>scm:svn:https://svn.java.net/svn/yama~yama-repo/tags/yama-1.0.3/webapp/jaxrs</connection>
+		<developerConnection>scm:svn:https://svn.java.net/svn/yama~yama-repo/tags/yama-1.0.3/webapp/jaxrs</developerConnection>
+		<url>http://java.net/projects/yama/sources/yama-repo/show/tags/yama-1.0.3/yama-repo/show</url>
 	</scm>
 	
 	<dependencies>

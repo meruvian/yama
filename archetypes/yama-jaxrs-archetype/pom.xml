@@ -3,7 +3,7 @@
 	<parent>
 		<artifactId>yama-archetypes</artifactId>
 		<groupId>org.meruvian.yama</groupId>
-		<version>1.0.3-SNAPSHOT</version>
+		<version>1.0.3</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 
@@ -14,9 +14,9 @@
 	<name>Yama JAX-RS Archetype</name>
 
 	<scm>
-		<connection>scm:svn:https://svn.java.net/svn/yama~yama-repo/trunk/archetypes/yama-jaxrs-archetype</connection>
-		<developerConnection>scm:svn:https://svn.java.net/svn/yama~yama-repo/trunk/archetypes/yama-jaxrs-archetype</developerConnection>
-		<url>http://java.net/projects/yama/sources/yama-repo/show</url>
+		<connection>scm:svn:https://svn.java.net/svn/yama~yama-repo/tags/yama-1.0.3/archetypes/yama-jaxrs-archetype</connection>
+		<developerConnection>scm:svn:https://svn.java.net/svn/yama~yama-repo/tags/yama-1.0.3/archetypes/yama-jaxrs-archetype</developerConnection>
+		<url>http://java.net/projects/yama/sources/yama-repo/show/tags/yama-1.0.3/yama-repo/show</url>
 	</scm>
 
 	<build>
