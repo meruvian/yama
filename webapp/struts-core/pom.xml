@@ -3,15 +3,15 @@
 	<parent>
 		<artifactId>yama-webapp</artifactId>
 		<groupId>org.meruvian.yama</groupId>
-		<version>1.0.3</version>
+		<version>1.0.4-SNAPSHOT</version>
 	</parent>
 	<artifactId>yama-struts-core</artifactId>
 	<name>Yama Struts Core</name>
 
 	<scm>
-		<connection>scm:svn:https://svn.java.net/svn/yama~yama-repo/tags/yama-1.0.3/webapp/struts-core</connection>
-		<developerConnection>scm:svn:https://svn.java.net/svn/yama~yama-repo/tags/yama-1.0.3/webapp/struts-core</developerConnection>
-		<url>http://java.net/projects/yama/sources/yama-repo/show/tags/yama-1.0.3/yama-repo/show</url>
+		<connection>scm:svn:https://svn.java.net/svn/yama~yama-repo/trunk/webapp/struts-core</connection>
+		<developerConnection>scm:svn:https://svn.java.net/svn/yama~yama-repo/trunk/webapp/struts-core</developerConnection>
+		<url>http://java.net/projects/yama/sources/yama-repo/show</url>
 	</scm>
 
 	<dependencies>
