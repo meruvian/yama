@@ -20,6 +20,10 @@
 		<spring.security.version>3.1.0.RELEASE</spring.security.version>
 		<jackson.version>1.9.6</jackson.version>
 		<c3p0.version>0.9.1</c3p0.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<slf4j.version>1.6.1</slf4j.version>
+		<resteasy.version>2.3.4.Final</resteasy.version>
+		<java.version>1.6</java.version>
 	</properties>
 
 	<licenses>

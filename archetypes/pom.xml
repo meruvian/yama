@@ -19,5 +19,6 @@
 
 	<modules>
 		<module>yama-struts-archetype</module>
+		<module>yama-jaxrs-archetype</module>
 	</modules>
 </project>
