@@ -65,7 +65,7 @@ public class BackendUserService extends PersistenceManager<BackendUser> {
 			dao.persist(user);
 		} else {
 			BackendUser temp = dao.findById(user.getId());
-			temp.getLogInformation().setUpdateBy(user.getId());
+//			temp.getLogInformation().setUpdateBy(user.getId());
 			temp.getLogInformation().setUpdateDate(new Date());
 			temp.setUsername(user.getUsername());
 			temp.setEmail(user.getEmail());
@@ -80,7 +80,7 @@ public class BackendUserService extends PersistenceManager<BackendUser> {
 	public BackendUser changePassword(String username, String newPassword) {
 		BackendUser user = dao.getUserByUsername(username);
 		user.setPassword(encoder.encodePassword(newPassword, null));
-		user.getLogInformation().setUpdateBy(user.getId());
+//		user.getLogInformation().setUpdateBy(user.getId());
 		user.getLogInformation().setUpdateDate(new Date());
 
 		dao.persist(user);

@@ -7,9 +7,9 @@
 		<version>1.0.4-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>yama-struts</artifactId>
+	<artifactId>yama-showcases</artifactId>
 	<packaging>war</packaging>
-	<name>Yama Struts</name>
+	<name>Yama Showcases</name>
 
 	<scm>
 		<connection>scm:svn:https://svn.java.net/svn/yama~yama-repo/trunk/webapp/struts</connection>
@@ -55,6 +55,7 @@
 						<configuration>
 							<scanIntervalSeconds>10</scanIntervalSeconds>
 							<contextPath>/</contextPath>
+							<reload>manual</reload>
 						</configuration>
 						<executions>
 							<execution>

@@ -7,5 +7,7 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
 	<context:component-scan base-package="org.meruvian.yama" />
-	<context:property-placeholder location="classpath:/db.properties" />
+	<context:property-placeholder location="classpath:/db.properties, classpath:/yama.properties" />
+	
+	<bean id="reCaptcha" class="net.tanesha.recaptcha.ReCaptchaImpl" p:publicKey="${recaptcha.public.key}" p:privateKey="${recaptcha.private.key}" p:includeNoscript="${recaptcha.include.noscript}" />
 </beans>

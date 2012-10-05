@@ -134,11 +134,33 @@ public class PersistenceDAO<T extends DefaultPersistence> {
 				StatusFlag.ACTIVE);
 	}
 
+	public long getTotalPage(int limit) {
+		return PagingUtils.getTotalPage(getRowCount(), limit);
+	}
+
+	public T load(String id) {
+		LOG.debug("loading " + entityClass.getSimpleName()
+				+ " instance with id: " + id);
+		try {
+			T instance = entityManager.getReference(entityClass, id);
+
+			if (instance == null) {
+				LOG.debug("load successful, no instance found");
+			} else {
+				LOG.debug("load successful, instance found");
+			}
+			return instance;
+		} catch (RuntimeException re) {
+			LOG.error("load failed", re);
+			throw re;
+		}
+	}
+
 	protected long getRowCount(String alias, String criteria,
 			Object... parameters) {
 		LOG.debug("getting " + entityClass.getSimpleName() + " count");
 		try {
-			long count = createQuery(Long.class, "count(id)", "d", criteria,
+			long count = createQuery(Long.class, "count(id)", alias, criteria,
 					parameters).getSingleResult();
 
 			LOG.debug("get successful, return " + count + " row");
@@ -152,8 +174,6 @@ public class PersistenceDAO<T extends DefaultPersistence> {
 
 	protected <X> TypedQuery<X> createQuery(Class<X> resultClass,
 			String select, String alias, String criteria, Object... parameters) {
-
-		entityManager.clear();
 		String ql = "SELECT " + select.trim() + " FROM "
 				+ entityClass.getName() + " " + alias.trim() + " WHERE "
 				+ criteria;
@@ -165,9 +185,5 @@ public class PersistenceDAO<T extends DefaultPersistence> {
 		}
 
 		return query;
-	}
-
-	public long getTotalPage(int limit) {
-		return PagingUtils.getTotalPage(getRowCount(), limit);
 	}
 }

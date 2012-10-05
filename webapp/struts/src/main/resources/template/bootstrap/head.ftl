@@ -31,10 +31,9 @@
   <#assign validationFile="validation.js">
 </#if>
 <#assign cssAdditional="docs.css">
-
-	<script type="text/javascript" src="${base}/static/bootstrap/js/${jsFile}"></script>
-    <script type="text/javascript" src="${base}/static/bootstrap/js/${validationFile}"></script>
-    <script type="text/javascript" src="${base}/static/bootstrap/js/bootbox.min.js"></script>
-   	<link id="bootstrap_styles" rel="stylesheet" href="${base}/static/bootstrap/css/${cssFile}" type="text/css"/>
-	<link id="bootstrap_responsive_styles" rel="stylesheet" href="${base}/static/bootstrap/css/${cssResponsive}" type="text/css"/>
-	<link id="bootstrap_responsive_styles" rel="stylesheet" href="${base}/static/bootstrap/css/${cssAdditional}" type="text/css"/>
+	<script type="text/javascript" src="${base}/struts/bootstrap/js/${jsFile}"></script>
+    <script type="text/javascript" src="${base}/struts/bootstrap/js/${validationFile}"></script>
+    <script type="text/javascript" src="${base}/struts/bootstrap/js/bootbox.min.js"></script>
+   	<link id="bootstrap_styles" rel="stylesheet" href="${base}/struts/bootstrap/css/${cssFile}" type="text/css"/>
+	<link id="bootstrap_responsive_styles" rel="stylesheet" href="${base}/struts/bootstrap/css/${cssResponsive}" type="text/css"/>
+	<link id="bootstrap_responsive_styles" rel="stylesheet" href="${base}/struts/bootstrap/css/${cssAdditional}" type="text/css"/>
