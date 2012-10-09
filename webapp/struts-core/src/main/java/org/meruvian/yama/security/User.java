@@ -37,7 +37,6 @@ public class User extends DefaultPersistence {
 	private Address address = new Address();
 	private String email;
 	private String description;
-	private String workspaceType;
 
 	@Column(unique = true)
 	public String getUsername() {
@@ -48,13 +47,6 @@ public class User extends DefaultPersistence {
 		this.username = username;
 	}
 
-	public String getWorkspaceType() {
-		return workspaceType;
-	}
-
-	public void setWorkspaceType(String workspaceType) {
-		this.workspaceType = workspaceType;
-	}
 
 	public String getPassword() {
 		return password;

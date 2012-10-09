@@ -55,7 +55,6 @@ public class UserServiceImpl implements UserService {
 			s.setAddress(user.getAddress());
 			s.setEmail(user.getEmail());
 			s.setDescription(user.getDescription());
-			s.setWorkspaceType(user.getWorkspaceType());
 
 			s.getLogInformation().setUpdateDate(new Date());
 

@@ -10,9 +10,10 @@
 	<@s.textfield key="user.signup.firstname" name="signUp.name.first" cssClass="span3" required="true"/>
 	<@s.textfield key="user.signup.lastname" name="signUp.name.last" cssClass="span3" required="true"/>
 	<@s.textfield key="user.signup.email" name="signUp.email" cssClass="span3" required="true"/>
-	<@s.textfield key="user.signup.mobile_phone" name="" cssClass="span3" />
 	<@s.textfield key="user.signup.address" name="signUp.address.street1" cssClass="span4" />
 	<@s.textfield name="signup.address.street2" cssClass="span4" />
+	<@s.textfield key="user.signup.city" name="signUp.address.city" cssClass="span3" />
+	<@s.textfield key="user.signup.zip" name="signUp.address.zip" cssClass="span3" />
 	<div class="control-group">
 		<label class="control-label"></label>
 		<div class="controls">

@@ -35,7 +35,6 @@ public class SignUpServiceImpl implements SignUpService {
 			s.setAddress(signUp.getAddress());
 			s.setEmail(signUp.getEmail());
 			s.setDescription(signUp.getDescription());
-			s.setWorkspaceType(signUp.getWorkspaceType());
 
 			s.getLogInformation().setUpdateDate(new Date());
 

@@ -7,9 +7,9 @@
 		<version>1.0.4-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>yama-showcases</artifactId>
+	<artifactId>yama-startupkit</artifactId>
 	<packaging>war</packaging>
-	<name>Yama Showcases</name>
+	<name>Yama StartUp Kit</name>
 
 	<scm>
 		<connection>scm:svn:https://svn.java.net/svn/yama~yama-repo/trunk/webapp/struts</connection>

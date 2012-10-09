@@ -28,6 +28,7 @@ import javax.persistence.Embeddable;
 public class Address implements Serializable {
 	private String street1;
 	private String street2;
+	private String city;
 	private String zip;
 
 	@Column(name = "address_1", length = 128)
@@ -46,6 +47,14 @@ public class Address implements Serializable {
 
 	public void setStreet2(String street2) {
 		this.street2 = street2;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
 	}
 
 	@Column(length = 8)

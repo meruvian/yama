@@ -4,9 +4,9 @@
     "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
     "http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
-	<bean name="cimande" type="org.meruvian.inca.struts2.rest.discoverer.ActionFinder" class="org.meruvian.inca.struts2.rest.discoverer.IncaActionFinder" />
+<!-- 	<bean name="cimande" type="org.meruvian.inca.struts2.rest.discoverer.ActionFinder" class="org.meruvian.inca.struts2.rest.discoverer.IncaActionFinder" />
 	<bean name="cimande" type="com.opensymphony.xwork2.util.finder.Test" class="org.meruvian.inca.struts2.rest.discoverer.CimandeActionFilter" />
-
+ -->
 	<constant name="struts.enable.SlashesInActionNames" value="true" />
 	<constant name="struts.mapper.alwaysSelectFullNamespace" value="true" />
 	<constant name="struts.enable.DynamicMethodInvocation" value="false" />
@@ -15,8 +15,8 @@
 
 	<!-- <constant name="struts.inca.exclude.packages.prefix" value="org.hibernate, org.codehaus, org.springframework, org.apache, org.sonatype, net.sf, com.thoughtworks, org.eclipse, com.google, org.jaxen, com.mchange, freemarker" /> -->
 	<constant name="struts.inca.package.locators" value="org.meruvian.yama, org.blueoxygen.cimande" />
-	<constant name="struts.inca.actionFinder" value="cimande" />
-	<constant name="struts.inca.action.filter" value="cimande" />
+<!-- 	<constant name="struts.inca.actionFinder" value="cimande" />
+	<constant name="struts.inca.action.filter" value="cimande" /> -->
 	<constant name="struts.inca.default.parent.package" value="yama-default" />
 
 	<package name="yama-default" extends="struts-default">

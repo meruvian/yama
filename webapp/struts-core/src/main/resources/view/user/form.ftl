@@ -34,10 +34,7 @@
 	<@s.textfield key="user.address" name="user.address.street1" cssClass="span4" />
 	<@s.textfield name="user.address.street2" cssClass="span4" />
 	<@s.textfield key="user.city" name="user.address.city" cssClass="span3" />
-	<@s.textfield key="user.state" name="user.address.state" cssClass="span3" />
 	<@s.textfield key="user.zip" name="user.address.zip" cssClass="span3" />
-	<@s.textfield key="user.description" name="user.description" cssClass="span4" />
-	<@s.textfield key="user.type" name="user.workspaceType" cssClass="span3" />
 
 	<div class="form-actions">
 		<input type="submit" class="btn btn-primary" value="Save" />
