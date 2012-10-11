@@ -19,7 +19,7 @@
 	</div>
 	<div class="form-actions">
 		<input type="submit" class="btn btn-primary" value="Save" />
-		<a class="btn" href="/backend/user" style="width: 80px;">Cancel</a>
+		<a class="btn" href="<@s.url value="/backend/user"/>" style="width: 80px;">Cancel</a>
 	</div>
 </@s.form>
 

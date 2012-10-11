@@ -9,7 +9,7 @@
     </a>
     <ul class="dropdown-menu">
     	<#list menu.moduleFunctions as submenu>
-    		<li><a href="${submenu.moduleUrl!}">${submenu.name!}</a></li>
+    		<li><a href="<@s.url value="${submenu.moduleUrl!}"/>">${submenu.name!}</a></li>
     	</#list>
     </ul>
 </li>
@@ -23,7 +23,7 @@
 <li>
 	<#if request.session.getAttribute("cimandeSecurityUser")??>
 	<#assign name = request.session.getAttribute("cimandeSecurityUser").name />								
-		<a title="Profil" href="/module/profile"><i class="icon-user icon-white"></i> &nbsp; ${name.first} ${name.last}</a>
+		<a title="Profil" href="<@s.url value="/module/profile"/>"><i class="icon-user icon-white"></i> &nbsp; ${name.first} ${name.last}</a>
 	</#if>
 </li>
 <li>
@@ -32,7 +32,7 @@
 	</a>
 </li>
 <li>
-	<a href="/">&nbsp;<i class="icon-home icon-white"></i></a>
+	<a href="<@s.url value="/"/>">&nbsp;<i class="icon-home icon-white"></i></a>
 </li>
 </#if>
 </ul>

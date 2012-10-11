@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<parent>
+		<artifactId>yama-archetypes</artifactId>
+		<groupId>org.meruvian.yama</groupId>
+		<version>1.0.4-SNAPSHOT</version>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.meruvian.yama</groupId>
+	<artifactId>yama-startupkit-archetype</artifactId>
+	<packaging>maven-archetype</packaging>
+
+	<name>Yama StartUp Kit Archetype</name>
+
+	<scm>
+		<connection>scm:svn:https://svn.java.net/svn/yama~yama-repo/trunk/archetypes/yama-struts-archetype</connection>
+		<developerConnection>scm:svn:https://svn.java.net/svn/yama~yama-repo/trunk/archetypes/yama-struts-archetype</developerConnection>
+		<url>http://java.net/projects/yama/sources/yama-repo/show</url>
+	</scm>
+
+	<build>
+		<extensions>
+			<extension>
+				<groupId>org.apache.maven.archetype</groupId>
+				<artifactId>archetype-packaging</artifactId>
+				<version>2.0</version>
+			</extension>
+		</extensions>
+
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<artifactId>maven-archetype-plugin</artifactId>
+					<version>2.0</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+</project>

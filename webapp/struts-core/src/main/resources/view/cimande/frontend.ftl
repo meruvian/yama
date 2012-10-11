@@ -135,7 +135,7 @@
 							<#if request.session.getAttribute("cimandeSecurityUser")??>
 								<#assign name = request.session.getAttribute("cimandeSecurityUser").name />								
 							
-									<a title="Profil" href="/module/profile"><i class="icon-user icon-white"></i> &nbsp; ${name.first} ${name.last}</a>
+									<a title="Profil" href="<@s.url value="/module/profile"/>"><i class="icon-user icon-white"></i> &nbsp; ${name.first} ${name.last}</a>
 							</#if>
 						</li>
 						<li>

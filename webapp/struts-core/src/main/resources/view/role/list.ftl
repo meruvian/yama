@@ -2,7 +2,7 @@
 <form method="get" class="form-inline span12">
 	<input type="text" name="q" value="${q!}" class="span6" placeholder="Search..." />
 	<input type="submit" value="Search" class="span2 btn" />
-	<a class="btn btn-primary pull-right" href="${request.servletPath}/add">New Role</a>
+	<a class="btn btn-primary pull-right" href="<@s.url value="${request.servletPath}/add"/>">New Role</a>
 </form>
 </div>
 
@@ -31,9 +31,9 @@
 			<td>${c.description!}</td>
 			<!-- <td><#assign level = 0 /><#list c.treePath?split(".") as l><#assign level = level + 1 /></#list>${level}</td> -->
 			<td>
-				<a class="btn" title="Edit" href="${request.servletPath}/edit/${c.id!}"><i class="icon-edit"></i></a>
+				<a class="btn" title="Edit" href="<@s.url value="${request.servletPath}/edit/${c.id!}"/>"><i class="icon-edit"></i></a>
 				<!--  <a class="btn" title="Role Privilege" href="<@s.url value="/backend/role_privilege/edit/${c.id!}" />"><i class="icon-th-list"></i></a> -->
-				<a class="btn confirm" title="Delete" href="${request.servletPath}/delete/${c.id!}" data-message="Are you sure want to delete ${c.name!}?"><i class="icon-trash"></i></a>
+				<a class="btn confirm" title="Delete" href="<@s.url value="${request.servletPath}/delete/${c.id!}"/>" data-message="Are you sure want to delete ${c.name!}?"><i class="icon-trash"></i></a>
 			</td>
 		</tr>
 		<#assign no = no + 1>
