@@ -34,6 +34,9 @@
 	<script type="text/javascript" src="${base}/struts/bootstrap/js/${jsFile}"></script>
     <script type="text/javascript" src="${base}/struts/bootstrap/js/${validationFile}"></script>
     <script type="text/javascript" src="${base}/struts/bootstrap/js/bootbox.min.js"></script>
+    <script type="text/javascript" src="${base}/struts/bootstrap/js/wysihtml5-0.3.0.min.js"></script>
+    <script type="text/javascript" src="${base}/struts/bootstrap/js/bootstrap-wysihtml5.js"></script>
    	<link id="bootstrap_styles" rel="stylesheet" href="${base}/struts/bootstrap/css/${cssFile}" type="text/css"/>
 	<link id="bootstrap_responsive_styles" rel="stylesheet" href="${base}/struts/bootstrap/css/${cssResponsive}" type="text/css"/>
 	<link id="bootstrap_responsive_styles" rel="stylesheet" href="${base}/struts/bootstrap/css/${cssAdditional}" type="text/css"/>
+	<link id="bootstrap_responsive_styles" rel="stylesheet" href="${base}/struts/bootstrap/css/bootstrap-wysihtml5.css" type="text/css"/>

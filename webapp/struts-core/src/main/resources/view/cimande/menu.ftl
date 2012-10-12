@@ -16,6 +16,16 @@
 </#list>
 </#if>
 </#if>
+<li class="dropdown">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+   		Category
+     	<b class="caret"></b>
+    </a>
+    <ul class="dropdown-menu">
+    	<li><a href="<@s.url value="/backend/news"/>"/>News</a></li>  
+    	<li><a href="<@s.url value="/backend/article"/>"/>Article</a></li>    
+    </ul>
+</li>
 </ul>
 
 <ul class="nav pull-right">

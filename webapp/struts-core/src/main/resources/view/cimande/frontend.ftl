@@ -23,7 +23,7 @@
 	<![endif]-->
 	<script src="/scripts/jquery/jquery.min.js"></script>
 	<script type="text/javascript" src="<@s.url value="/scripts/inca.ext.js" />"></script>
-	<script type="text/javascript" src="<@s.url value="/scripts/map/leaflet/leaflet.js" />"></script>
+	<script type="text/javascript" src="<@s.url value="/scripts/jquery/jquery.expander.min.js" />"></script>
 	<@sb.head compressed="true" />
 	<@s.url value="" forceAddSchemeHostAndPort="true" var="ctx" />
 	
@@ -205,6 +205,9 @@
 	  		$(this).prependTo(parent);
 	  	});
 	});
+	
+	
+	
 	</script>
 	
 </body>

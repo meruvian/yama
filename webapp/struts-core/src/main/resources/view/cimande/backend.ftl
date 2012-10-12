@@ -10,14 +10,8 @@
 		<script type="text/javascript" src="<@s.url value="/scripts/map/leaflet/leaflet.js" />"></script>
 		<script type="text/javascript" src="<@s.url value="/scripts/cimande-popup.js" />"></script>
 		<script type="text/javascript" src="<@s.url value="/scripts/inca.ext.js" />"></script>
-		
+		<script type="text/javascript" src="<@s.url value="/scripts/jquery/jquery.expander.min.js" />"></script>
 		<link rel="stylesheet" type="text/css" href="<@s.url value="/styles/map/leaflet/leaflet.css" />" />
-		
-		<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
-		<!--[if lt IE 9]>
-		<link rel="stylesheet" type="text/css" href="<@s.url value="/styles/map/leaflet/leaflet.ie.css" />" />
-		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-		<![endif]-->
 		<@sb.head compressed="true" />
 		<@s.url value="" forceAddSchemeHostAndPort="true" var="ctx" />
 		<style type="text/css">
@@ -35,7 +29,57 @@
 			header h1 { font-size: 150%; margin-bottom: 5px; }
 			.required{
 				color: red;
+			}.bs-docs-example {
+				position: relative;
+				margin: 0 0 15px;
+				padding: 39px 0px 14px;
+				background-color: white;
+				border: 1px solid  #DDD;
+				-webkit-border-radius: 4px;
+				-moz-border-radius: 4px;
+				border-radius: 4px;
 			}
+			.title-news{
+				font-size: 17px;		
+				font-weight: bold;
+			}
+			#newsfeed {
+				margin-left: 0px;
+			}
+			#newsfeed::after {
+				content: "News Feed";
+				position: absolute;
+				top: -1px;
+				left: -1px;
+				padding: 9px 11px;
+				font-size: 22px;
+				font-weight: bold;
+				background-color: whiteSmoke;
+				border: 1px solid #DDD;
+				color: #317EAC;
+				-webkit-border-radius: 4px 0 4px 0;
+				-moz-border-radius: 4px 0 4px 0;
+				border-radius: 4px 0 4px 0;
+			}
+			#article {
+				margin-left: 0px;
+			}
+			#article::after {
+				content: "Article";
+				position: absolute;
+				top: -1px;
+				left: -1px;
+				padding: 9px 11px;
+				font-size: 22px;
+				font-weight: bold;
+				background-color: whiteSmoke;
+				border: 1px solid #DDD;
+				color: #317EAC;
+				-webkit-border-radius: 4px 0 4px 0;
+				-moz-border-radius: 4px 0 4px 0;
+				border-radius: 4px 0 4px 0;
+			}
+
 		</style>
 	</head>
 	<body>
@@ -106,6 +150,16 @@
 	  				$(this).prependTo(parent);
 	  			});
 			});
+			
+			(function() {
+				 var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+				 ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+				 var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			})();
+		</script>
+
+		<script>
+			$('.textarea').wysihtml5();
 		</script>
 	</body>
 </html>

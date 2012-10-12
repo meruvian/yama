@@ -1,47 +1,69 @@
 <div class="container-fluid">
 	<div class="row-fluid">
+		
 		<div id="newsfeed" class="bs-docs-example span9">
+			
+			<#list newses.entityList as n>
 			<div style="background-color: #FAFAFC; margin: 7px; padding:7px; -webkit-border-radius: 4px; margin-bottom: 10px;"> 
-					<a href="#" class="title-news">Demoground/Pameran jTechnopreneur se-Kota Malang Oktober 2012</a>
-					<p style="text-align: justify;margin-top: 7px;">
-						Dengan ini kami memberitahukan bahwa Meruvian akan mengadakan Pameran/Demoground Pengenalan Program jTechnopreneur Meruvian ke SMK-SMK se-Kota Malang yang akan diadakan pada tanggal 1 Oktober-31 Oktober 2012, kami mengundang Bapak/Ibu untuk dapat berpartisipasi dalam kegiatan ini.
-					</p>
+			  	  
+				<a href="<@s.url value="${request.servletPath}/news/detail/${n.id!}"/>" class="title-news" style="margin: 0 0;">${n.title!}</a>
+				<br>
+				<font size="2"> Posted by <a href="#">${n.user.name.first!} ${n.user.name.last!}</a> on ${n.logInformation.createDate!}</font>
+
+				<p style="text-align: justify;margin-top: 12px;">
+					<div class="expander">
+						${n.content!}
+					</div>
+				</p>
+				
 			</div>
-			<div style="background-color: #FAFAFC; margin: 7px; padding:7px; -webkit-border-radius: 4px; margin-bottom: 10px;"> 
-					<a href="#" class="title-news">[Release] Yama-JAXRS</a>
-					<p style="text-align: justify;margin-top: 7px;">
-						Yama-JAXRS merupakan platform yang menggunakan mekanisme API JAX-RS didalam pengembangan aplikasi berbasis RESTful. JAX-RS merupakan API Java yang dikhususkan untuk pengembangan sistem berbasis RESTful. Spesifikasi yang digunakan yaitu mengacu pada spesifikasi 
-					</p>
+			</#list>
+			
+			<div style="; margin: 7px; padding:7px; -webkit-border-radius: 4px; margin-bottom: 10px;"> 
+			 	  
+				<span class="label pull-left">Found ${newses.rowCount} row(s)</span>
+				<div class="btn-group pull-right">
+					<#if pageNews &gt; 1>
+						<a class="btn" href="<@s.url value="${request.servletPath}?max=${maxNews}&pageNews=1"/>"><i class="icon-fast-backward"></i>&nbsp;</a>
+						<a class="btn" href="<@s.url value="${request.servletPath}?max=${maxNews}&pageNews=${pageNews - 1}"/>"><i class="icon-backward"></i>&nbsp;</a>
+					</#if>
+						<a class="btn disabled">${pageNews} of ${newses.totalPage}</a>
+					<#if pageNews &lt; newses.totalPage>
+						<a class="btn" href="<@s.url value="${request.servletPath}?max=${maxNews}&pageNews=${pageNews + 1}"/>">&nbsp;<i class="icon-forward"></i></a>
+						<a class="btn" href="<@s.url value="${request.servletPath}?max=${maxNews}&pageNews=${newses.totalPage}"/>">&nbsp;<i class="icon-fast-forward"></i></a>
+					</#if>
+				</div> 
 			</div>
-			<div style="background-color: #FAFAFC; margin: 7px; padding:7px; -webkit-border-radius: 4px; margin-bottom: 10px;"> 
-					<a href="#" class="title-news">Mobile Game Monetization Tour 2012</a>
-					<p style="text-align: justify;margin-top: 7px;">
-						Tak bisa dipungkiri lagi, perkembangan Mobile Games akhir-akhir ini semakin bertambah pesat. Banyak pelaku bisnis yang mulai melirik area ini.Tak hanya di luar negri, di dalam negripun area ini mulai menunjukkan </p>
-			</div>
+			
 		</div>
 		<div id="article" class="bs-docs-example span3">
-			<div style="background-color: #FAFAFC; margin: 7px; padding:7px; -webkit-border-radius: 4px; "> 
-					<a href="#">PaaS dan OpenPaaS</a>
-			</div>
+			<#list articles.entityList as a>
 			<div style="background-color: #FAFAFC; margin: 7px; padding:7px; -webkit-border-radius: 4px; margin-bottom: 10px;"> 
-					<a href="#">Cloud Gaming sebagai Game as Service</a>
-			</div>
-			<div style="background-color: #FAFAFC; margin: 7px; padding:7px; -webkit-border-radius: 4px; margin-bottom: 10px;"> 
-					<a href="#">Benarkah MaaS Solusi Skalabilitas?</a>
-			</div>
-			<div style="background-color: #FAFAFC; margin: 7px; padding:7px; -webkit-border-radius: 4px; margin-bottom: 10px;"> 
-					<a href="#">Meruvian Survey Management</a>
-			</div>
-			<div style="background-color: #FAFAFC; margin: 7px; padding:7px; -webkit-border-radius: 4px; margin-bottom: 10px;"> 
-					<a href="#">[Release] Yama-JAXRS</a>
-			</div>
-			<div style="background-color: #FAFAFC; margin: 7px; padding:7px; -webkit-border-radius: 4px; margin-bottom: 10px;"> 
-					<a href="#">Aliber Special Mention</a>
-			</div>
-			<div style="background-color: #FAFAFC; margin: 7px; padding:7px; -webkit-border-radius: 4px; margin-bottom: 10px;"> 
-					<a href="#">Cimande vs Yama</a>
+			  	  <a href="<@s.url value="${request.servletPath}/article/detail/${a.id!}"/>" class="" style="margin: 0 0;">${a.title!}</a>
+				</div>
+			</#list>
+			<div style="text-align:center; margin: 7px; padding:7px; -webkit-border-radius: 4px; margin-bottom: 10px;"> 
+				<div class="btn-group">
+					<#if pageArticle &gt; 1>
+						<a class="btn" href="<@s.url value="${request.servletPath}?max=${maxArticle}&pageArticle=1"/>"><i class="icon-fast-backward"></i>&nbsp;</a>
+						<a class="btn" href="<@s.url value="${request.servletPath}?max=${maxArticle}&pageArticle=${pageArticle - 1}"/>"><i class="icon-backward"></i>&nbsp;</a>
+					</#if>
+						<a class="btn disabled">${pageArticle} of ${articles.totalPage}</a>
+					<#if pageArticle &lt; articles.totalPage>
+						<a class="btn" href="<@s.url value="${request.servletPath}?max=${maxArticle}&pageArticle=${pageArticle + 1}"/>">&nbsp;<i class="icon-forward"></i></a>
+						<a class="btn" href="<@s.url value="${request.servletPath}?max=${maxArticle}&pageArticle=${articles.totalPage}"/>">&nbsp;<i class="icon-fast-forward"></i></a>
+					</#if>
+				</div> 
 			</div>
 		</div>
+		
 
 	</div>
 </div>
+<script>
+$(document).ready(function() {
+  var opts = {collapseTimer: 4000};
+  $('div.expander').expander();
+});
+
+</script>
