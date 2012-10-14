@@ -153,7 +153,8 @@
 
 							</li>
 						</#if>
-						<#if request.session.getAttribute("cimandeSecurityRole")??>
+						
+						<#if request.session.getAttribute("SPRING_SECURITY_CONTEXT")??>
 							<li>
 								<a href="<@s.url value="/backend" />" title="<@s.text name="frontend.go.backend.text" />">&nbsp;<i class="icon-share icon-white"></i></a>
 							</li>

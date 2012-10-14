@@ -1,0 +1,61 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:sc="http://www.springframework.org/schema/security" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<bean id="passwordEncoder"
+		class="org.springframework.security.authentication.encoding.ShaPasswordEncoder">
+		<constructor-arg value="256" />
+	</bean>
+	<bean id="authenticationSuccesshandler"
+		class="org.meruvian.yama.security.CimandeUserDetailsService"
+		p:defaultTargetUrl="/home" />
+
+	<bean id="userService"
+		class="org.meruvian.yama.security.CimandeUserDetailsService" />
+
+	<bean id="accessDecisionManager" class="org.springframework.security.access.vote.UnanimousBased">
+		<constructor-arg>
+			<list>
+				<bean
+					class="org.springframework.security.web.access.expression.WebExpressionVoter" />
+				<bean class="org.springframework.security.access.vote.AuthenticatedVoter" />
+				<bean class="org.springframework.security.access.vote.RoleVoter" />
+				<bean class="org.meruvian.yama.security.CimandeAccessDecisionVoter" />
+			</list>
+		</constructor-arg>
+	</bean>
+
+	<sc:http access-decision-manager-ref="accessDecisionManager">
+		<sc:intercept-url pattern="/backend/login"
+			access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		<sc:intercept-url pattern="/backend/user/login/**"
+			access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+		<sc:intercept-url pattern="/module/**"
+			access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		<sc:intercept-url pattern="/backend/**" access="IS_AUTHENTICATED_FULLY" />
+		
+		<sc:form-login login-page="/login" login-processing-url="/auth"
+			username-parameter="username" password-parameter="password"
+			authentication-failure-url="/login?failure"
+			authentication-success-handler-ref="authenticationSuccesshandler" />
+		<sc:logout logout-url="/logout" logout-success-url="/"
+			invalidate-session="true" />
+	</sc:http>
+
+	<!-- Database authentication -->
+	<sc:authentication-manager>
+		<sc:authentication-provider
+			user-service-ref="userService">
+			<sc:password-encoder ref="passwordEncoder" />
+		</sc:authentication-provider>
+	</sc:authentication-manager>
+</beans>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+    
+<struts>
+	<package name="index" extends="yama-default" namespace="/">
+		<action name="">
+			<result type="redirect">/home</result>
+		</action>
+		<action name="login" class="org.meruvian.yama.security.LoginAction">
+			<result name="input" type="freemarker">/view/cimande/login.ftl</result>
+			<result name="success" type="redirect">/home</result>
+		</action>
+		<action name="about">
+			<result type="freemarker">/view/footer/AboutUs.ftl</result>
+		</action>
+		<action name="term">
+			<result type="freemarker">/view/footer/terms_condition.ftl</result>
+		</action>
+		<action name="home" class="org.meruvian.yama.webapp.MainAction">
+			<result name="success" type="freemarker">/view/include/home_module.ftl</result>
+			<result name="input" type="freemarker">/view/include/home_button.ftl</result>
+		</action>
+	</package>
+	<package name="backend" extends="yama-default" namespace="/">
+		<action name="backend">
+			<result type="freemarker">/view/cimande/welcome.ftl</result>
+		</action>
+	</package>
+	<package name="security" extends="yama-default" namespace="/security">
+		<action name="password" class="org.meruvian.yama.security.ResetPasswordAction">
+			<result name="input" type="freemarker">/org/meruvian/yama/view/security/change-password-form.ftl</result>
+			<result name="success" type="freemarker">/org/meruvian/yama/view/security/change-password-success.ftl</result>
+		</action>
+	</package>
+</struts>

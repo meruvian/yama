@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<bean name="cimande" type="org.meruvian.inca.struts2.rest.discoverer.ActionFinder" class="org.meruvian.inca.struts2.rest.discoverer.IncaActionFinder" />
+	<bean name="cimande" type="com.opensymphony.xwork2.util.finder.Test" class="org.meruvian.inca.struts2.rest.discoverer.CimandeActionFilter" />
+
+	<constant name="struts.enable.SlashesInActionNames" value="true" />
+	<constant name="struts.mapper.alwaysSelectFullNamespace" value="true" />
+	<constant name="struts.enable.DynamicMethodInvocation" value="false" />
+	<constant name="struts.devMode" value="true" />
+	<constant name="struts.custom.i18n.resources" value="global" />
+
+	<!-- <constant name="struts.inca.exclude.packages.prefix" value="org.hibernate, org.codehaus, org.springframework, org.apache, org.sonatype, net.sf, com.thoughtworks, org.eclipse, com.google, org.jaxen, com.mchange, freemarker" /> -->
+	<constant name="struts.inca.package.locators" value="org.meruvian.yama, ${package}" />
+    <constant name="struts.inca.actionFinder" value="cimande" />
+	<constant name="struts.inca.action.filter" value="cimande" />
+	<constant name="struts.inca.default.parent.package" value="yama-default" />
+
+	<package name="yama-default" extends="struts-default">
+		<interceptors>
+			<!-- <interceptor name="ovalValidation" class="org.apache.struts2.oval.interceptor.OValValidationInterceptor" /> -->
+			<interceptor name="nocache" class="org.meruvian.yama.struts.iterceptors.NoCacheInterceptor" />
+			<interceptor name="menu" class="org.meruvian.yama.security.menu.TreeMenuInterceptor" />
+
+			<interceptor-stack name="adminStack">
+				<interceptor-ref name="i18n" />
+				<interceptor-ref name="exception" />
+				<interceptor-ref name="logger" />
+				<interceptor-ref name="timer" />
+				<interceptor-ref name="alias" />
+				<interceptor-ref name="servletConfig" />
+				<interceptor-ref name="prepare" />
+				<interceptor-ref name="chain" />
+				<interceptor-ref name="scopedModelDriven" />
+				<interceptor-ref name="modelDriven" />
+				<interceptor-ref name="fileUpload" />
+				<interceptor-ref name="checkbox" />
+				<interceptor-ref name="multiselect" />
+				<interceptor-ref name="staticParams" />
+				<interceptor-ref name="actionMappingParams" />
+				<interceptor-ref name="params">
+					<param name="excludeParams">dojo\..*,^struts\..*</param>
+				</interceptor-ref>
+				<interceptor-ref name="store">
+					<param name="operationMode">AUTOMATIC</param>
+				</interceptor-ref>
+				<interceptor-ref name="conversionError" />
+				<interceptor-ref name="validation">
+					<param name="validateAnnotatedMethodOnly">true</param>
+					<param name="excludeMethods">input,back,cancel,browse</param>
+				</interceptor-ref>
+				<interceptor-ref name="workflow">
+					<param name="excludeMethods">input,back,cancel,browse</param>
+				</interceptor-ref>
+				<interceptor-ref name="menu" />
+				<interceptor-ref name="nocache" />
+			</interceptor-stack>
+		</interceptors>
+
+		<default-interceptor-ref name="adminStack" />
+		<default-class-ref class="org.meruvian.yama.actions.DefaultAction" />
+
+		<global-results>
+			<result name="login" type="redirect">/logout</result>
+			<result name="home" type="redirect">/home</result>
+		</global-results>
+	</package>
+	
+	<include file="struts-basic.xml" />
+</struts>
