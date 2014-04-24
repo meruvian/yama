@@ -5,18 +5,11 @@
 		<pattern>/images/*</pattern>
 		<pattern>*.json</pattern>
 		<pattern>*.xml</pattern>
-		<pattern>*.htm*</pattern>
 	</excludes>
-	
-	<decorator name="backend-layout" page="/view/cimande/backend.ftl">
-		<pattern>/backend</pattern>
-		<pattern>/backend/*</pattern>
-	</decorator>
-	
-	<decorator name="public-layout" page="/view/cimande/frontend.ftl">
+
+	<decorator name="layout" page="/org/meruvian/yama/view/decorator.ftl">
 		<pattern>/</pattern>
 		<pattern>/module/*</pattern>
-		<pattern>/login</pattern>
 		<pattern>/home</pattern>
 	</decorator>
 </decorators> 

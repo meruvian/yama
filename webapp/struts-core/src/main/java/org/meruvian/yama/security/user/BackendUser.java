@@ -25,8 +25,8 @@ import org.meruvian.yama.persistence.DefaultPersistence;
  * @author Dian Aditya
  * 
  */
-//@Entity
-//@Table(name = "yama_backend_user")
+@Entity
+@Table(name = "yama_backend_user")
 public class BackendUser extends DefaultPersistence {
 	private String username;
 	private String password;
