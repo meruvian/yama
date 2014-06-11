@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.meruvian.yama</groupId>
 	<artifactId>yama</artifactId>
-	<version>1.0.4-SNAPSHOT</version>
+	<version>1.1.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Meruvian Yama</name>
 	<description>Meruvian Yama is a part of Meruvian Integrated Platform. An integrated platform to create Java WebApp based on Struts2, SpringMVC, JPA and many others popular framework quickly and easily.</description>
@@ -14,16 +14,31 @@
 	</parent>
 
 	<properties>
-		<struts2.version>2.3.1.2</struts2.version>
-		<spring.version>3.1.0.RELEASE</spring.version>
-		<hibernate.version>4.1.0.Final</hibernate.version>
-		<spring.security.version>3.1.0.RELEASE</spring.security.version>
-		<jackson.version>1.9.6</jackson.version>
+		<struts2.version>2.3.16.2</struts2.version>
+		<struts2.bootstrap.version>2.0.0</struts2.bootstrap.version>
+		<inca.version>1.1.0</inca.version>
+		<spring.version>4.0.3.RELEASE</spring.version>
+		<spring.security.version>3.2.3.RELEASE</spring.security.version>
+		<spring.data.commons.version>1.8.0.RELEASE</spring.data.commons.version>
+		<spring.data.jpa.version>1.6.0.RELEASE</spring.data.jpa.version>
+		<hibernate.version>4.3.5.Final</hibernate.version>
+		<bonecp.version>0.8.0.RELEASE</bonecp.version>
 		<c3p0.version>0.9.1</c3p0.version>
+		<hikaricp.version>1.3.8</hikaricp.version>
+		<resteasy.version>3.0.8.Final</resteasy.version>
+		<jackson.version>1.9.6</jackson.version>
+		<jackson2.version>2.3.2</jackson2.version>
+		<slf4j.version>1.7.7</slf4j.version>
+		<commons.lang.version>3.3.2</commons.lang.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<slf4j.version>1.6.1</slf4j.version>
-		<resteasy.version>2.3.4.Final</resteasy.version>
 		<java.version>1.6</java.version>
+		<jdbc.group.id>mysql</jdbc.group.id>
+		<jdbc.artifact.id>mysql-connector-java</jdbc.artifact.id>
+		<jdbc.version>5.1.18</jdbc.version>
+		<jquery.version>1.11.0-1</jquery.version>
+		<angularjs.version>1.2.16</angularjs.version>
+		<bootstrap.version>3.1.1-1</bootstrap.version>
+		<fontawesome.version>4.0.3</fontawesome.version>
 	</properties>
 
 	<licenses>
@@ -147,9 +162,10 @@
 	</distributionManagement>
 	
 	<modules>
-		<module>persistence</module>
-		<module>webapp</module>
+		<module>yama-webapp</module>
 		<module>archetypes</module>
+		<module>yama-repository</module>
+		<module>yama-service</module>
 	</modules>
 	
 	<profiles>
