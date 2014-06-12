@@ -21,6 +21,10 @@
 		<spring.security.version>3.2.3.RELEASE</spring.security.version>
 		<spring.data.commons.version>1.8.0.RELEASE</spring.data.commons.version>
 		<spring.data.jpa.version>1.6.0.RELEASE</spring.data.jpa.version>
+		<spring.social.core.version>1.1.0.RELEASE</spring.social.core.version>
+		<spring.social.facebook.version>1.1.1.RELEASE</spring.social.facebook.version>
+		<spring.social.google.version>1.0.0.RELEASE</spring.social.google.version>
+		<http.client.version>4.3.4</http.client.version>
 		<hibernate.version>4.3.5.Final</hibernate.version>
 		<bonecp.version>0.8.0.RELEASE</bonecp.version>
 		<c3p0.version>0.9.1</c3p0.version>
@@ -163,7 +167,7 @@
 	
 	<modules>
 		<module>yama-webapp</module>
-		<module>archetypes</module>
+		<module>yama-archetypes</module>
 		<module>yama-repository</module>
 		<module>yama-service</module>
 	</modules>

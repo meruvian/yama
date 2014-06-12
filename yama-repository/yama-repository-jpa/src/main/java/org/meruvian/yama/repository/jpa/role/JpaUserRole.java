@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.meruvian.yama.repository.jpa.user;
+package org.meruvian.yama.repository.jpa.role;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -22,7 +22,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 import org.meruvian.yama.repository.jpa.DefaultJpaPersistence;
-import org.meruvian.yama.repository.jpa.role.JpaRole;
+import org.meruvian.yama.repository.jpa.user.JpaUser;
 import org.meruvian.yama.repository.role.UserRole;
 
 /**

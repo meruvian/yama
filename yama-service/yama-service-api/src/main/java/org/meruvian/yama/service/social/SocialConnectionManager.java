@@ -13,20 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.meruvian.yama.repository.jpa.user;
+package org.meruvian.yama.service.social;
 
-import org.meruvian.yama.repository.role.UserRoleRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
+import org.springframework.social.connect.ConnectionRepository;
 
 /**
  * @author Dian Aditya
  *
  */
-@Repository
-public interface JpaUserRoleRepository extends UserRoleRepository<JpaUserRole> {
-	
-	@Override
-	@Query("SELECT ur FROM JpaUserRole ur WHERE ur.user.id = ?1 AND ur.role.id = ?2")
-	JpaUserRole findByUserIdAndRoleid(String userId, String roleId);
+public interface SocialConnectionManager extends ConnectionRepository {
+
 }

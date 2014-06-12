@@ -10,6 +10,7 @@
 			classpath:/applicationContext.xml
 			classpath:/applicationContext-persistence.xml
 			classpath:/applicationContext-security.xml
+			classpath:/applicationContext-social.xml
 		</param-value>
 	</context-param>
 	
