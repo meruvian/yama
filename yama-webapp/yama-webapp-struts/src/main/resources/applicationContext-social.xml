@@ -8,10 +8,16 @@
 	
 	<bean id="connectionFactoryLocator" class="org.springframework.social.connect.support.ConnectionFactoryRegistry">
 		<property name="connectionFactories">
-			<bean class="org.springframework.social.facebook.connect.FacebookConnectionFactory">
-				<constructor-arg value="${social.facebook.appId}" />
-				<constructor-arg value="${social.facebook.appSecret}" />
-			</bean>
+			<array>
+				<bean class="org.springframework.social.facebook.connect.FacebookConnectionFactory">
+					<constructor-arg value="${social.facebook.appId}" />
+					<constructor-arg value="${social.facebook.appSecret}" />
+				</bean>
+				<bean class="org.springframework.social.google.connect.GoogleConnectionFactory">
+					<constructor-arg value="${social.google.appId}" />
+					<constructor-arg value="${social.google.appSecret}" />
+				</bean>
+			</array>
 		</property>
 	</bean>
 	
@@ -19,7 +25,10 @@
 	
 	<bean id="socialManagerLocator" class="org.meruvian.yama.service.social.SocialManagerRegistry">
 		<property name="socialManagers">
-			<bean class="org.meruvian.yama.service.jpa.social.manager.FacebookManager" />
+			<array>
+				<bean class="org.meruvian.yama.service.jpa.social.manager.FacebookManager" />
+				<bean class="org.meruvian.yama.service.jpa.social.manager.GoogleManager"></bean>
+			</array>
 		</property>
 	</bean>
 </beans>

@@ -24,13 +24,13 @@ import javax.inject.Inject;
 
 import org.meruvian.yama.repository.jpa.social.JpaSocialConnectionRepository;
 import org.meruvian.yama.repository.social.SocialConnection.Provider;
+import org.meruvian.yama.service.social.SocialUsersConnectionManager;
 import org.springframework.security.crypto.encrypt.TextEncryptor;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionFactoryLocator;
 import org.springframework.social.connect.ConnectionKey;
 import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.connect.ConnectionSignUp;
-import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,7 +40,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional(readOnly = true)
-public class JpaSocialUsersConnectionManager implements UsersConnectionRepository {
+public class JpaSocialUsersConnectionManager implements SocialUsersConnectionManager {
 	private ConnectionFactoryLocator connectionFactoryLocator;
 	private TextEncryptor textEncryptor;
 	private ConnectionSignUp connectionSignUp;
@@ -71,7 +71,7 @@ public class JpaSocialUsersConnectionManager implements UsersConnectionRepositor
 	public List<String> findUserIdsWithConnection(Connection<?> connection) {
 		ConnectionKey key = connection.getKey();
 		List<String> localUserIds = connectionRepository.findUserIdByProviderAndProviderUserId(
-				Provider.valueOf(key.getProviderId()), key.getProviderUserId());
+				Provider.valueOf(key.getProviderId().toUpperCase()), key.getProviderUserId());
 		
 		if (localUserIds.size() == 0 && connectionSignUp != null) {
 			String newUserId = connectionSignUp.execute(connection);
@@ -88,7 +88,7 @@ public class JpaSocialUsersConnectionManager implements UsersConnectionRepositor
 	public Set<String> findUserIdsConnectedTo(String providerId,
 			Set<String> providerUserIds) {
 		List<String> connections = connectionRepository.findUserIdByProviderAndProviderUserIdIn(
-				Provider.valueOf(providerId), providerUserIds);
+				Provider.valueOf(providerId.toUpperCase()), providerUserIds);
 		
 		return new HashSet<String>(connections);
 	}

@@ -45,11 +45,15 @@ public class SocialConnectionSignUp implements ConnectionSignUp {
 	@Override
 	public String execute(Connection<?> connection) {
 		SocialManager<?> socialManager = socialManagerLocator.getSocialManager(connection.getKey().getProviderId());
+		User createdUser = socialManager.createUser(connection);
+		User user = userManager.findUser(createdUser);
 		
-//		User user = userManager.saveUser(socialManager.getUser());
+		if (user != null) {
+			createdUser = user;
+		} else {
+			createdUser = userManager.saveUser(createdUser);
+		}
 		
-//		return user.getId();
-		
-		return null;
+		return createdUser.getId();
 	}
 }

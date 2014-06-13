@@ -87,7 +87,7 @@ public class JpaSocialConnectionManager implements SocialConnectionManager {
 	@Override
 	public List<Connection<?>> findConnections(String providerId) {
 		List<JpaSocialConnection> socialConnections = connectionRepository
-				.findByUserIdAndProviderOrderByRankAsc(userId, Provider.valueOf(providerId));
+				.findByUserIdAndProviderOrderByRankAsc(userId, Provider.valueOf(providerId.toUpperCase()));
 		
 		List<Connection<?>> connections = new ArrayList<Connection<?>>();
 
@@ -170,7 +170,7 @@ public class JpaSocialConnectionManager implements SocialConnectionManager {
 	public Connection<?> getConnection(ConnectionKey connectionKey) {
 		JpaSocialConnection connection = connectionRepository
 				.findByUserIdAndProviderAndProviderUserId(userId,
-						Provider.valueOf(connectionKey.getProviderId()),
+						Provider.valueOf(connectionKey.getProviderId().toUpperCase()),
 						connectionKey.getProviderUserId());
 		
 		try {
@@ -209,14 +209,14 @@ public class JpaSocialConnectionManager implements SocialConnectionManager {
 	@Transactional
 	public void addConnection(Connection<?> connection) {
 		ConnectionData data = connection.createData();
-		int rank = connectionRepository.getRank(userId, Provider.valueOf(data.getProviderId()));
+		int rank = connectionRepository.getRank(userId, Provider.valueOf(data.getProviderId().toUpperCase()));
 
 		JpaUser user = new JpaUser();
 		user.setId(userId);
 		
 		JpaSocialConnection userConnection = new JpaSocialConnection();
 		userConnection.setUser(user);
-		userConnection.setProvider(Provider.valueOf(data.getProviderId()));
+		userConnection.setProvider(Provider.valueOf(data.getProviderId().toUpperCase()));
 		userConnection.setProviderUserId(data.getProviderUserId());
 		userConnection.setRank(rank);
 		userConnection.setDisplayName(data.getDisplayName());
@@ -235,7 +235,7 @@ public class JpaSocialConnectionManager implements SocialConnectionManager {
 	public void updateConnection(Connection<?> connection) {
 		ConnectionData data = connection.createData();
 		JpaSocialConnection userConnection = connectionRepository
-				.findByUserIdAndProviderAndProviderUserId(userId, Provider.valueOf(data.getProviderId()),
+				.findByUserIdAndProviderAndProviderUserId(userId, Provider.valueOf(data.getProviderId().toUpperCase()),
 						data.getProviderUserId());
 
 		userConnection.setDisplayName(data.getDisplayName());
@@ -253,7 +253,7 @@ public class JpaSocialConnectionManager implements SocialConnectionManager {
 	@Transactional
 	public void removeConnections(String providerId) {
 		List<JpaSocialConnection> connections = connectionRepository
-				.findByUserIdAndProvider(userId, Provider.valueOf(providerId));
+				.findByUserIdAndProvider(userId, Provider.valueOf(providerId.toUpperCase()));
 		for (JpaSocialConnection connection : connections) {
 			connectionRepository.delete(connection);
 		}
@@ -262,7 +262,7 @@ public class JpaSocialConnectionManager implements SocialConnectionManager {
 	@Override
 	public void removeConnection(ConnectionKey connectionKey) {
 		JpaSocialConnection connection = connectionRepository.findByUserIdAndProviderAndProviderUserId(
-				userId, Provider.valueOf(connectionKey.getProviderId()), connectionKey.getProviderUserId());
+				userId, Provider.valueOf(connectionKey.getProviderId().toUpperCase()), connectionKey.getProviderUserId());
 		connectionRepository.delete(connection);
 	}
 
@@ -276,7 +276,7 @@ public class JpaSocialConnectionManager implements SocialConnectionManager {
 
 	private Connection<?> findPrimaryConnection(String providerId) {
 		List<JpaSocialConnection> socialConnections = connectionRepository.findByUserIdAndProviderAndRank(
-				userId, Provider.valueOf(providerId), 1);
+				userId, Provider.valueOf(providerId.toUpperCase()), 1);
 		
 		List<Connection<?>> connections = new ArrayList<Connection<?>>();
 		for (SocialConnection connection : socialConnections) {

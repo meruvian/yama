@@ -30,11 +30,15 @@ public interface SocialManager<T> {
 	
 	Connection<T> createConnection(String authorizationCode, MultiValueMap<String, String> additionalParameters);;
 	
-	User getUser(Connection<?> connection);
+	User createUser(Connection<?> connection);
 	
 	String getAuthorizeUrl();
 	
 	OAuth2Operations getOAuth2Operations();
 
 	ConnectionFactory<T> getConnectionFactory();
+	
+	SocialUsersConnectionManager getUsersConnectionManager();
+	
+	boolean isAuthorized(Connection<?> connection);
 }

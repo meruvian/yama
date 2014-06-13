@@ -13,30 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.meruvian.yama.service.social;
-
-import java.util.ArrayList;
-import java.util.List;
+package org.meruvian.yama.repository.exception;
 
 /**
  * @author Dian Aditya
  *
  */
-public class SocialManagerRegistry implements SocialManagerLocator {
-	private List<SocialManager<?>> socialManagers = new ArrayList<SocialManager<?>>();
+public class UserExistException extends RuntimeException {
+	public UserExistException() {}
 	
-	public void setSocialManagers(List<SocialManager<?>> socialManagers) {
-		this.socialManagers = socialManagers;
+	public UserExistException(String message, Throwable cause) {
+		super(message, cause);
 	}
 
-	@Override
-	public SocialManager<?> getSocialManager(String name) {
-		for (SocialManager<?> manager : socialManagers) {
-			if (manager.getProviderName().equalsIgnoreCase(name)) {
-				return manager;
-			}
-		}
-		
-		return null;
+	public UserExistException(String message) {
+		super(message);
+	}
+
+	public UserExistException(Throwable cause) {
+		super(cause);
 	}
 }

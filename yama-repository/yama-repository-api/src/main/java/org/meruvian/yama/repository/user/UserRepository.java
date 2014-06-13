@@ -27,6 +27,8 @@ public interface UserRepository<T extends User> extends DefaultRepository<T> {
 	T findByUsername(String username);
 
 	T findById(String id);
+	
+	T findByEmail(String email);
 
 	Page<T> find(String keyword, Pageable pageable);
 

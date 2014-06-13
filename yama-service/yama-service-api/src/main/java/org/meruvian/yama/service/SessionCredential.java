@@ -25,4 +25,6 @@ public interface SessionCredential {
 	User getCurrentUser();
 	
 	String getCurrentUsername();
+	
+	void registerAuthentication(String userId);
 }

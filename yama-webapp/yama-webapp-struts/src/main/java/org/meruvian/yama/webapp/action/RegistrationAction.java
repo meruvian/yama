@@ -13,30 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.meruvian.yama.service.social;
+package org.meruvian.yama.webapp.action;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.meruvian.inca.struts2.rest.ActionResult;
+import org.meruvian.inca.struts2.rest.annotation.Action;
+import org.meruvian.inca.struts2.rest.annotation.Action.HttpMethod;
 
 /**
  * @author Dian Aditya
  *
  */
-public class SocialManagerRegistry implements SocialManagerLocator {
-	private List<SocialManager<?>> socialManagers = new ArrayList<SocialManager<?>>();
-	
-	public void setSocialManagers(List<SocialManager<?>> socialManagers) {
-		this.socialManagers = socialManagers;
+@Action(name = "/register")
+public class RegistrationAction {
+	@Action(method = HttpMethod.GET)
+	public ActionResult registerForm() {
+		return new ActionResult("freemarker", "/view/regsiter.ftl");
 	}
-
-	@Override
-	public SocialManager<?> getSocialManager(String name) {
-		for (SocialManager<?> manager : socialManagers) {
-			if (manager.getProviderName().equalsIgnoreCase(name)) {
-				return manager;
-			}
-		}
-		
-		return null;
+	
+	@Action(method = HttpMethod.POST)
+	public ActionResult register() {
+		return new ActionResult("freemarker", "/view/regsiter-success.ftl");
 	}
 }

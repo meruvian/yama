@@ -19,7 +19,9 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import org.apache.commons.lang3.StringUtils;
+import org.hibernate.exception.ConstraintViolationException;
 import org.meruvian.yama.repository.LogInformation;
+import org.meruvian.yama.repository.exception.UserExistException;
 import org.meruvian.yama.repository.jpa.role.JpaRole;
 import org.meruvian.yama.repository.jpa.role.JpaRoleRepository;
 import org.meruvian.yama.repository.jpa.role.JpaUserRole;
@@ -203,9 +205,14 @@ public class JpaUserManager implements UserManager {
 		}
 	}
 
-	private JpaUser findUser(User user) {
+	@Override
+	public JpaUser findUser(User user) {
 		if (StringUtils.isNotBlank(user.getId())) {
 			return userRepository.findById(user.getId());
+		}
+		
+		if (StringUtils.isNotBlank(user.getEmail())) {
+			return userRepository.findByEmail(user.getEmail());
 		}
 		
 		return userRepository.findByUsername(user.getUsername());

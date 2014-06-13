@@ -17,9 +17,12 @@ package org.meruvian.yama.service;
 
 import javax.inject.Inject;
 
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**
  * @author Dian Aditya
@@ -27,10 +30,16 @@ import org.springframework.security.core.userdetails.User;
  */
 public class DefaultSessionCredential implements SessionCredential {
 	private UserManager userService;
-
+	private UserDetailsService userDetailsService;
+	
 	@Inject
 	public DefaultSessionCredential(UserManager userService) {
 		this.userService = userService;
+	}
+	
+	@Inject
+	public void setUserDetailsService(UserDetailsService userDetailsService) {
+		this.userDetailsService = userDetailsService;
 	}
 	
 	@Override
@@ -54,5 +63,14 @@ public class DefaultSessionCredential implements SessionCredential {
 		}
 		
 		return null;
+	}
+
+	@Override
+	public void registerAuthentication(String userId) {
+		org.meruvian.yama.repository.user.User user = userService.getUserById(userId);
+		UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUsername());
+		
+		Authentication auth = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+		SecurityContextHolder.getContext().setAuthentication(auth);
 	}
 }

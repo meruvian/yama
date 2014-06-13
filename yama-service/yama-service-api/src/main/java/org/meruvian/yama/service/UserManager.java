@@ -44,4 +44,6 @@ public interface UserManager {
 	boolean removeRoleFromUser(User user, Role role);
 	
 	Page<? extends Role> findRoleByUser(User user, Pageable pageable);
+
+	User findUser(User user);
 }

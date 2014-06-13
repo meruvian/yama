@@ -28,9 +28,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionFactory;
 import org.springframework.social.connect.ConnectionFactoryLocator;
-import org.springframework.social.facebook.api.Facebook;
-import org.springframework.social.facebook.api.FacebookProfile;
-import org.springframework.social.facebook.connect.FacebookConnectionFactory;
+import org.springframework.social.google.api.Google;
+import org.springframework.social.google.api.plus.Person;
+import org.springframework.social.google.connect.GoogleConnectionFactory;
 import org.springframework.social.oauth2.AccessGrant;
 import org.springframework.social.oauth2.GrantType;
 import org.springframework.social.oauth2.OAuth2Operations;
@@ -41,15 +41,16 @@ import org.springframework.util.MultiValueMap;
  * @author Dian Aditya
  *
  */
-public class FacebookManager implements SocialManager<Facebook> {
+public class GoogleManager implements SocialManager<Google> {
+
 	private ConnectionFactoryLocator factoryLocator;
 	private PasswordEncoder passwordEncoder;
 	private SocialUsersConnectionManager usersConnectionManager;
 
-	@Value("${social.facebook.redirectUri}") 
+	@Value("${social.google.redirectUri}") 
 	private String redirectUri;
 	
-	@Value("${social.facebook.scope}") 
+	@Value("${social.google.scope}") 
 	private String scope;
 	
 	@Inject
@@ -69,34 +70,33 @@ public class FacebookManager implements SocialManager<Facebook> {
 	
 	@Override
 	public String getProviderName() {
-		return Provider.FACEBOOK.toString();
+		return Provider.GOOGLE.toString();
 	}
 	
 	@Override
-	public ConnectionFactory<Facebook> getConnectionFactory() {
-		return factoryLocator.getConnectionFactory(Facebook.class);
+	public ConnectionFactory<Google> getConnectionFactory() {
+		return factoryLocator.getConnectionFactory(Google.class);
 	}
 	
 	@Override
 	public OAuth2Operations getOAuth2Operations() {
-		FacebookConnectionFactory factory = (FacebookConnectionFactory) getConnectionFactory();
+		GoogleConnectionFactory factory = (GoogleConnectionFactory) getConnectionFactory();
 		return factory.getOAuthOperations();
 	}
 
 	@Override
 	public User createUser(Connection<?> connection) {
-		Facebook facebook = (Facebook) connection.getApi();
-		FacebookProfile profile = facebook.userOperations().getUserProfile();
+		Google google = (Google) connection.getApi();
+		Person profile = google.plusOperations().getGoogleProfile();
 		
 		String alphanumeric = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
-		String randomUsername = RandomStringUtils.random(4, alphanumeric);
+		String randomUsername = RandomStringUtils.random(8, alphanumeric);
 		
 		JpaUser user = new JpaUser();
-		user.setUsername(profile.getFirstName()+profile.getLastName()+randomUsername);
-		user.getName().setFirst(profile.getFirstName());
-		user.getName().setLast(profile.getLastName());
-		user.getName().setMiddle(profile.getMiddleName());
-		user.setEmail(profile.getEmail());
+		user.setUsername(profile.getGivenName()+profile.getFamilyName()+randomUsername);
+		user.getName().setFirst(profile.getGivenName());
+		user.getName().setLast(profile.getFamilyName());
+		user.setEmail(profile.getEmailAddresses().iterator().next());
 		
 		String password = RandomStringUtils.random(8, alphanumeric);
 		user.setPassword(passwordEncoder.encode(password));
@@ -106,7 +106,7 @@ public class FacebookManager implements SocialManager<Facebook> {
 
 	@Override
 	public String getAuthorizeUrl() {
-		FacebookConnectionFactory factory = (FacebookConnectionFactory) getConnectionFactory();
+		GoogleConnectionFactory factory = (GoogleConnectionFactory) getConnectionFactory();
 		OAuth2Parameters parameters = new OAuth2Parameters();
 		parameters.setRedirectUri(redirectUri);
 		parameters.setScope(scope);
@@ -119,11 +119,11 @@ public class FacebookManager implements SocialManager<Facebook> {
 	}
 
 	@Override
-	public Connection<Facebook> createConnection(String authorizationCode, MultiValueMap<String, String> additionalParameters) {
+	public Connection<Google> createConnection(String authorizationCode, MultiValueMap<String, String> additionalParameters) {
 		AccessGrant grant = getOAuth2Operations()
 				.exchangeForAccess(authorizationCode, redirectUri, additionalParameters);
 		
-		return ((FacebookConnectionFactory) getConnectionFactory()).createConnection(grant);
+		return ((GoogleConnectionFactory) getConnectionFactory()).createConnection(grant);
 	}
 
 	@Override
@@ -133,9 +133,9 @@ public class FacebookManager implements SocialManager<Facebook> {
 
 	@Override
 	public boolean isAuthorized(Connection<?> connection) {
-		Facebook facebook = (Facebook) connection.getApi();
+		Google google = (Google) connection.getApi();
 		
-		return facebook.isAuthorized();
+		return google.isAuthorized();
 	}
-
+	
 }
