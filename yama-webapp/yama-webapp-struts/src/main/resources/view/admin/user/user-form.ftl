@@ -1,10 +1,9 @@
 <html>
 	<head>
-		<title>User</title>
+		<title><@s.text name="page.admin.user.title" /></title>
 	</head>
 	<body>
-		<content tag="header">User</content>
-		<content tag="headerDetail">Add New Users</content>
+		<content tag="header"><@s.text name="page.admin.user.header" /></content>
 		<content tag="script">
 		<script type="text/javascript">
 		$(function() {
@@ -24,38 +23,37 @@
 
 		<@s.actionerror theme="bootstrap"/>
 		<@s.actionmessage theme="bootstrap"/>
-		<@s.fielderror theme="bootstrap"/>
 		<div class="row">
 			<div class="col-md-9">
 				<div class="box box-primary">
 					<div class="box-header">
-						<h3 class="box-title">User Information</h3>
+						<h3 class="box-title"><@s.text name="label.admin.user.title" /></h3>
 					</div>
 					
 					<div class="box-body">
 						<@s.form theme="bootstrap">
 							<@s.hidden name="user.id" />
-							<@s.textfield label="Username" name="user.username" />
+							<@s.textfield key="label.admin.user.username" name="user.username" />
 							<div class="row">
 								<div class="col-md-6">
-									<@s.password label="Password" name="user.password" />
+									<@s.password key="label.admin.user.password" name="user.password" />
 								</div>
 								<div class="col-md-6">
-									<@s.password label="Confirm Password" />
+									<@s.password key="label.admin.user.password.confirm" name="confirmPassword" />
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-md-6">
-									<@s.textfield label="First Name" name="user.name.first" />
+									<@s.textfield key="label.admin.user.name.first" name="user.name.first" />
 								</div>
 								<div class="col-md-6">
-									<@s.textfield label="Last Name" name="user.name.last" />
+									<@s.textfield key="label.admin.user.name.last" name="user.name.last" />
 								</div>
 							</div>
-							<@s.textfield label="Email" name="user.email" />
+							<@s.textfield key="label.admin.user.email" name="user.email" />
 							
 							<div class="form-group ">
-								<label for="roles">Roles</label>
+								<label for="roles"><@s.text name="label.admin.user.roles" /></label>
 								<div class="controls">
 									<select name="roles" class="form-control" multiple="true">
 										<#list roles.content as r>
@@ -64,7 +62,7 @@
 									</select>
 								</div>
 							</div>
-							<@s.submit cssClass="btn btn-primary col-md-3" value="Save" />
+							<@s.submit cssClass="btn btn-primary col-md-3" value="%{getText('button.main.save')}" />
 						</@s.form>
 					</div>
 				</div>

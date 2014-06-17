@@ -19,14 +19,14 @@
 		</content>
 		<div class="row">
 			<div class="col-md-6">
-				<a href="<@s.url value="/admin/roles/-/edit" />" class="btn btn-default col-md-3">Add</a>
+				<a href="<@s.url value="/admin/roles/-/edit" />" class="btn btn-default col-md-3"><@s.text name="button.main.add" /></a>
 			</div>
 			<div class="col-md-6">
 				<@s.form theme="bootstrap" method="GET">
 					<div class="form-group col-md-10">
-						<input name="q" value="${q!}" type="text" class="form-control" placeholder="Search...">
+						<input name="q" value="${q!}" type="text" class="form-control" placeholder="<@s.text name="button.main.search" />...">
 					</div>
-					<@s.submit cssClass="btn btn-success col-md-2" value="Search" />
+					<@s.submit cssClass="btn btn-success col-md-2" value="%{getText('button.main.search')}" />
 				</@s.form>
 			</div>
 		</div>
@@ -41,8 +41,8 @@
 							<table class="table">
 								<thead>
 									<tr>
-										<th>Name</th>
-										<th>Description</th>
+										<th><@s.text name="label.admin.role.name" /></th>
+										<th><@s.text name="label.admin.role.description" /></th>
 									</tr>
 								</thead>
 								<tbody>

@@ -1,16 +1,14 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Dashboard</title>
+		<title><@s.text name="page.profile.title" /></title>
 	</head>
 	<body>
-		<content tag="header">Profile</content>
-		<content tag="headerDetail">Edit Profile</content>
+		<content tag="header"><@s.text name="page.profile.header" /></content>
 		
 		<@s.actionerror theme="bootstrap"/>
 		<@s.actionmessage theme="bootstrap"/>
-		<@s.fielderror theme="bootstrap"/>
-		<div class="row">
+			<div class="row">
 			<div class="col-md-6">
 				<div class="box box-primary">
 					<div class="box-header">
@@ -20,18 +18,18 @@
 					<div class="box-body">
 						<@s.form theme="bootstrap">
 							<@s.hidden name="user.id" />
-							<@s.textfield label="Username" name="user.username" />
+							<@s.textfield key="label.profile.username" name="user.username" />
 							<div class="row">
 								<div class="col-md-6">
-									<@s.textfield label="First Name" name="user.name.first" />
+									<@s.textfield key="label.profile.name.first" name="user.name.first" />
 								</div>
 								<div class="col-md-6">
-									<@s.textfield label="Last Name" name="user.name.last" />
+									<@s.textfield key="label.profile.name.last" name="user.name.last" />
 								</div>
 							</div>
-							<@s.textfield label="Email" name="user.email" />
+							<@s.textfield key="label.profile.email" name="user.email" />
 							
-							<@s.submit cssClass="btn btn-primary col-md-3" value="Save" />
+							<@s.submit cssClass="btn btn-primary col-md-3" value="%{getText('button.main.save')}" />
 						</@s.form>
 					</div>
 				</div>
@@ -41,12 +39,19 @@
 					<div class="col-md-12">
 						<div class="box box-success">
 							<div class="box-header">
-								<h3 class="box-title">Profile Picture</h3>
+								<h3 class="box-title"><@s.text name="label.profile.picture" /></h3>
 							</div>
 							
 							<div class="box-body">
-								<@s.form theme="bootstrap">
-									<@s.file label="Browse" name="user.photo" />
+								<@s.form theme="bootstrap" enctype="multipart/form-data">
+									<div class="row">
+										<img src="<@s.url value="/profile/photo" />" class="img-thumbnail col-md-3 col-md-offset-4" alt="User Image">
+									</div>
+									<@s.hidden name="user.id" />
+									<@s.hidden name="edit" value="photo" />
+									<@s.file key="button.main.browse" name="profilePicture" />
+									
+									<@s.submit cssClass="btn btn-primary col-md-3" value="%{getText('button.main.upload')}" />
 								</@s.form>
 							</div>
 						</div>
@@ -56,23 +61,23 @@
 					<div class="col-md-12">
 						<div class="box box-success">
 							<div class="box-header">
-								<h3 class="box-title">Change Password</h3>
+								<h3 class="box-title"><@s.text name="label.profile.password.change" /></h3>
 							</div>
 							
 							<div class="box-body">
 								<@s.form theme="bootstrap">
 									<@s.hidden name="user.id" />
-									<@s.password label="Current Password" name="cpassword" />
+									<@s.hidden name="edit" value="password" />
 									<div class="row">
 										<div class="col-md-6">
-											<@s.password label="New Password" name="user.password" />
+											<@s.password key="label.profile.password" name="user.password" />
 										</div>
 										<div class="col-md-6">
-											<@s.password label="Confirm New Password" />
+											<@s.password key="label.profile.password.confirm" name="confirmPassword" />
 										</div>
 									</div>
 									
-									<@s.submit cssClass="btn btn-primary col-md-3" value="Save" />
+									<@s.submit cssClass="btn btn-primary col-md-3" value="%{getText('button.main.save')}" />
 								</@s.form>
 							</div>
 						</div>

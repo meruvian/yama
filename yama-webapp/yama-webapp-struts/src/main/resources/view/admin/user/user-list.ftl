@@ -1,10 +1,9 @@
 <html>
 	<head>
-		<title>User</title>
+		<title><@s.text name="page.admin.user.title" /></title>
 	</head>
 	<body>
-		<content tag="header">User</content>
-		<content tag="headerDetail">Active Users</content>
+		<content tag="header"><@s.text name="page.admin.user.header" /></content>
 		<content tag="script">
 		<script type="text/javascript" src="<@s.url value="/scripts/jquery/simple-pagination.js" />"></script>
 		<script type="text/javascript">
@@ -19,14 +18,14 @@
 		</content>
 		<div class="row">
 			<div class="col-md-6">
-				<a href="<@s.url value="/admin/users/-/edit" />" class="btn btn-default col-md-3">Add</a>
+				<a href="<@s.url value="/admin/users/-/edit" />" class="btn btn-default col-md-3"><@s.text name="button.main.add" /></a>
 			</div>
 			<div class="col-md-6">
 				<@s.form theme="bootstrap" method="GET">
 					<div class="form-group col-md-10">
-						<input name="q" value="${q!}" type="text" class="form-control" placeholder="Search...">
+						<input name="q" value="${q!}" type="text" class="form-control" placeholder="<@s.text name="button.main.search" />...">
 					</div>
-					<@s.submit cssClass="btn btn-success col-md-2" value="Search" />
+					<@s.submit cssClass="btn btn-success col-md-2" value="%{getText('button.main.search')}" />
 				</@s.form>
 			</div>
 		</div>
@@ -41,9 +40,9 @@
 							<table class="table">
 								<thead>
 									<tr>
-										<th>Username</th>
-										<th>Full Name</th>
-										<th>Email</th>
+										<th><@s.text name="label.admin.user.username" /></th>
+										<th><@s.text name="label.admin.user.name.full" /></th>
+										<th><@s.text name="label.admin.user.email" /></th>
 									</tr>
 								</thead>
 								<tbody>

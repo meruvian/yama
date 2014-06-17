@@ -1,22 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:facebook="http://www.springframework.org/schema/social/facebook"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:facebook="http://www.springframework.org/schema/social/facebook"
 	xmlns:google="http://www.springframework.org/schema/social/google"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/social/facebook http://www.springframework.org/schema/social/spring-social-facebook.xsd
-		http://www.springframework.org/schema/social/google http://www.springframework.org/schema/social/spring-social-google.xsd">
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/social/facebook http://www.springframework.org/schema/social/spring-social-facebook.xsd
+		http://www.springframework.org/schema/social/google http://www.springframework.org/schema/social/spring-social-google.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean id="facebookConnectionFactory" class="org.springframework.social.facebook.connect.FacebookConnectionFactory">
+		<constructor-arg value="${social.facebook.appId}" />
+		<constructor-arg value="${social.facebook.appSecret}" />
+	</bean>
+	
+	<bean id="googleConnectionFactory" class="org.springframework.social.google.connect.GoogleConnectionFactory">
+		<constructor-arg value="${social.google.appId}" />
+		<constructor-arg value="${social.google.appSecret}" />
+	</bean>
 	
 	<bean id="connectionFactoryLocator" class="org.springframework.social.connect.support.ConnectionFactoryRegistry">
 		<property name="connectionFactories">
 			<array>
-				<bean class="org.springframework.social.facebook.connect.FacebookConnectionFactory">
-					<constructor-arg value="${social.facebook.appId}" />
-					<constructor-arg value="${social.facebook.appSecret}" />
-				</bean>
-				<bean class="org.springframework.social.google.connect.GoogleConnectionFactory">
-					<constructor-arg value="${social.google.appId}" />
-					<constructor-arg value="${social.google.appSecret}" />
-				</bean>
+				<ref bean="facebookConnectionFactory" />
+				<ref bean="googleConnectionFactory" />
 			</array>
 		</property>
 	</bean>
@@ -26,8 +32,12 @@
 	<bean id="socialManagerLocator" class="org.meruvian.yama.service.social.SocialManagerRegistry">
 		<property name="socialManagers">
 			<array>
-				<bean class="org.meruvian.yama.service.jpa.social.manager.FacebookManager" />
-				<bean class="org.meruvian.yama.service.jpa.social.manager.GoogleManager"></bean>
+				<bean class="org.meruvian.yama.service.social.facebook.FacebookSocialManager" p:redirectUri="${social.facebook.redirectUri}" p:scope="${social.facebook.scope}">
+					<constructor-arg ref="facebookConnectionFactory" />
+				</bean>
+				<bean class="org.meruvian.yama.service.social.google.GoogleSocialManager" p:redirectUri="${social.google.redirectUri}" p:scope="${social.google.scope}">
+					<constructor-arg ref="googleConnectionFactory" />
+				</bean>
 			</array>
 		</property>
 	</bean>

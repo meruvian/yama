@@ -29,9 +29,8 @@ import org.meruvian.yama.repository.DefaultPersistence;
  */
 @MappedSuperclass
 public class DefaultJpaPersistence implements DefaultPersistence {
-
-	private String id;
-	private JpaLogInformation logInformation = new JpaLogInformation();
+	protected String id;
+	protected JpaLogInformation logInformation = new JpaLogInformation();
 
 	@Id()
 	@GeneratedValue(generator = "system-uuid")

@@ -17,8 +17,8 @@ package org.meruvian.yama.service.social;
 
 import org.meruvian.yama.repository.user.User;
 import org.springframework.social.connect.Connection;
-import org.springframework.social.connect.ConnectionFactory;
-import org.springframework.social.oauth2.OAuth2Operations;
+import org.springframework.social.connect.support.OAuth2ConnectionFactory;
+import org.springframework.social.oauth2.OAuth2Parameters;
 import org.springframework.util.MultiValueMap;
 
 /**
@@ -26,19 +26,17 @@ import org.springframework.util.MultiValueMap;
  *
  */
 public interface SocialManager<T> {
-	String getProviderName();
-	
 	Connection<T> createConnection(String authorizationCode, MultiValueMap<String, String> additionalParameters);;
 	
 	User createUser(Connection<?> connection);
 	
 	String getAuthorizeUrl();
 	
-	OAuth2Operations getOAuth2Operations();
-
-	ConnectionFactory<T> getConnectionFactory();
+	OAuth2ConnectionFactory<T> getConnectionFactory();
 	
 	SocialUsersConnectionManager getUsersConnectionManager();
 	
 	boolean isAuthorized(Connection<?> connection);
+	
+	OAuth2Parameters getParameters();
 }

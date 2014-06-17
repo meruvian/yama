@@ -19,7 +19,6 @@ import java.util.Collection;
 import java.util.List;
 
 import org.meruvian.yama.repository.social.SocialConnectionRepository;
-import org.meruvian.yama.repository.social.SocialConnection.Provider;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -32,13 +31,13 @@ public interface JpaSocialConnectionRepository extends SocialConnectionRepositor
 
 	@Override
 	@Query("SELECT coalesce(max(c.rank) + 1, 1) as rank FROM JpaSocialConnection c WHERE c.user.id = ?1 AND c.provider = ?2")
-	public int getRank(String userId, Provider provider);
+	public int getRank(String userId, String provider);
 	
 	@Override
 	@Query("SELECT c.user.id FROM JpaSocialConnection c WHERE c.provider = ?1 AND c.providerUserId = ?2")
-	public List<String> findUserIdByProviderAndProviderUserId(Provider provider, String providerUserId);
+	public List<String> findUserIdByProviderAndProviderUserId(String provider, String providerUserId);
 	
 	@Override
 	@Query("SELECT c.user.id FROM JpaSocialConnection c WHERE c.provider = ?1 AND c.providerUserId IN ?2")
-	public List<String> findUserIdByProviderAndProviderUserIdIn(Provider provider, Collection<String> providerUserIds);
+	public List<String> findUserIdByProviderAndProviderUserIdIn(String provider, Collection<String> providerUserIds);
 }

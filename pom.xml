@@ -43,6 +43,7 @@
 		<angularjs.version>1.2.16</angularjs.version>
 		<bootstrap.version>3.1.1-1</bootstrap.version>
 		<fontawesome.version>4.0.3</fontawesome.version>
+		<jqueryfileupload.version>9.5.7</jqueryfileupload.version>
 	</properties>
 
 	<licenses>

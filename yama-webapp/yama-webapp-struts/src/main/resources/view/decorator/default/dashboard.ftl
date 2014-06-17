@@ -2,7 +2,7 @@
 <html ng-app="yama">
 	<head>
 		<meta charset="UTF-8">
-		<title>${title!}</title>
+		<title>${title!} - <@s.text name="page.main.title" /></title>
 		<base href="<@s.url value="/" />" />
 		<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
 		<!-- bootstrap 3.0.2 -->
@@ -50,6 +50,16 @@
 					<!-- top row -->
 					<div class="row">
 						<div class="col-xs-12 connectedSortable">
+						<#if request.getParameter("registrationSuccess")??>
+						<div class="row">
+							<div class="col-md-12">
+								<div class="alert alert-success alert-dismissable">
+									<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+									Registration success! Now complete your profile
+								</div>
+							</div>
+						</div>
+						</#if>
 						${body}
 						</div><!-- /.col -->
 					</div>

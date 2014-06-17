@@ -23,15 +23,11 @@ import org.meruvian.yama.repository.user.User;
  * 
  */
 public interface SocialConnection extends DefaultPersistence {
-	public enum Provider {
-		FACEBOOK, GOOGLE, LINKEDIN, YAHOO, TWITTER, FUPEI;
-	}
-	
 	static final String DEFAULT_ID = "DEFAULT";
 
 	User getUser();
 
-	Provider getProvider();
+	String getProvider();
 
 	String getProviderUserId();
 

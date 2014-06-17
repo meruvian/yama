@@ -19,7 +19,6 @@ import java.util.Collection;
 import java.util.List;
 
 import org.meruvian.yama.repository.DefaultRepository;
-import org.meruvian.yama.repository.social.SocialConnection.Provider;
 
 /**
  * @author Dian Aditya
@@ -28,17 +27,17 @@ import org.meruvian.yama.repository.social.SocialConnection.Provider;
 public interface SocialConnectionRepository<T extends SocialConnection> extends DefaultRepository<T> {
 	List<T> findByUserIdOrderByRankAsc(String userId);
 	
-	List<T> findByUserIdAndProviderOrderByRankAsc(String userId, Provider provider);
+	List<T> findByUserIdAndProviderOrderByRankAsc(String userId, String provider);
 	
-	T findByUserIdAndProviderAndProviderUserId(String userId, Provider provider, String providerUserId);
+	T findByUserIdAndProviderAndProviderUserId(String userId, String provider, String providerUserId);
 	
-	List<T> findByUserIdAndProvider(String userId, Provider provider);
+	List<T> findByUserIdAndProvider(String userId, String provider);
 	
-	List<T> findByUserIdAndProviderAndRank(String userId, Provider provider, int rank);
+	List<T> findByUserIdAndProviderAndRank(String userId, String provider, int rank);
 	
-	int getRank(String userId, Provider provider);
+	int getRank(String userId, String provider);
 	
-	List<String> findUserIdByProviderAndProviderUserId(Provider provider, String providerUserId);
+	List<String> findUserIdByProviderAndProviderUserId(String provider, String providerUserId);
 
-	List<String> findUserIdByProviderAndProviderUserIdIn(Provider provider, Collection<String> providerUserIds);
+	List<String> findUserIdByProviderAndProviderUserIdIn(String provider, Collection<String> providerUserIds);
 }

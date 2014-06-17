@@ -23,7 +23,6 @@ import java.util.Set;
 import javax.inject.Inject;
 
 import org.meruvian.yama.repository.jpa.social.JpaSocialConnectionRepository;
-import org.meruvian.yama.repository.social.SocialConnection.Provider;
 import org.meruvian.yama.service.social.SocialUsersConnectionManager;
 import org.springframework.security.crypto.encrypt.TextEncryptor;
 import org.springframework.social.connect.Connection;
@@ -71,7 +70,7 @@ public class JpaSocialUsersConnectionManager implements SocialUsersConnectionMan
 	public List<String> findUserIdsWithConnection(Connection<?> connection) {
 		ConnectionKey key = connection.getKey();
 		List<String> localUserIds = connectionRepository.findUserIdByProviderAndProviderUserId(
-				Provider.valueOf(key.getProviderId().toUpperCase()), key.getProviderUserId());
+				key.getProviderId(), key.getProviderUserId());
 		
 		if (localUserIds.size() == 0 && connectionSignUp != null) {
 			String newUserId = connectionSignUp.execute(connection);
@@ -88,7 +87,7 @@ public class JpaSocialUsersConnectionManager implements SocialUsersConnectionMan
 	public Set<String> findUserIdsConnectedTo(String providerId,
 			Set<String> providerUserIds) {
 		List<String> connections = connectionRepository.findUserIdByProviderAndProviderUserIdIn(
-				Provider.valueOf(providerId.toUpperCase()), providerUserIds);
+				providerId, providerUserIds);
 		
 		return new HashSet<String>(connections);
 	}

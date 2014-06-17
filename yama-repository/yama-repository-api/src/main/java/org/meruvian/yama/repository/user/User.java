@@ -16,14 +16,18 @@
 package org.meruvian.yama.repository.user;
 
 import org.meruvian.yama.repository.DefaultPersistence;
+import org.meruvian.yama.repository.Updateable;
 import org.meruvian.yama.repository.commons.Address;
+import org.meruvian.yama.repository.commons.FileInfo;
 import org.meruvian.yama.repository.commons.Name;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * @author Dian Aditya
  * 
  */
-public interface User extends DefaultPersistence {
+public interface User extends DefaultPersistence, Updateable<User> {
 	String getUsername();
 
 	Name getName();
@@ -33,4 +37,7 @@ public interface User extends DefaultPersistence {
 	String getEmail();
 	
 	Address getAddress();
+	
+	@JsonIgnore
+	FileInfo getFileInfo();
 }

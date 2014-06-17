@@ -8,6 +8,7 @@
 
 	<context:component-scan base-package="org.meruvian.yama.service, org.meruvian.yama.webapp" />
 	<context:property-placeholder location="classpath:/yama.properties" />
-	
-	<bean id="sessionCredential" class="org.meruvian.yama.service.DefaultSessionCredential" />
+
+	<bean id="reCaptcha" class="net.tanesha.recaptcha.ReCaptchaImpl"
+		p:privateKey="${recaptcha.private.key}" p:publicKey="${recaptcha.public.key}" />
 </beans>

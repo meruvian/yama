@@ -17,55 +17,24 @@ package org.meruvian.yama.repository.commons;
 
 import java.io.InputStream;
 
+import org.meruvian.yama.repository.DefaultPersistence;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * @author Dian Aditya
  * 
  */
-public class FileInfo {
-	private String originalName;
-	private String contentType;
-	private String path;
-	private long size = 0;
-	private InputStream dataBlob;
+public interface FileInfo extends DefaultPersistence {
+	String getOriginalName();
 
-	public String getOriginalName() {
-		return originalName;
-	}
+	String getContentType();
 
-	public void setOriginalName(String originalName) {
-		this.originalName = originalName;
-	}
+	@JsonIgnore
+	String getPath();
 
-	public String getContentType() {
-		return contentType;
-	}
+	long getSize();
 
-	public void setContentType(String contentType) {
-		this.contentType = contentType;
-	}
-
-	public String getPath() {
-		return path;
-	}
-
-	public void setPath(String path) {
-		this.path = path;
-	}
-
-	public long getSize() {
-		return size;
-	}
-
-	public void setSize(long size) {
-		this.size = size;
-	}
-
-	public InputStream getDataBlob() {
-		return dataBlob;
-	}
-
-	public void setDataBlob(InputStream dataBlob) {
-		this.dataBlob = dataBlob;
-	}
-
+	@JsonIgnore
+	InputStream getDataBlob();
 }

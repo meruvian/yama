@@ -15,6 +15,7 @@
  */
 package org.meruvian.yama.service;
 
+import org.meruvian.yama.repository.commons.FileInfo;
 import org.meruvian.yama.repository.role.Role;
 import org.meruvian.yama.repository.user.User;
 import org.springframework.data.domain.Page;
@@ -28,6 +29,8 @@ public interface UserManager {
 	User getUserById(String id);
 
 	User getUserByUsername(String username);
+	
+	User getUserByEmail(String email);
 
 	Page<? extends User> findUserByKeyword(String keyword, Pageable pageable);
 	
@@ -46,4 +49,6 @@ public interface UserManager {
 	Page<? extends Role> findRoleByUser(User user, Pageable pageable);
 
 	User findUser(User user);
+	
+	FileInfo setUserProfilePicture(User user, FileInfo fileInfo);
 }

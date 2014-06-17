@@ -28,11 +28,15 @@ public class SocialManagerRegistry implements SocialManagerLocator {
 	public void setSocialManagers(List<SocialManager<?>> socialManagers) {
 		this.socialManagers = socialManagers;
 	}
+	
+	public List<SocialManager<?>> getSocialManagers() {
+		return socialManagers;
+	}
 
 	@Override
 	public SocialManager<?> getSocialManager(String name) {
 		for (SocialManager<?> manager : socialManagers) {
-			if (manager.getProviderName().equalsIgnoreCase(name)) {
+			if (manager.getConnectionFactory().getProviderId().equals(name)) {
 				return manager;
 			}
 		}

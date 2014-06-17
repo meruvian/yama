@@ -18,25 +18,28 @@ package org.meruvian.yama.webapp.action.admin;
 import javax.inject.Inject;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.validator.routines.EmailValidator;
 import org.meruvian.inca.struts2.rest.ActionResult;
 import org.meruvian.inca.struts2.rest.annotation.Action;
 import org.meruvian.inca.struts2.rest.annotation.Action.HttpMethod;
 import org.meruvian.inca.struts2.rest.annotation.ActionParam;
-import org.meruvian.yama.repository.jpa.role.JpaRole;
-import org.meruvian.yama.repository.jpa.user.JpaUser;
+import org.meruvian.yama.repository.role.DefaultRole;
 import org.meruvian.yama.repository.role.Role;
+import org.meruvian.yama.repository.user.DefaultUser;
 import org.meruvian.yama.repository.user.User;
 import org.meruvian.yama.service.RoleManager;
 import org.meruvian.yama.service.UserManager;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
+import com.opensymphony.xwork2.ActionSupport;
+
 /**
  * @author Dian Aditya
  *
  */
 @Action(name = "/admin/users")
-public class UserAction {
+public class UserAction extends ActionSupport {
 	@Inject
 	private UserManager userManager;
 	
@@ -47,7 +50,7 @@ public class UserAction {
 	public ActionResult userList(@ActionParam("q") String q, @ActionParam("max") int max,
 			@ActionParam("page") int page) {
 		max = max == 0 ? 10 : max;
-		Page<? extends User> users = userManager.findActiveUserByKeyword(q, new PageRequest(page, max));
+		Page<? extends User> users = userManager.findUserByKeyword(q, new PageRequest(page, max));
 		
 		return new ActionResult("freemarker","/view/admin/user/user-list.ftl")
 				.addToModel("users", users);
@@ -57,23 +60,25 @@ public class UserAction {
 	public ActionResult userForm(@ActionParam("username") String username) {
 		ActionResult actionResult = new ActionResult("freemarker", "/view/admin/user/user-form.ftl");
 		
-		Page<? extends Role> roles = roleManager.findActiveRoleByKeyword("", null);
-		actionResult.addToModel("roles", roles);
-		
-		if (!StringUtils.equalsIgnoreCase(username, "-")) {
-			User user = userManager.getUserByUsername(username);
-			actionResult.addToModel("user", user);
-			
-			Page<? extends Role> userRoles = userManager.findRoleByUser(user, null);
-			actionResult.addToModel("userRoles", userRoles);
-		}
+		showRoles(actionResult, username);
 		
 		return actionResult;
 	}
 	
 	@Action(name = "/{username}/edit", method = HttpMethod.POST)
 	public ActionResult updateUser(@ActionParam("username") String username, 
-			@ActionParam("user") JpaUser user, @ActionParam("roles") String[] roles) {
+			@ActionParam("user") DefaultUser user, @ActionParam("roles") String[] roles,
+			@ActionParam("confirmPassword") String confirmPassword) {
+		validateUser(user, confirmPassword);
+		
+		if (hasFieldErrors()) {
+			ActionResult actionResult = new ActionResult("freemarker", "/view/admin/user/user-form.ftl");
+			
+			showRoles(actionResult, username);
+			
+			return actionResult;
+		}
+		
 		User u = userManager.saveUser(user);
 		String redirectUri = "/admin/users/" + u.getUsername() + "/edit?success";
 		
@@ -86,9 +91,59 @@ public class UserAction {
 		}
 		
 		for (String r : roles) {
-			userManager.addRoleToUser(u, new JpaRole(r, null));
+			DefaultRole role = new DefaultRole();
+			role.setName(r);
+			
+			userManager.addRoleToUser(u, role);
 		}
 		
 		return new ActionResult("redirect", redirectUri);
+	}
+	
+	public void showRoles(ActionResult actionResult, String username) {
+		Page<? extends Role> roles = roleManager.findActiveRoleByKeyword("", null);
+		actionResult.addToModel("roles", roles);
+		
+		if (!StringUtils.equalsIgnoreCase(username, "-")) {
+			User user = userManager.getUserByUsername(username);
+			actionResult.addToModel("user", user);
+			
+			Page<? extends Role> userRoles = userManager.findRoleByUser(user, null);
+			actionResult.addToModel("userRoles", userRoles);
+		}
+	}
+	
+	private void validateUser(DefaultUser user, String confirmPassword) {
+		if (StringUtils.isBlank(user.getUsername())) {
+			addFieldError("user.username", getText("message.admin.user.username.notempty"));
+		} else if (userManager.getUserByUsername(user.getUsername()) != null) {
+			addFieldError("user.username", getText("message.admin.user.username.exist"));
+		}
+			
+		if (StringUtils.isBlank(user.getEmail())) {
+			addFieldError("user.email", getText("message.admin.user.email.notempty"));
+		} else if (!EmailValidator.getInstance().isValid(user.getEmail())) {
+			addFieldError("user.email", getText("message.admin.user.username.notvalid"));
+		} else {
+			if (StringUtils.isNotBlank(user.getId())) {
+				String email = userManager.getUserById(user.getId()).getEmail();
+			
+				if (!StringUtils.equals(email, user.getEmail())) {
+					if (userManager.getUserByEmail(user.getEmail()) != null)
+						addFieldError("user.email", getText("message.admin.user.username.exist"));
+				}
+			} else {
+				if (userManager.getUserByEmail(user.getEmail()) != null)
+					addFieldError("user.email", getText("message.admin.user.username.exist"));
+			}
+		}
+		
+		if(StringUtils.isBlank(user.getPassword())) {
+			addFieldError("user.password", getText("message.admin.user.password.notempty"));
+		}
+		
+		if (!StringUtils.equals(user.getPassword(), confirmPassword)) {
+			addFieldError("confirmPassword", getText("message.admin.user.password.notmatch"));
+		}
 	}
 }

@@ -27,7 +27,6 @@ import org.meruvian.yama.repository.jpa.social.JpaSocialConnection;
 import org.meruvian.yama.repository.jpa.social.JpaSocialConnectionRepository;
 import org.meruvian.yama.repository.jpa.user.JpaUser;
 import org.meruvian.yama.repository.social.SocialConnection;
-import org.meruvian.yama.repository.social.SocialConnection.Provider;
 import org.meruvian.yama.service.social.SocialConnectionManager;
 import org.springframework.security.crypto.encrypt.TextEncryptor;
 import org.springframework.social.connect.Connection;
@@ -87,7 +86,7 @@ public class JpaSocialConnectionManager implements SocialConnectionManager {
 	@Override
 	public List<Connection<?>> findConnections(String providerId) {
 		List<JpaSocialConnection> socialConnections = connectionRepository
-				.findByUserIdAndProviderOrderByRankAsc(userId, Provider.valueOf(providerId.toUpperCase()));
+				.findByUserIdAndProviderOrderByRankAsc(userId, providerId);
 		
 		List<Connection<?>> connections = new ArrayList<Connection<?>>();
 
@@ -106,63 +105,12 @@ public class JpaSocialConnectionManager implements SocialConnectionManager {
 
 	@Override
 	public MultiValueMap<String, Connection<?>> findConnectionsToUsers(MultiValueMap<String, String> providerUserIds) {
-//		if (providerUserIds == null || providerUserIds.isEmpty()) {
-//			throw new IllegalArgumentException("Unable to execute find: no providerUsers provided");
-//		}
-//
-//		StringBuilder providerUsersCriteriaSql = new StringBuilder();
-//		List<Object> parameters = new ArrayList<Object>();
-//		int i = 2;
-//		for (Iterator<Entry<String, List<String>>> it = providerUserIds.entrySet().iterator(); it.hasNext();) {
-//			Entry<String, List<String>> entry = it.next();
-//			String providerId = entry.getKey();
-//			providerUsersCriteriaSql.append("c.provider = ?").append(i++)
-//					.append(providerId).append(" AND c.providerUserId in (?")
-//					.append(i++).append(providerId).append(")");
-//			parameters.add(Provider.valueOf(providerId));
-//			parameters.add(entry.getValue());
-//			if (it.hasNext()) {
-//				providerUsersCriteriaSql.append(" OR ");
-//			}
-//		}
-//
-//		String ql = "SELECT c FROM SocialConnection c WHERE c.user.id = ? AND "
-//				+ providerUsersCriteriaSql + " ORDER BY c.provider, c.rank";
-//		TypedQuery<JpaSocialConnection> query = entityManager.createQuery(ql, JpaSocialConnection.class);
-//		query.setParameter(1, userId);
-//		
-//		
-//		
-//		for (int j = 0; j < parameters.size(); j++) {
-//			query.setParameter(j + 2, parameters.get(j));
-//		}
-//
-//		List<Connection<?>> resultList = new ArrayList<Connection<?>>();
-//		for (SocialConnection connection : query.getResultList()) {
-//			resultList.add(connectionMapper.mapRow(connection));
-//		}
-//
-//		MultiValueMap<String, Connection<?>> connectionsForUsers = new LinkedMultiValueMap<String, Connection<?>>();
-//		for (Connection<?> connection : resultList) {
-//			String providerId = connection.getKey().getProviderId();
-//			List<String> userIds = providerUserIds.get(providerId);
-//			List<Connection<?>> connections = connectionsForUsers
-//					.get(providerId);
-//			
-//			if (connections == null) {
-//				connections = new ArrayList<Connection<?>>(userIds.size());
-//				for (int j = 0; j < userIds.size(); j++) {
-//					connections.add(null);
-//				}
-//				connectionsForUsers.put(providerId, connections);
-//			}
-//			
-//			String providerUserId = connection.getKey().getProviderUserId();
-//			int connectionIndex = userIds.indexOf(providerUserId);
-//			connections.set(connectionIndex, connection);
-//		}
-//
-//		return connectionsForUsers;
+		if (providerUserIds == null || providerUserIds.isEmpty()) {
+			throw new IllegalArgumentException("Unable to execute find: no providerUsers provided");
+		}
+		
+		// TODO
+
 		return null;
 	}
 
@@ -170,7 +118,7 @@ public class JpaSocialConnectionManager implements SocialConnectionManager {
 	public Connection<?> getConnection(ConnectionKey connectionKey) {
 		JpaSocialConnection connection = connectionRepository
 				.findByUserIdAndProviderAndProviderUserId(userId,
-						Provider.valueOf(connectionKey.getProviderId().toUpperCase()),
+						connectionKey.getProviderId(),
 						connectionKey.getProviderUserId());
 		
 		try {
@@ -209,14 +157,14 @@ public class JpaSocialConnectionManager implements SocialConnectionManager {
 	@Transactional
 	public void addConnection(Connection<?> connection) {
 		ConnectionData data = connection.createData();
-		int rank = connectionRepository.getRank(userId, Provider.valueOf(data.getProviderId().toUpperCase()));
+		int rank = connectionRepository.getRank(userId, data.getProviderId());
 
 		JpaUser user = new JpaUser();
 		user.setId(userId);
 		
 		JpaSocialConnection userConnection = new JpaSocialConnection();
 		userConnection.setUser(user);
-		userConnection.setProvider(Provider.valueOf(data.getProviderId().toUpperCase()));
+		userConnection.setProvider(data.getProviderId());
 		userConnection.setProviderUserId(data.getProviderUserId());
 		userConnection.setRank(rank);
 		userConnection.setDisplayName(data.getDisplayName());
@@ -235,7 +183,7 @@ public class JpaSocialConnectionManager implements SocialConnectionManager {
 	public void updateConnection(Connection<?> connection) {
 		ConnectionData data = connection.createData();
 		JpaSocialConnection userConnection = connectionRepository
-				.findByUserIdAndProviderAndProviderUserId(userId, Provider.valueOf(data.getProviderId().toUpperCase()),
+				.findByUserIdAndProviderAndProviderUserId(userId, data.getProviderId(),
 						data.getProviderUserId());
 
 		userConnection.setDisplayName(data.getDisplayName());
@@ -253,7 +201,7 @@ public class JpaSocialConnectionManager implements SocialConnectionManager {
 	@Transactional
 	public void removeConnections(String providerId) {
 		List<JpaSocialConnection> connections = connectionRepository
-				.findByUserIdAndProvider(userId, Provider.valueOf(providerId.toUpperCase()));
+				.findByUserIdAndProvider(userId, providerId);
 		for (JpaSocialConnection connection : connections) {
 			connectionRepository.delete(connection);
 		}
@@ -262,7 +210,7 @@ public class JpaSocialConnectionManager implements SocialConnectionManager {
 	@Override
 	public void removeConnection(ConnectionKey connectionKey) {
 		JpaSocialConnection connection = connectionRepository.findByUserIdAndProviderAndProviderUserId(
-				userId, Provider.valueOf(connectionKey.getProviderId().toUpperCase()), connectionKey.getProviderUserId());
+				userId, connectionKey.getProviderId(), connectionKey.getProviderUserId());
 		connectionRepository.delete(connection);
 	}
 
@@ -276,7 +224,7 @@ public class JpaSocialConnectionManager implements SocialConnectionManager {
 
 	private Connection<?> findPrimaryConnection(String providerId) {
 		List<JpaSocialConnection> socialConnections = connectionRepository.findByUserIdAndProviderAndRank(
-				userId, Provider.valueOf(providerId.toUpperCase()), 1);
+				userId, providerId, 1);
 		
 		List<Connection<?>> connections = new ArrayList<Connection<?>>();
 		for (SocialConnection connection : socialConnections) {

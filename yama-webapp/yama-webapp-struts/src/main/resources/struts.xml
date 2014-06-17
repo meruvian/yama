@@ -49,11 +49,6 @@
 		<global-results>
 			<result name="login" type="redirect">/logout</result>
 			<result name="home" type="redirect">/home</result>
-			<result name="notfound">/404.jsp</result>
 		</global-results>
-		
-		<global-exception-mappings>
-			<exception-mapping result="notfound" exception="java.io.FileNotFoundException" />
-		</global-exception-mappings>
 	</package>
 </struts>

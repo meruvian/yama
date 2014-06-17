@@ -22,18 +22,20 @@ import org.meruvian.inca.struts2.rest.ActionResult;
 import org.meruvian.inca.struts2.rest.annotation.Action;
 import org.meruvian.inca.struts2.rest.annotation.Action.HttpMethod;
 import org.meruvian.inca.struts2.rest.annotation.ActionParam;
-import org.meruvian.yama.repository.jpa.role.JpaRole;
+import org.meruvian.yama.repository.role.DefaultRole;
 import org.meruvian.yama.repository.role.Role;
 import org.meruvian.yama.service.RoleManager;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+
+import com.opensymphony.xwork2.ActionSupport;
 
 /**
  * @author Dian Aditya
  *
  */
 @Action(name = "/admin/roles")
-public class RoleAction {
+public class RoleAction extends ActionSupport {
 	@Inject
 	private RoleManager roleManager;
 	
@@ -41,7 +43,7 @@ public class RoleAction {
 	public ActionResult roleList(@ActionParam("q") String q, @ActionParam("max") int max,
 			@ActionParam("page") int page) {
 		max = max == 0 ? 10 : max;
-		Page<? extends Role> roles = roleManager.findActiveRoleByKeyword(q, new PageRequest(page, max));
+		Page<? extends Role> roles = roleManager.findRoleByKeyword(q, new PageRequest(page, max));
 		
 		return new ActionResult("freemarker","/view/admin/role/role-list.ftl")
 				.addToModel("roles", roles);
@@ -55,7 +57,7 @@ public class RoleAction {
 			Role role = roleManager.getRoleByName(name);
 			actionResult.addToModel("role", role);
 		} else {
-			actionResult.addToModel("role", new JpaRole());
+			actionResult.addToModel("role", new DefaultRole());
 		}
 		
 		return actionResult;
@@ -63,7 +65,12 @@ public class RoleAction {
 	
 	@Action(name = "/{rolename}/edit", method = HttpMethod.POST)
 	public ActionResult updateRole(@ActionParam("rolename") String name, 
-			@ActionParam("role") JpaRole role, @ActionParam("roles") String[] roles) {
+			@ActionParam("role") DefaultRole role, @ActionParam("roles") String[] roles) {
+		validateRole(role, name);
+		if (hasFieldErrors()) {
+			return new ActionResult("freemarker", "/view/admin/role/role-form.ftl");
+		}
+		
 		Role r = roleManager.saveRole(role);
 		String redirectUri = "/admin/roles/" + r.getName() + "/edit?success";
 		
@@ -72,5 +79,15 @@ public class RoleAction {
 		}
 		
 		return new ActionResult("redirect", redirectUri);
+	}
+	
+	private void validateRole(Role role, String rolename) {
+		if (StringUtils.isBlank(role.getName())) {
+			addFieldError("role.name", getText("message.admin.role.name.notempty"));
+		} else if (!StringUtils.equalsIgnoreCase(role.getName(), rolename)) {
+			if (roleManager.getRoleByName(role.getName()) != null) {
+				addFieldError("role.name", getText("message.admin.role.name.exist"));
+			}
+		}
 	}
 }

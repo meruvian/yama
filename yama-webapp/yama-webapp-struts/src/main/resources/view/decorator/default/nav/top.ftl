@@ -1,7 +1,7 @@
 		<header class="header">
 			<a href="<@s.url value="/" />" class="logo">
 				<!-- Add the class icon to your logo image or logo icon to add the margining -->
-				Yama
+				<@s.text name="page.main.header" />
 			</a>
 			<!-- Header Navbar: style can be found in header.less -->
 			<nav class="navbar navbar-static-top" role="navigation">
@@ -29,7 +29,7 @@
 										<li><!-- start message -->
 											<a href="#">
 												<div class="pull-left">
-													<img src="img/avatar3.png" class="img-circle" alt="User Image"/>
+													<img src="<@s.url value="/profile/photo" />" class="img-circle" alt="User Image"/>
 												</div>
 												<h4>
 													Support Team
@@ -213,7 +213,7 @@
 							<ul class="dropdown-menu">
 								<!-- User image -->
 								<li class="user-header bg-light-blue">
-									<img src="img/avatar3.png" class="img-circle" alt="User Image" />
+									<img src="<@s.url value="/profile/photo" />" class="img-circle" alt="User Image" />
 									<p>
 										${(currentUser.name!).first!} ${(currentUser.name!).last!}
 										<small>${currentUser.username!}</small>

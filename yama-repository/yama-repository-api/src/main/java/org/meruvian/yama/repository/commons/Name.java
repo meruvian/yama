@@ -41,6 +41,10 @@ public class Name implements Serializable {
 		this.middle = middle;
 		this.last = last;
 	}
+	
+	public Name(Name name) {
+		this(name.getPrefix(), name.getFirst(), name.getMiddle(), name.getLast());
+	}
 
 	/**
 	 * @return the prefix

@@ -15,15 +15,30 @@
  */
 package org.meruvian.yama.repository.jpa.user;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.meruvian.yama.repository.commons.Address;
+import org.meruvian.yama.repository.commons.Name;
 import org.meruvian.yama.repository.jpa.DefaultJpaPersistence;
+import org.meruvian.yama.repository.jpa.JpaLogInformation;
 import org.meruvian.yama.repository.jpa.commons.JpaAddress;
+import org.meruvian.yama.repository.jpa.commons.JpaFileInfo;
 import org.meruvian.yama.repository.jpa.commons.JpaName;
+import org.meruvian.yama.repository.jpa.role.JpaUserRole;
 import org.meruvian.yama.repository.user.User;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * @author Dian Aditya
@@ -37,11 +52,13 @@ public class JpaUser extends DefaultJpaPersistence implements User {
 	private String email;
 	private JpaName name = new JpaName();
 	private JpaAddress address = new JpaAddress();
-
+	private JpaFileInfo fileInfo;
+	private List<JpaUserRole> roles = new ArrayList<JpaUserRole>();
+	
 	public JpaUser() {
 	}
 	
-	public JpaUser(String username, String email, JpaName name, JpaAddress address) {
+	public JpaUser(String username, String email, Name name, Address address) {
 		update(username, email, name, address);
 	}
 
@@ -49,16 +66,22 @@ public class JpaUser extends DefaultJpaPersistence implements User {
 		update(user);
 	}
 	
-	private void update(String username, String email, JpaName name, JpaAddress address) {
+	private void update(String username, String email, Name name, Address address) {
 		this.username = username;
 		this.email = email;
-		this.name = name;
-		this.address = address;
+		this.name = new JpaName(name);
+		this.address = new JpaAddress(address);
 	}
 	
+	@Override
 	public void update(User user) {
-		update(user.getUsername(), user.getEmail(), 
-				new JpaName(user.getName()), new JpaAddress(user.getAddress()));
+		this.id = user.getId();
+		this.logInformation = new JpaLogInformation(user.getLogInformation());
+		this.username = user.getUsername();
+		this.password = user.getPassword();
+		this.email = user.getEmail();
+		this.name = new JpaName(user.getName());
+		this.address = new JpaAddress(user.getAddress());
 	}
 
 	@Override
@@ -109,5 +132,26 @@ public class JpaUser extends DefaultJpaPersistence implements User {
 
 	public void setAddress(JpaAddress address) {
 		this.address = address;
+	}
+
+	@Override
+	@ManyToOne
+	@JoinColumn(name = "file_info_id")
+	public JpaFileInfo getFileInfo() {
+		return fileInfo;
+	}
+	
+	public void setFileInfo(JpaFileInfo fileInfo) {
+		this.fileInfo = fileInfo;
+	}
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "user", cascade = { CascadeType.REMOVE }, fetch = FetchType.LAZY)
+	public List<JpaUserRole> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<JpaUserRole> roles) {
+		this.roles = roles;
 	}
 }

@@ -27,7 +27,7 @@ import org.springframework.stereotype.Repository;
  *
  */
 @Repository
-public interface JpaRoleRepository extends  RoleRepository<JpaRole> {
+public interface JpaRoleRepository extends RoleRepository<JpaRole> {
 	@Override
 	@Query("SELECT r FROM JpaRole r WHERE r.name LIKE :keyword% OR r.description LIKE :keyword%")
 	Page<JpaRole> find(@Param("keyword") String keyword, Pageable pageable);

@@ -1,34 +1,38 @@
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title><@s.text name="page.register.title" /></title>
+	</head>
+	<body>
 		<div class="form-box" id="login-box">
-			<div class="header">Register New Membership</div>
-			<form action="<@s.url value="${request.servletPath}" />" method="post">
+			<div class="header"><@s.text name="page.register.header" /></div>
+			<@s.form theme="bootstrap">
 				<div class="body bg-gray">
-					<div class="form-group">
-						<input type="text" name="name" class="form-control" placeholder="Full name"/>
-					</div>
-					<div class="form-group">
-						<input type="text" name="userid" class="form-control" placeholder="User ID"/>
-					</div>
-					<div class="form-group">
-						<input type="password" name="password" class="form-control" placeholder="Password"/>
-					</div>
-					<div class="form-group">
-						<input type="password" name="password2" class="form-control" placeholder="Retype password"/>
-					</div>
+					<@s.textfield name="user.username" placeholder="%{getText('label.register.username')}" />
+					<@s.password name="user.password" placeholder="%{getText('label.register.password')}" />
+					<@s.password name="confirmPassword" placeholder="%{getText('label.register.password.confirm')}" />
+					<@s.textfield name="user.email" placeholder="%{getText('label.register.email')}" />
+					<#if reCaptchaActive>
+					<div class="label label-danger col-md-12">${fieldErrors.get('user.reCaptcha')!}</div>
+					<#include "recaptcha.ftl" />
+					</#if>
 				</div>
-				<div class="footer">					
-
-					<button type="submit" class="btn bg-olive btn-block">Sign me up</button>
-
-					<a href="<@s.url value="/login" />" class="text-center">I already have a membership</a>
+				<div class="footer">
+					<button type="submit" class="btn bg-olive btn-block"><@s.text name="button.main.signup" /></button>
+					<a href="<@s.url value="/login" />" class="text-center"><@s.text name="label.register.login" /></a>
 				</div>
-			</form>
+			</@s.form>
 
 			<div class="margin text-center">
-				<span>Register using social networks</span>
-				<br/>
-				<button class="btn bg-light-blue btn-circle"><i class="fa fa-facebook"></i></button>
-				<button class="btn bg-aqua btn-circle"><i class="fa fa-twitter"></i></button>
-				<button class="btn bg-red btn-circle"><i class="fa fa-google-plus"></i></button>
-
+				<span><@s.text name="label.register.social" /></span>
+				<br />
+				<a class="btn bg-light-blue btn-circle" href="<@s.url value="/login/social/facebook/auth" />">
+					<i class="fa fa-facebook"></i>
+				</a>
+				<a class="btn bg-red btn-circle" href="<@s.url value="/login/social/google/auth" />">
+					<i class="fa fa-google-plus"></i>
+				</a>
 			</div>
 		</div>
+	</body>
+</html>

@@ -13,15 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.meruvian.yama.service.jpa.jaxrs;
+package org.meruvian.yama.service.jaxrs;
 
 import javax.inject.Inject;
 
 import org.jboss.resteasy.annotations.Form;
-import org.meruvian.yama.repository.jpa.role.JpaRole;
+import org.meruvian.yama.repository.role.DefaultRole;
 import org.meruvian.yama.repository.role.Role;
 import org.meruvian.yama.service.RoleManager;
-import org.meruvian.yama.service.jaxrs.RoleService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -31,7 +30,7 @@ import org.springframework.stereotype.Service;
  *
  */
 @Service
-public class JpaRoleService implements RoleService {
+public class DefaultRoleService implements RoleService {
 	private RoleManager roleManager;
 	
 	@Inject
@@ -51,7 +50,10 @@ public class JpaRoleService implements RoleService {
 
 	@Override
 	public boolean removeRole(String name) {
-		return roleManager.removeRole(new JpaRole(name, null));
+		DefaultRole role = new DefaultRole();
+		role.setName(name);
+		
+		return roleManager.removeRole(role);
 	}
 
 	@Override

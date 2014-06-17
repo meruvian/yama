@@ -37,6 +37,10 @@ public class Address implements Serializable {
 		this.state = state;
 		this.zip = zip;
 	}
+	
+	public Address(Address address) {
+		this(address.getStreet1(), address.getStreet2(), address.getCity(), address.getState(), address.getZip());
+	}
 
 	/**
 	 * @return the street1

@@ -17,18 +17,14 @@ package org.meruvian.yama.repository.jpa.social;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.meruvian.yama.repository.jpa.DefaultJpaPersistence;
 import org.meruvian.yama.repository.jpa.user.JpaUser;
 import org.meruvian.yama.repository.social.SocialConnection;
-import org.meruvian.yama.repository.user.User;
 
 /**
  * @author Dian Aditya
@@ -40,7 +36,7 @@ import org.meruvian.yama.repository.user.User;
 		@UniqueConstraint(columnNames = { "user_id", "provider", "provider_user_id" }) })
 public class JpaSocialConnection extends DefaultJpaPersistence implements SocialConnection {
 	private JpaUser user;
-	private Provider provider = Provider.FACEBOOK;
+	private String provider;
 	private String providerUserId;
 	private int rank;
 	private String displayName;
@@ -61,12 +57,11 @@ public class JpaSocialConnection extends DefaultJpaPersistence implements Social
 		this.user = user;
 	}
 
-	@Enumerated(EnumType.STRING)
-	public Provider getProvider() {
+	public String getProvider() {
 		return provider;
 	}
 
-	public void setProvider(Provider provider) {
+	public void setProvider(String provider) {
 		this.provider = provider;
 	}
 

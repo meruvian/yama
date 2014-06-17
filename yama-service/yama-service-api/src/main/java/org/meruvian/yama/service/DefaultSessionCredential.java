@@ -23,11 +23,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.stereotype.Service;
 
 /**
  * @author Dian Aditya
  *
  */
+@Service
 public class DefaultSessionCredential implements SessionCredential {
 	private UserManager userService;
 	private UserDetailsService userDetailsService;

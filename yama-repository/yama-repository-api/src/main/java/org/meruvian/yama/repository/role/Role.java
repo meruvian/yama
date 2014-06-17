@@ -16,12 +16,13 @@
 package org.meruvian.yama.repository.role;
 
 import org.meruvian.yama.repository.DefaultPersistence;
+import org.meruvian.yama.repository.Updateable;
 
 /**
  * @author Dian Aditya
  * 
  */
-public interface Role extends DefaultPersistence {
+public interface Role extends DefaultPersistence, Updateable<Role> {
 	String getName();
 
 	String getDescription();

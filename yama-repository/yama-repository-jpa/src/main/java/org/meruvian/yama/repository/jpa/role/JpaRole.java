@@ -15,12 +15,21 @@
  */
 package org.meruvian.yama.repository.jpa.role;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.meruvian.yama.repository.jpa.DefaultJpaPersistence;
+import org.meruvian.yama.repository.jpa.JpaLogInformation;
 import org.meruvian.yama.repository.role.Role;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * @author Dian Aditya
@@ -31,8 +40,15 @@ import org.meruvian.yama.repository.role.Role;
 public class JpaRole extends DefaultJpaPersistence implements Role {
 	private String name;
 	private String description;
+	private List<JpaUserRole> users = new ArrayList<JpaUserRole>();
 	
 	public JpaRole() {}
+	
+	public JpaRole(Role role) {
+		this(role.getName(), role.getDescription());
+		this.id = role.getId();
+		this.logInformation = new JpaLogInformation(role.getLogInformation());
+	}
 	
 	public JpaRole(String name, String description) {
 		this.name = name;
@@ -56,5 +72,20 @@ public class JpaRole extends DefaultJpaPersistence implements Role {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	@Override
+	public void update(Role instance) {
+		
+	}
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "role", cascade = { CascadeType.REMOVE }, fetch = FetchType.LAZY)
+	public List<JpaUserRole> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<JpaUserRole> users) {
+		this.users = users;
 	}
 }

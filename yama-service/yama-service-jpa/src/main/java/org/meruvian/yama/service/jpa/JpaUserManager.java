@@ -19,9 +19,10 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import org.apache.commons.lang3.StringUtils;
-import org.hibernate.exception.ConstraintViolationException;
 import org.meruvian.yama.repository.LogInformation;
-import org.meruvian.yama.repository.exception.UserExistException;
+import org.meruvian.yama.repository.commons.FileInfo;
+import org.meruvian.yama.repository.jpa.commons.JpaFileInfo;
+import org.meruvian.yama.repository.jpa.commons.JpaFileInfoRepository;
 import org.meruvian.yama.repository.jpa.role.JpaRole;
 import org.meruvian.yama.repository.jpa.role.JpaRoleRepository;
 import org.meruvian.yama.repository.jpa.role.JpaUserRole;
@@ -49,6 +50,7 @@ public class JpaUserManager implements UserManager {
 	private JpaUserRepository userRepository;
 	private JpaRoleRepository roleRepository;
 	private JpaUserRoleRepository userRoleRepository;
+	private JpaFileInfoRepository fileInfoRepository;
 	private PasswordEncoder passwordEncoder;
 	
 	@Value("${init.username}")
@@ -57,7 +59,7 @@ public class JpaUserManager implements UserManager {
 	@Value("${init.password}")
 	private String defaultPassword;
 
-	@Value("${init.role}")
+	@Value("${init.role.admin}")
 	private String defaultRole;
 	
 	@Value("${init.email}")
@@ -77,6 +79,11 @@ public class JpaUserManager implements UserManager {
 	public void setUserRoleRepository(JpaUserRoleRepository userRoleRepository) {
 		this.userRoleRepository = userRoleRepository;
 	}
+	
+	@Inject
+	public void setFileInfoRepository(JpaFileInfoRepository fileInfoRepository) {
+		this.fileInfoRepository = fileInfoRepository;
+	}
 
 	@Inject
 	public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
@@ -91,6 +98,11 @@ public class JpaUserManager implements UserManager {
 	@Override
 	public JpaUser getUserByUsername(String username) {
 		return userRepository.findByUsername(username);
+	}
+	
+	@Override
+	public User getUserByEmail(String email) {
+		return userRepository.findByEmail(email);
 	}
 
 	@Override
@@ -131,9 +143,13 @@ public class JpaUserManager implements UserManager {
 			userRepository.save(jpaUser);
 		} else {
 			jpaUser = userRepository.findById(user.getId());
+			String originalPasswd = jpaUser.getPassword();
 			jpaUser.update(user);
+			
 			if (StringUtils.isNotBlank(user.getPassword())) {
 				jpaUser.setPassword(passwordEncoder.encode(user.getPassword()));
+			} else {
+				jpaUser.setPassword(originalPasswd);
 			}
 		}
 		
@@ -144,13 +160,15 @@ public class JpaUserManager implements UserManager {
 	@Transactional
 	public JpaUser updateUserPassword(User user, String currentPassword, String newPassword) {
 		JpaUser jpaUser = findUser(user);
-		if (passwordEncoder.matches(currentPassword, jpaUser.getPassword())) {
+		if (currentPassword != null) {
+			if (passwordEncoder.matches(currentPassword, jpaUser.getPassword())) {
+				jpaUser.setPassword(passwordEncoder.encode(newPassword));
+			}
+		} else {
 			jpaUser.setPassword(passwordEncoder.encode(newPassword));
-			
-			return jpaUser;
 		}
 		
-		return null;
+		return jpaUser;
 	}
 
 	@Override
@@ -192,8 +210,9 @@ public class JpaUserManager implements UserManager {
 		if (user == null) {
 			user = new JpaUser();
 			user.setUsername(defaultUsername);
-			user.setPassword(passwordEncoder.encode(defaultPassword));
+			user.setPassword(defaultPassword);
 			user.setEmail(defaultEmail);
+			user.setFileInfo(null);
 			
 			saveUser(user);
 			
@@ -203,6 +222,19 @@ public class JpaUserManager implements UserManager {
 			
 			addRoleToUser(user, role);
 		}
+	}
+
+	@Override
+	@Transactional
+	public FileInfo setUserProfilePicture(User user, FileInfo fileInfo) {
+		JpaUser u = findUser(user);
+		
+		JpaFileInfo file = new JpaFileInfo(fileInfo);
+		file = fileInfoRepository.findOne(fileInfo.getId());
+		
+		u.setFileInfo(file);
+		
+		return file;
 	}
 
 	@Override

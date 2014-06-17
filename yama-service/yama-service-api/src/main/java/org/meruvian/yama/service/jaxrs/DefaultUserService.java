@@ -13,17 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.meruvian.yama.service.jpa.jaxrs;
+package org.meruvian.yama.service.jaxrs;
 
 import javax.inject.Inject;
 
 import org.jboss.resteasy.annotations.Form;
-import org.meruvian.yama.repository.jpa.role.JpaRole;
-import org.meruvian.yama.repository.jpa.user.JpaUser;
+import org.meruvian.yama.repository.role.DefaultRole;
 import org.meruvian.yama.repository.role.Role;
+import org.meruvian.yama.repository.user.DefaultUser;
 import org.meruvian.yama.repository.user.User;
 import org.meruvian.yama.service.UserManager;
-import org.meruvian.yama.service.jaxrs.UserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -33,7 +32,7 @@ import org.springframework.stereotype.Service;
  *
  */
 @Service
-public class JpaUserService implements UserService {
+public class DefaultUserService implements UserService {
 	private UserManager userManager;
 	
 	@Inject
@@ -53,7 +52,10 @@ public class JpaUserService implements UserService {
 
 	@Override
 	public boolean removeUser(String username) {
-		return userManager.removeUser(new JpaUser(username, null, null, null));
+		DefaultUser user = new DefaultUser();
+		user.setUsername(username);
+		
+		return userManager.removeUser(user);
 	}
 
 	@Override
@@ -63,25 +65,39 @@ public class JpaUserService implements UserService {
 
 	@Override
 	public User updateUserPassword(String username, String currentPassword, String newPassword) {
-		return userManager.updateUserPassword(new JpaUser(username, null, null, null),
-				currentPassword, newPassword);
+		DefaultUser user = new DefaultUser();
+		user.setUsername(username);
+		
+		return userManager.updateUserPassword(user, currentPassword, newPassword);
 	}
 
 	@Override
 	public boolean addRoleToUser(String username, String roleName) {
-		return userManager.addRoleToUser(new JpaUser(username, null, null, null),
-				new JpaRole(roleName, null));
+		DefaultUser user = new DefaultUser();
+		user.setUsername(username);
+		
+		DefaultRole role = new DefaultRole();
+		role.setName(roleName);
+		
+		return userManager.addRoleToUser(user, role);
 	}
 
 	@Override
 	public boolean removeRoleFromUser(String username, String roleName) {
-		return userManager.removeRoleFromUser(new JpaUser(username, null, null, null),
-				new JpaRole(roleName, null));
+		DefaultUser user = new DefaultUser();
+		user.setUsername(username);
+		
+		DefaultRole role = new DefaultRole();
+		role.setName(roleName);
+		
+		return userManager.removeRoleFromUser(user, role);
 	}
 
 	@Override
 	public Page<? extends Role> findRoleByUser(String username, int max, int page) {
-		return userManager.findRoleByUser(new JpaUser(username, null, null, null),
-				new PageRequest(page, max));
+		DefaultUser user = new DefaultUser();
+		user.setUsername(username);
+		
+		return userManager.findRoleByUser(user, new PageRequest(page, max));
 	}
 }
