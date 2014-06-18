@@ -1,1 +1,0 @@
-<span id="alert" class="alert alert-success"><@s.text name="change.password.success" /></span>
