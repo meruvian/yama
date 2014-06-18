@@ -15,10 +15,15 @@
  */
 package org.meruvian.yama.service;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -74,5 +79,16 @@ public class DefaultSessionCredential implements SessionCredential {
 		
 		Authentication auth = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 		SecurityContextHolder.getContext().setAuthentication(auth);
+	}
+
+	@Override
+	public List<String> getCurrentRoles() {
+		List<String> roles = new ArrayList<String>();
+		Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+		for (GrantedAuthority authority : authorities) {
+			roles.add(authority.getAuthority());
+		}
+		
+		return roles;
 	}
 }

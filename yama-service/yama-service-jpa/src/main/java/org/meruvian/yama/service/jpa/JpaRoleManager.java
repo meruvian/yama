@@ -54,6 +54,8 @@ public class JpaRoleManager implements RoleManager {
 
 	@Override
 	public Page<JpaRole> findRoleByKeyword(String keyword, Pageable pageable) {
+		keyword = StringUtils.defaultIfBlank(keyword, "");
+		
 		return roleRepository.find(keyword, pageable);
 	}
 
@@ -67,12 +69,10 @@ public class JpaRoleManager implements RoleManager {
 	@Override
 	@Transactional
 	public boolean removeRole(Role role) {
-		role = roleRepository.findById(role.getId());
-		
 		if (role == null)
 			return false;
 		
-		role.getLogInformation().setActiveFlag(LogInformation.INACTIVE);
+		roleRepository.delete(role.getId());
 		
 		return true;
 	}
@@ -92,5 +92,14 @@ public class JpaRoleManager implements RoleManager {
 		}
 		
 		return jpaRole;
+	}
+
+	@Override
+	@Transactional
+	public Role updateStatus(Role role, int status) {
+		role = roleRepository.findById(role.getId());
+		role.getLogInformation().setActiveFlag(status);
+		
+		return role;
 	}
 }

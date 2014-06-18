@@ -5,20 +5,22 @@
 	</head>
 	<body>
 		<div class="form-box" id="login-box">
-			<div class="header"><@s.text name="page.register.header" /></div>
+			<div class="header bg-gray">
+				<img src="<@s.url value="/images/logo.png" />" />
+			</div>
 			<@s.form theme="bootstrap">
 				<div class="body bg-gray">
-					<@s.textfield name="user.username" placeholder="%{getText('label.register.username')}" />
-					<@s.password name="user.password" placeholder="%{getText('label.register.password')}" />
-					<@s.password name="confirmPassword" placeholder="%{getText('label.register.password.confirm')}" />
-					<@s.textfield name="user.email" placeholder="%{getText('label.register.email')}" />
+					<@s.textfield name="user.username" key="label.register.username" />
+					<@s.password name="user.password" key="label.register.password" />
+					<@s.password name="confirmPassword" key="label.register.password.confirm" />
+					<@s.textfield name="user.email" key="label.register.email" />
 					<#if reCaptchaActive>
 					<div class="label label-danger col-md-12">${fieldErrors.get('user.reCaptcha')!}</div>
 					<#include "recaptcha.ftl" />
 					</#if>
 				</div>
-				<div class="footer">
-					<button type="submit" class="btn bg-olive btn-block"><@s.text name="button.main.signup" /></button>
+				<div class="footer bg-gray">
+					<button type="submit" class="btn bg-blue btn-block"><@s.text name="button.main.signup" /></button>
 					<a href="<@s.url value="/login" />" class="text-center"><@s.text name="label.register.login" /></a>
 				</div>
 			</@s.form>

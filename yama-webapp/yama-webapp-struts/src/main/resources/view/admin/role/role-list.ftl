@@ -43,6 +43,7 @@
 									<tr>
 										<th><@s.text name="label.admin.role.name" /></th>
 										<th><@s.text name="label.admin.role.description" /></th>
+										<th><@s.text name="label.admin.role.enabled" /></th>
 									</tr>
 								</thead>
 								<tbody>
@@ -50,6 +51,14 @@
 									<tr>
 										<td><a href="<@s.url value="/admin/roles/${(r.name!'')?upper_case}/edit" />">${(r.name!"")?upper_case}</a></td>
 										<td>${r.description!}</td>
+										<td>
+											<#assign status = r.logInformation.activeFlag />
+											<#if status == 0>
+											<span class="glyphicon glyphicon-unchecked"></span>
+											<#elseif status == 1>
+											<span class="glyphicon glyphicon-check"></span>
+											</#if>
+										</td>
 									</tr>
 									</#list>
 								</tbody>

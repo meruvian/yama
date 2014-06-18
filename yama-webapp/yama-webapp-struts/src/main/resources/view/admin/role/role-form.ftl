@@ -29,6 +29,29 @@
 					</div>
 				</div>
 			</div>
+			<div class="col-md-3">
+				<#if role.logInformation.activeFlag == 0>
+				<div class="box box-success">
+					<div class="box-body">
+						<@s.form theme="bootstrap" action="${request.contextPath}${request.servletPath}/status">
+							<@s.hidden name="id" value="%{role.id}" />
+							<@s.hidden name="status" value="1" />
+							<@s.submit cssClass="btn btn-success btn-lg col-md-12" key="label.admin.role.enable" />
+						</@s.form>
+					</div>
+				</div>
+				<#elseif role.logInformation.activeFlag == 1>
+				<div class="box box-danger">
+					<div class="box-body">
+						<@s.form theme="bootstrap" action="${request.contextPath}${request.servletPath}/status">
+							<@s.hidden name="id" value="%{role.id}" />
+							<@s.hidden name="status" value="0" />
+							<@s.submit cssClass="btn btn-danger btn-lg col-md-12" key="label.admin.role.disable" />
+						</@s.form>
+					</div>
+				</div>
+				</#if>
+			</div>
 		</div>
 	</body>
 </html>

@@ -120,12 +120,12 @@ public class JpaUserManager implements UserManager {
 	@Override
 	@Transactional
 	public boolean removeUser(User user) {
-		user = findUser(user);
+		JpaUser u = findUser(user);
 		
-		if (user == null)
+		if (u == null)
 			return false;
 		
-		user.getLogInformation().setActiveFlag(LogInformation.INACTIVE);
+		userRepository.delete(u);
 		
 		return true;
 	}
@@ -248,6 +248,15 @@ public class JpaUserManager implements UserManager {
 		}
 		
 		return userRepository.findByUsername(user.getUsername());
+	}
+	
+	@Override
+	@Transactional
+	public User updateStatus(User user, int status) {
+		user = userRepository.findById(user.getId());
+		user.getLogInformation().setActiveFlag(status);
+		
+		return user;
 	}
 	
 	private JpaRole findRole(Role role) {

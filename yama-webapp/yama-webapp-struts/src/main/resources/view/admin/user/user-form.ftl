@@ -67,6 +67,31 @@
 					</div>
 				</div>
 			</div>
+			<#if user??>
+			<div class="col-md-3">
+				<#if user.logInformation.activeFlag == 0>
+				<div class="box box-success">
+					<div class="box-body">
+						<@s.form theme="bootstrap" action="${request.contextPath}${request.servletPath}/status">
+							<@s.hidden name="id" value="%{user.id}" />
+							<@s.hidden name="status" value="1" />
+							<@s.submit cssClass="btn btn-success btn-lg col-md-12" key="label.admin.user.enable" />
+						</@s.form>
+					</div>
+				</div>
+				<#elseif user.logInformation.activeFlag == 1>
+				<div class="box box-danger">
+					<div class="box-body">
+						<@s.form theme="bootstrap" action="${request.contextPath}${request.servletPath}/status">
+							<@s.hidden name="id" value="%{user.id}" />
+							<@s.hidden name="status" value="0" />
+							<@s.submit cssClass="btn btn-danger btn-lg col-md-12" key="label.admin.user.disable" />
+						</@s.form>
+					</div>
+				</div>
+				</#if>
+			</div>
+			</#if>
 		</div>
 	</body>
 </html>

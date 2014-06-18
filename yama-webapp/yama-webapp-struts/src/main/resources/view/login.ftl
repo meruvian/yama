@@ -5,25 +5,23 @@
 	</head>
 	<body>
 		<div class="form-box" id="login-box">
-			<div class="header"><@s.text name="page.login.header" /></div>
-			<form action="<@s.url value="${request.servletPath}/do" />" method="post">
+			<div class="header bg-gray">
+				<img src="<@s.url value="/images/logo.png" />" />
+			</div>
+			<@s.form action="${request.contextPath}${request.servletPath}/do" method="post" theme="bootstrap">
 				<div class="body bg-gray">
-					<div class="form-group">
-						<input type="text" name="username" class="form-control" placeholder="<@s.text name="label.login.username" />"/>
-					</div>
-					<div class="form-group">
-						<input type="password" name="password" class="form-control" placeholder="<@s.text name="label.login.password" />"/>
-					</div>		  
+					<@s.textfield key="label.login.username" name="username" />
+					<@s.textfield key="label.login.password" name="password" />
 					<div class="form-group">
 						<input type="checkbox" name="_spring_security_remember_me"/> <@s.text name="label.login.rememberme" />
 					</div>
 				</div>
-				<div class="footer">															   
-					<button type="submit" class="btn bg-olive btn-block"><@s.text name="button.main.login" /></button>  
+				<div class="footer bg-gray">															   
+					<button type="submit" class="btn bg-blue btn-block"><@s.text name="button.main.login" /></button>  
 					
 					<a href="<@s.url value="/register" />" class="text-center"><@s.text name="label.login.register" /></a>
 				</div>
-			</form>
+			</@s.form>
 
 			<div class="margin text-center">
 				<span><@s.text name="label.login.social" /></span>

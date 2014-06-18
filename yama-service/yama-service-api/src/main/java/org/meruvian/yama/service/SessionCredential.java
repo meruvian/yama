@@ -15,6 +15,8 @@
  */
 package org.meruvian.yama.service;
 
+import java.util.List;
+
 import org.meruvian.yama.repository.user.User;
 
 /**
@@ -25,6 +27,8 @@ public interface SessionCredential {
 	User getCurrentUser();
 	
 	String getCurrentUsername();
+	
+	List<String> getCurrentRoles();
 	
 	void registerAuthentication(String userId);
 }

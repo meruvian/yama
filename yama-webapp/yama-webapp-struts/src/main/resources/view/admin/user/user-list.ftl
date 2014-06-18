@@ -43,6 +43,7 @@
 										<th><@s.text name="label.admin.user.username" /></th>
 										<th><@s.text name="label.admin.user.name.full" /></th>
 										<th><@s.text name="label.admin.user.email" /></th>
+										<th><@s.text name="label.admin.user.enabled" /></th>
 									</tr>
 								</thead>
 								<tbody>
@@ -51,6 +52,14 @@
 										<td><a href="<@s.url value="/admin/users/${u.username!}/edit" />">${u.username}</a></td>
 										<td>${(u.name!).first!} ${(u.name!).last!}</td>
 										<td>${u.email!}</td>
+										<td>
+											<#assign status = u.logInformation.activeFlag />
+											<#if status == 0>
+											<span class="glyphicon glyphicon-unchecked"></span>
+											<#elseif status == 1>
+											<span class="glyphicon glyphicon-check"></span>
+											</#if>
+										</td>
 									</tr>
 									</#list>
 								</tbody>

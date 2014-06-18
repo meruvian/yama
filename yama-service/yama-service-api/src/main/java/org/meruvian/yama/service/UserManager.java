@@ -51,4 +51,6 @@ public interface UserManager {
 	User findUser(User user);
 	
 	FileInfo setUserProfilePicture(User user, FileInfo fileInfo);
+	
+	User updateStatus(User user, int status);
 }

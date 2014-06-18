@@ -9,7 +9,7 @@
 							-->
 						</div>
 						<div class="pull-left info">
-							<p>Hello, ${currentUser.username}</p>
+							<p>Hello, <#if currentUser.name??>${currentUser.name.first!} ${currentUser.name.last!}<#else>${currentUser.username}</#if></p>
 
 							<a href="#"><i class="fa fa-circle text-success"></i> Online</a>
 						</div>
@@ -22,6 +22,7 @@
 								<i class="fa fa-dashboard"></i> <span>Dashboard</span>
 							</a>
 						</li>
+						<#if isAdmin>
 						<li class="treeview">
 							<a href="#">
 								<i class="fa fa-gears"></i>
@@ -33,6 +34,7 @@
 								<li><a href="<@s.url value="/admin/roles" />"><i class="fa fa-angle-double-right"></i> Role</a></li>
 							</ul>
 						</li>
+						</#if>
 					</ul>
 				</section>
 				<!-- /.sidebar -->

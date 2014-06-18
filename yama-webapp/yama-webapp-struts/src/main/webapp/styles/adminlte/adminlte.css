@@ -113,6 +113,7 @@ body.fixed .wrapper {
 .content {
   padding: 20px 15px;
   background: #f9f9f9;
+  min-height: 400px;
 }
 /* Utility */
 /* H1 - H6 font */
@@ -1047,10 +1048,12 @@ body > .header .logo .icon {
   border-radius: 0;
 }
 /* Checkbox and radio inputs */
+/*
 .checkbox,
 .radio {
   padding-left: 0;
 }
+*/
 /* 
     Compenent: Progress bars
 --------------------------------

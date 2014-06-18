@@ -104,9 +104,26 @@
 					<source>1.6</source>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>1.9</version>
+				<executions>
+					<execution>
+						<id>remove-old-artifacts</id>
+						<phase>clean</phase>
+						<goals>
+							<goal>remove-project-artifact</goal>
+						</goals>
+						<configuration>  
+							<removeAll>true</removeAll>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
-
+	
 	<dependencies>
 		<!-- Unit Testing -->
 		<dependency>

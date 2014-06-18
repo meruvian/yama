@@ -64,8 +64,7 @@ public class RoleAction extends ActionSupport {
 	}
 	
 	@Action(name = "/{rolename}/edit", method = HttpMethod.POST)
-	public ActionResult updateRole(@ActionParam("rolename") String name, 
-			@ActionParam("role") DefaultRole role, @ActionParam("roles") String[] roles) {
+	public ActionResult updateRole(@ActionParam("rolename") String name,  @ActionParam("role") DefaultRole role) {
 		validateRole(role, name);
 		if (hasFieldErrors()) {
 			return new ActionResult("freemarker", "/view/admin/role/role-form.ftl");
@@ -77,6 +76,16 @@ public class RoleAction extends ActionSupport {
 		if (StringUtils.equalsIgnoreCase(name, "-")) {
 			redirectUri = "/admin/roles?success";
 		}
+		
+		return new ActionResult("redirect", redirectUri);
+	}
+	
+	@Action(name = "/{rolename}/edit/status", method = HttpMethod.POST)
+	public ActionResult updateRoleStatus(@ActionParam("id") final String id, @ActionParam("status") int status) {
+		Role r = new DefaultRole() {{ setId(id); }};
+		r = roleManager.updateStatus(r, status);
+		
+		String redirectUri = "/admin/roles/" + r.getName() + "/edit?success";
 		
 		return new ActionResult("redirect", redirectUri);
 	}

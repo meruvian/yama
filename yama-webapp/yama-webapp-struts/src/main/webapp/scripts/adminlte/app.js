@@ -129,10 +129,12 @@ $(function() {
      * iCheck plugin in.
      * You can find the documentation at http://fronteed.com/iCheck/
      */
+    /*
     $("input[type='checkbox'], input[type='radio']").iCheck({
         checkboxClass: 'icheckbox_minimal',
         radioClass: 'iradio_minimal'
     });
+    */
 });
 $(window).load(function() {
     /*! pace 0.4.17 */
@@ -608,6 +610,7 @@ $(window).load(function() {
  * -----------------------
  * This plugin depends on iCheck plugin for checkbox and radio inputs
  */
+/*
 (function($) {
     "use strict";
 
@@ -638,6 +641,7 @@ $(window).load(function() {
     };
 
 }(jQuery));
+*/
 
 /* CENTER ELEMENTS */
 (function($) {
@@ -871,6 +875,7 @@ $(window).load(function() {
 })(jQuery);
 
 /*! iCheck v1.0.1 by Damir Sultanov, http://git.io/arlzeA, MIT Licensed */
+/*
 (function(h) {
     function F(a, b, d) {
         var c = a[0], e = /er/.test(d) ? m : /bl/.test(d) ? s : l, f = d == H ? {checked: c[l], disabled: c[s], indeterminate: "true" == a.attr(m) || "false" == a.attr(w)} : c[e];
@@ -1033,3 +1038,4 @@ $(window).load(function() {
         })
     }
 })(window.jQuery || window.Zepto);
+*/

@@ -35,4 +35,6 @@ public interface RoleManager {
 	boolean removeRole(Role role);
 
 	Role saveRole(Role role);
+	
+	Role updateStatus(Role role, int status);
 }

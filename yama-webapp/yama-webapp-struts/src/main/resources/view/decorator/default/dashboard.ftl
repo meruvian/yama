@@ -65,9 +65,23 @@
 					</div>
 					<!-- /.row -->
 				</section><!-- /.content -->
+				<section class="footer">
+					<div class="navbar-static-bottom">
+						<div class="container">
+							<div class="row">
+								<hr>
+								<div class="col-xs-9">
+									<p class="text-muted"><@s.text name="page.main.footer" /></p>
+								</div>
+								<div class="col-xs-3">
+									<p class="text-muted"><@s.text name="page.main.header" /> v<@s.text name="page.main.version" /></p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
 			</aside><!-- /.right-side -->
 		</div><!-- ./wrapper -->
-
 		<!-- add new calendar event modal -->
 
 

@@ -100,6 +100,16 @@ public class UserAction extends ActionSupport {
 		return new ActionResult("redirect", redirectUri);
 	}
 	
+	@Action(name = "/{username}/edit/status", method = HttpMethod.POST)
+	public ActionResult updateUserStatus(@ActionParam("id") final String id, @ActionParam("status") int status) {
+		User u = new DefaultUser() {{ setId(id); }};
+		u = userManager.updateStatus(u, status);
+		
+		String redirectUri = "/admin/users/" + u.getUsername() + "/edit?success";
+		
+		return new ActionResult("redirect", redirectUri);
+	}
+	
 	public void showRoles(ActionResult actionResult, String username) {
 		Page<? extends Role> roles = roleManager.findActiveRoleByKeyword("", null);
 		actionResult.addToModel("roles", roles);

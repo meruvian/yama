@@ -15,9 +15,13 @@
  */
 package org.meruvian.yama.webapp.interceptor;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
+import org.apache.commons.lang3.StringUtils;
 import org.meruvian.yama.service.SessionCredential;
+import org.springframework.beans.factory.annotation.Value;
 
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
@@ -29,16 +33,29 @@ import com.opensymphony.xwork2.util.ValueStack;
  */
 public class SessionCredentialInterceptor extends AbstractInterceptor {
 	private SessionCredential sessionCredential;
-
+	private String adminRole;
+	
 	@Inject
 	public void setSessionCredential(SessionCredential sessionCredential) {
 		this.sessionCredential = sessionCredential;
+	}
+	
+	@Value("${init.role.admin}")
+	public void setAdminRole(String adminRole) {
+		this.adminRole = adminRole;
 	}
 	
 	@Override
 	public String intercept(ActionInvocation invocation) throws Exception {
 		ValueStack stack = invocation.getStack();
 		stack.set("currentUser", sessionCredential.getCurrentUser());
+		stack.set("adminRole", adminRole);
+
+		List<String> roles = sessionCredential.getCurrentRoles();
+		boolean isAdmin = roles.contains(StringUtils.upperCase(adminRole));
+
+		stack.set("currentRoles", roles);
+		stack.set("isAdmin", isAdmin);
 		
 		return invocation.invoke();
 	}

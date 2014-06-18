@@ -101,6 +101,7 @@ public class ProfileAction extends ActionSupport {
 				return new ActionResult("freemarker", "/view/profile/profile-form.ftl");
 			
 			userManager.saveUser(user);
+			sessionCredential.registerAuthentication(user.getId());
 		}
 		
 		return new ActionResult("redirect", "/profile?success");
