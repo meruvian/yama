@@ -1,0 +1,47 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:facebook="http://www.springframework.org/schema/social/facebook"
+	xmlns:google="http://www.springframework.org/schema/social/google"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/social/facebook http://www.springframework.org/schema/social/spring-social-facebook.xsd
+		http://www.springframework.org/schema/social/google http://www.springframework.org/schema/social/spring-social-google.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean id="facebookConnectionFactory" class="org.springframework.social.facebook.connect.FacebookConnectionFactory">
+		<constructor-arg value="${symbol_dollar}{social.facebook.appId}" />
+		<constructor-arg value="${symbol_dollar}{social.facebook.appSecret}" />
+	</bean>
+	
+	<bean id="googleConnectionFactory" class="org.springframework.social.google.connect.GoogleConnectionFactory">
+		<constructor-arg value="${symbol_dollar}{social.google.appId}" />
+		<constructor-arg value="${symbol_dollar}{social.google.appSecret}" />
+	</bean>
+	
+	<bean id="connectionFactoryLocator" class="org.springframework.social.connect.support.ConnectionFactoryRegistry">
+		<property name="connectionFactories">
+			<array>
+				<ref bean="facebookConnectionFactory" />
+				<ref bean="googleConnectionFactory" />
+			</array>
+		</property>
+	</bean>
+	
+	<bean id="connectionSignUp" class="org.meruvian.yama.service.social.SocialConnectionSignUp" />
+	
+	<bean id="socialManagerLocator" class="org.meruvian.yama.service.social.SocialManagerRegistry">
+		<property name="socialManagers">
+			<array>
+				<bean class="org.meruvian.yama.service.social.facebook.FacebookSocialManager" p:redirectUri="${symbol_dollar}{social.facebook.redirectUri}" p:scope="${symbol_dollar}{social.facebook.scope}">
+					<constructor-arg ref="facebookConnectionFactory" />
+				</bean>
+				<bean class="org.meruvian.yama.service.social.google.GoogleSocialManager" p:redirectUri="${symbol_dollar}{social.google.redirectUri}" p:scope="${symbol_dollar}{social.google.scope}">
+					<constructor-arg ref="googleConnectionFactory" />
+				</bean>
+			</array>
+		</property>
+	</bean>
+</beans>
