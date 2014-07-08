@@ -36,6 +36,5 @@
 	</dependencies>
 	<modules>
 		<module>yama-webapp-struts</module>
-		<module>yama-webapp-struts-jaxrs</module>
 	</modules>
 </project>
