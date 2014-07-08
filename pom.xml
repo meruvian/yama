@@ -64,9 +64,9 @@
 	</issueManagement>
 
 	<scm>
-		<connection>scm:svn:https://svn.java.net/svn/yama~yama-repo/trunk</connection>
-		<developerConnection>scm:svn:https://svn.java.net/svn/yama~yama-repo/trunk</developerConnection>
-		<url>http://java.net/projects/yama/sources/yama-repo/show</url>
+		<connection>scm:git:https://github.com/meruvian/yama.git</connection>
+		<developerConnection>scm:git:https://github.com/meruvian/yama.git</developerConnection>
+		<url>https://github.com/meruvian/yama</url>
 	</scm>
 
 	<organization>
