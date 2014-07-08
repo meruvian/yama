@@ -7,7 +7,7 @@
 		<!-- bootstrap 3.0.2 -->
 		<link href="<@s.url value="/webjars/bootstrap/3.1.1/css/bootstrap.min.css" />" rel="stylesheet" type="text/css" />
 		<!-- font Awesome -->
-		<link href="<@s.url value="/webjars/font-awesome/4.0.3/css/font-awesome.min.css" />" rel="stylesheet" type="text/css" />
+		<link href="<@s.url value="/webjars/font-awesome/4.1.0/css/font-awesome.min.css" />" rel="stylesheet" type="text/css" />
 		<!-- Theme style -->
 		<link href="<@s.url value="/styles/adminlte/adminlte.css" />" rel="stylesheet" type="text/css" />
 

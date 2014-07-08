@@ -36,5 +36,6 @@
 	</dependencies>
 	<modules>
 		<module>yama-webapp-struts</module>
+		<module>yama-webapp-jaxrs-resteasy</module>
 	</modules>
 </project>

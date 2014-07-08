@@ -118,6 +118,8 @@ public class ProfileAction extends ActionSupport {
 	})
 	public String getPhoto() throws IOException {
 		User u = sessionCredential.getCurrentUser();
+		u = userManager.getUserById(u.getId());
+		
 		FileInfo fileInfo = u.getFileInfo();
 		if (fileInfo == null) {
 			return "no-profile";

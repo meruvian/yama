@@ -19,12 +19,14 @@
 		<inca.version>1.1.0</inca.version>
 		<spring.version>4.0.3.RELEASE</spring.version>
 		<spring.security.version>3.2.3.RELEASE</spring.security.version>
+		<spring.security.oauth.version>2.0.2.RELEASE</spring.security.oauth.version>
 		<spring.data.commons.version>1.8.0.RELEASE</spring.data.commons.version>
 		<spring.data.jpa.version>1.6.0.RELEASE</spring.data.jpa.version>
 		<spring.social.core.version>1.1.0.RELEASE</spring.social.core.version>
 		<spring.social.facebook.version>1.1.1.RELEASE</spring.social.facebook.version>
 		<spring.social.google.version>1.0.0.RELEASE</spring.social.google.version>
 		<http.client.version>4.3.4</http.client.version>
+		<oltu.oauth2.version>1.0.0</oltu.oauth2.version>
 		<hibernate.version>4.3.5.Final</hibernate.version>
 		<bonecp.version>0.8.0.RELEASE</bonecp.version>
 		<c3p0.version>0.9.1</c3p0.version>
@@ -34,6 +36,7 @@
 		<jackson2.version>2.3.2</jackson2.version>
 		<slf4j.version>1.7.7</slf4j.version>
 		<commons.lang.version>3.3.2</commons.lang.version>
+		<jasypt.version>1.9.2</jasypt.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.6</java.version>
 		<jdbc.group.id>mysql</jdbc.group.id>
@@ -42,8 +45,9 @@
 		<jquery.version>1.11.0-1</jquery.version>
 		<angularjs.version>1.2.16</angularjs.version>
 		<bootstrap.version>3.1.1-1</bootstrap.version>
-		<fontawesome.version>4.0.3</fontawesome.version>
+		<fontawesome.version>4.1.0</fontawesome.version>
 		<jqueryfileupload.version>9.5.7</jqueryfileupload.version>
+		<jetty.version>8.1.15.v20140411</jetty.version>
 	</properties>
 
 	<licenses>

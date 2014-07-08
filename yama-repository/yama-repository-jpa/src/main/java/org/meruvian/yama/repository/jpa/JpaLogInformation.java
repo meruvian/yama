@@ -22,10 +22,6 @@ import javax.persistence.Embeddable;
 import javax.persistence.Transient;
 
 import org.meruvian.yama.repository.LogInformation;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
 
 /**
  * @author Dian Aditya
@@ -40,25 +36,21 @@ public class JpaLogInformation extends LogInformation {
 		super(logInformation);
 	}
 	
-	@CreatedBy
 	@Column(name = "create_by")
 	public String getCreateBy() {
 		return super.getCreateBy();
 	}
 
-	@CreatedDate
 	@Column(name = "create_date")
 	public Date getCreateDate() {
 		return super.getCreateDate();
 	}
 
-	@LastModifiedBy
 	@Column(name = "update_by")
 	public String getLastUpdateBy() {
 		return super.getLastUpdateBy();
 	}
 
-	@LastModifiedDate
 	@Column(name = "update_date")
 	public Date getLastUpdateDate() {
 		return super.getLastUpdateDate();

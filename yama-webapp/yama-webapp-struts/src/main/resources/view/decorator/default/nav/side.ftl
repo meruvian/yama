@@ -19,22 +19,27 @@
 					<ul class="sidebar-menu">
 						<li class="active">
 							<a href="<@s.url value="/" />">
-								<i class="fa fa-dashboard"></i> <span>Dashboard</span>
+								<i class="fa fa-dashboard"></i> <span><@s.text name="menu.main.dashboard" /></span>
 							</a>
 						</li>
 						<#if isAdmin>
 						<li class="treeview">
 							<a href="#">
 								<i class="fa fa-gears"></i>
-								<span>Admin</span>
+								<span><@s.text name="menu.main.admin" /></span>
 								<i class="fa fa-angle-left pull-right"></i>
 							</a>
 							<ul class="treeview-menu">
-								<li><a href="<@s.url value="/admin/users" />"><i class="fa fa-angle-double-right"></i> User</a></li>
-								<li><a href="<@s.url value="/admin/roles" />"><i class="fa fa-angle-double-right"></i> Role</a></li>
+								<li><a href="<@s.url value="/admin/users" />"><i class="fa fa-angle-double-right"></i> <@s.text name="menu.main.admin.user" /></a></li>
+								<li><a href="<@s.url value="/admin/roles" />"><i class="fa fa-angle-double-right"></i> <@s.text name="menu.main.admin.role" /></a></li>
 							</ul>
 						</li>
 						</#if>
+						<li class="active">
+							<a href="<@s.url value="/applications" />">
+								<i class="fa fa-cube"></i> <span><@s.text name="menu.main.application" /></span>
+							</a>
+						</li>
 					</ul>
 				</section>
 				<!-- /.sidebar -->

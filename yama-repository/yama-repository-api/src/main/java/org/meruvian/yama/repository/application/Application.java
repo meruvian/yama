@@ -13,32 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.meruvian.yama.repository.user;
+package org.meruvian.yama.repository.application;
 
 import org.meruvian.yama.repository.DefaultPersistence;
 import org.meruvian.yama.repository.Updateable;
-import org.meruvian.yama.repository.commons.Address;
-import org.meruvian.yama.repository.commons.FileInfo;
-import org.meruvian.yama.repository.commons.Name;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * @author Dian Aditya
  * 
  */
-public interface User extends DefaultPersistence, Updateable<User> {
-	String getUsername();
-
-	Name getName();
+public interface Application extends DefaultPersistence, Updateable<Application> {
+	String getSecret();
 	
-	@JsonIgnore
-	String getPassword();
-
-	String getEmail();
+	String getNamespace();
 	
-	Address getAddress();
+	String getDisplayName();
 	
-	@JsonIgnore
-	FileInfo getFileInfo();
+	String getDomain();
+	
+	String getSite();
 }

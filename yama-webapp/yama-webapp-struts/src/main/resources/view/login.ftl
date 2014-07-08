@@ -10,8 +10,8 @@
 			</div>
 			<@s.form action="${request.contextPath}${request.servletPath}/do" method="post" theme="bootstrap">
 				<div class="body bg-gray">
-					<@s.textfield key="label.login.username" name="username" />
-					<@s.textfield key="label.login.password" name="password" />
+					<@s.textfield key="label.login.username" name="username" autofocus="true" />
+					<@s.password key="label.login.password" name="password" />
 					<div class="form-group">
 						<input type="checkbox" name="_spring_security_remember_me"/> <@s.text name="label.login.rememberme" />
 					</div>

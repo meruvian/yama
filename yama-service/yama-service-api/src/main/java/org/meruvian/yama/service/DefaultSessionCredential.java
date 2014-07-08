@@ -21,11 +21,11 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.meruvian.yama.service.security.DefaultUserDetails;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
@@ -51,21 +51,24 @@ public class DefaultSessionCredential implements SessionCredential {
 	
 	@Override
 	public org.meruvian.yama.repository.user.User getCurrentUser() {
-		if (getCurrentUsername() != null)
-			return userService.getUserByUsername(getCurrentUsername());
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication == null || !authentication.isAuthenticated()) {
+			return null;
+		}
+		
+		if (authentication.getPrincipal() instanceof DefaultUserDetails) {
+			DefaultUserDetails user = (DefaultUserDetails) authentication.getPrincipal();
+			return user.getUser();
+		}
 		
 		return null;
 	}
 
 	@Override
 	public String getCurrentUsername() {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if (authentication == null || !authentication.isAuthenticated()) {
-			return null;
-		}
+		org.meruvian.yama.repository.user.User user = getCurrentUser();
 		
-		if (authentication.getPrincipal() instanceof User) {
-			User user = (User) authentication.getPrincipal();
+		if (user != null) {
 			return user.getUsername();
 		}
 		

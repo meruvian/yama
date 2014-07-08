@@ -24,5 +24,15 @@
 			<artifactId>jackson-annotations</artifactId>
 			<version>${jackson2.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.jasypt</groupId>
+			<artifactId>jasypt</artifactId>
+			<version>${jasypt.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jasypt</groupId>
+			<artifactId>jasypt-springsecurity3</artifactId>
+			<version>${jasypt.version}</version>
+		</dependency>
 	</dependencies>
 </project>

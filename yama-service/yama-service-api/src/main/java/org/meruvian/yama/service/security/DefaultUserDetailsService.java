@@ -23,6 +23,7 @@ import javax.inject.Inject;
 import org.apache.commons.lang3.StringUtils;
 import org.meruvian.yama.repository.LogInformation;
 import org.meruvian.yama.repository.role.Role;
+import org.meruvian.yama.repository.user.DefaultUser;
 import org.meruvian.yama.repository.user.User;
 import org.meruvian.yama.service.UserManager;
 import org.springframework.data.domain.Page;
@@ -57,8 +58,9 @@ public class DefaultUserDetailsService implements UserDetailsService {
 				authorities.add(new SimpleGrantedAuthority(StringUtils.upperCase(role.getName())));
 			}
 			
-			UserDetails details = new org.springframework.security.core.userdetails
-					.User(user.getUsername(), user.getPassword(), enabled, true, true, true, authorities);
+			DefaultUserDetails details = new DefaultUserDetails(user.getUsername(), user.getPassword(), enabled, true, true, true, authorities);
+			details.setId(user.getId());
+			details.setUser(new DefaultUser(user));
 			
 			return details;
 		}

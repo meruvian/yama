@@ -13,32 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.meruvian.yama.repository.user;
+package org.meruvian.yama.repository.application;
 
-import org.meruvian.yama.repository.DefaultPersistence;
-import org.meruvian.yama.repository.Updateable;
-import org.meruvian.yama.repository.commons.Address;
-import org.meruvian.yama.repository.commons.FileInfo;
-import org.meruvian.yama.repository.commons.Name;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.meruvian.yama.repository.DefaultRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 /**
  * @author Dian Aditya
- * 
+ *
  */
-public interface User extends DefaultPersistence, Updateable<User> {
-	String getUsername();
-
-	Name getName();
+public interface ApplicationRepository<T extends Application> extends DefaultRepository<T>{
+	T findById(String id);
 	
-	@JsonIgnore
-	String getPassword();
-
-	String getEmail();
+	T findByNamespace(String name);
 	
-	Address getAddress();
+	Page<T> findByNamespaceStartingWith(String name, Pageable pageable);
 	
-	@JsonIgnore
-	FileInfo getFileInfo();
+	Page<T> findByDisplayNameStartingWith(String name, Pageable pageable);
+	
+	Page<T> findByLogInformationCreateBy(String userId, Pageable pageable);
 }

@@ -13,32 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.meruvian.yama.repository.user;
+package org.meruvian.yama.repository.jpa.application;
 
-import org.meruvian.yama.repository.DefaultPersistence;
-import org.meruvian.yama.repository.Updateable;
-import org.meruvian.yama.repository.commons.Address;
-import org.meruvian.yama.repository.commons.FileInfo;
-import org.meruvian.yama.repository.commons.Name;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.meruvian.yama.repository.application.ApplicationRepository;
+import org.springframework.stereotype.Repository;
 
 /**
  * @author Dian Aditya
- * 
+ *
  */
-public interface User extends DefaultPersistence, Updateable<User> {
-	String getUsername();
-
-	Name getName();
+@Repository
+public interface JpaApplicationRepository extends ApplicationRepository<JpaApplication>{
 	
-	@JsonIgnore
-	String getPassword();
-
-	String getEmail();
-	
-	Address getAddress();
-	
-	@JsonIgnore
-	FileInfo getFileInfo();
 }

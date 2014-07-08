@@ -27,11 +27,11 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
-			<version>1.7.7</version>
+			<version>${slf4j.version}</version>
 		</dependency>
 
 		<!-- Database -->
@@ -194,7 +194,7 @@
 					<plugin>
 						<groupId>org.mortbay.jetty</groupId>
 						<artifactId>jetty-maven-plugin</artifactId>
-						<version>8.1.3.v20120416</version>
+						<version>${jetty.version}</version>
 						<configuration>
 							<scanIntervalSeconds>10</scanIntervalSeconds>
 							<contextPath>/</contextPath>

@@ -18,5 +18,7 @@
 		<pattern>/dashboard/**</pattern>
 		<pattern>/admin</pattern>
 		<pattern>/admin/**</pattern>
+		<pattern>/applications</pattern>
+		<pattern>/applications</pattern>
 	</decorator>
 </decorators> 

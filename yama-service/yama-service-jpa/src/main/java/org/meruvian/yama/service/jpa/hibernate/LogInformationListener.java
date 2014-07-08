@@ -19,13 +19,13 @@ import java.util.Date;
 
 import javax.inject.Inject;
 
-import org.hibernate.event.spi.AbstractPreDatabaseOperationEvent;
 import org.hibernate.event.spi.PreInsertEvent;
 import org.hibernate.event.spi.PreInsertEventListener;
 import org.hibernate.event.spi.PreUpdateEvent;
 import org.hibernate.event.spi.PreUpdateEventListener;
 import org.meruvian.yama.repository.DefaultPersistence;
 import org.meruvian.yama.repository.LogInformation;
+import org.meruvian.yama.repository.user.User;
 import org.meruvian.yama.service.SessionCredential;
 import org.springframework.stereotype.Component;
 
@@ -42,37 +42,69 @@ public class LogInformationListener implements PreInsertEventListener, PreUpdate
 		this.sessionCredential = sessionCredential;
 	}
 	
-	private boolean onPreInsertOrUpdate(AbstractPreDatabaseOperationEvent event) {
-		String username = sessionCredential.getCurrentUsername();
+	private String getCurrentUserId() {
+		User user = sessionCredential.getCurrentUser();
+		String userId = null;
+		
+		if (user != null) {
+			userId = user.getId();
+		}
+		
+		return userId;
+	}
+	
+	@Override
+	public boolean onPreInsert(PreInsertEvent event) {
+		String userId = getCurrentUserId();
+		
+		if (event.getEntity() instanceof DefaultPersistence) {
+			DefaultPersistence p = (DefaultPersistence) event.getEntity();
+			LogInformation logInfo = p.getLogInformation();
+		
+			logInfo.setCreateDate(new Date());
+			logInfo.setLastUpdateDate(new Date());
+			logInfo.setCreateBy(userId);
+			logInfo.setLastUpdateBy(userId);
+			
+			Object[] state = event.getState();
+			
+			for (int i = 0; i < state.length; i++) {
+				if (state[i] instanceof LogInformation) {
+					state[i] = logInfo;
+					
+					break;
+				}
+			}
+		}
+		
+		return false;
+	}
+
+	@Override
+	public boolean onPreUpdate(PreUpdateEvent event) {
+		String userId = getCurrentUserId();
 		
 		if (event.getEntity() instanceof DefaultPersistence) {
 			DefaultPersistence p = (DefaultPersistence) event.getEntity();
 			LogInformation logInfo = p.getLogInformation();
 			
-			if (event instanceof PreUpdateEventListener) {
-				logInfo.setLastUpdateDate(new Date());
-				logInfo.setLastUpdateBy(username);
-			} else if (event instanceof PreInsertEventListener) {
-				logInfo.setCreateDate(new Date());
-				logInfo.setLastUpdateDate(new Date());
-				logInfo.setCreateBy(username);
-				logInfo.setLastUpdateBy(username);
-			}
+			Object[] oldState = event.getOldState();
 			
-			return false;
+			for (int i = 0; i < oldState.length; i++) {
+				if (oldState[i] instanceof LogInformation) {
+					LogInformation oldLogInfo = (LogInformation) oldState[i];
+					
+					logInfo.setCreateDate(oldLogInfo.getCreateDate());
+					logInfo.setLastUpdateDate(new Date());
+					logInfo.setCreateBy(oldLogInfo.getCreateBy());
+					logInfo.setLastUpdateBy(userId);
+					logInfo.setActiveFlag(oldLogInfo.getActiveFlag());
+					
+					break;
+				}
+			}
 		}
 		
-		return true;
+		return false;
 	}
-	
-	@Override
-	public boolean onPreInsert(PreInsertEvent event) {
-		return onPreInsertOrUpdate(event);
-	}
-
-	@Override
-	public boolean onPreUpdate(PreUpdateEvent event) {
-		return onPreInsertOrUpdate(event);
-	}
-
 }

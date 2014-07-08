@@ -1,16 +1,16 @@
 <html>
 	<head>
-		<title><@s.text name="page.admin.role.title" /></title>
+		<title><@s.text name="page.application.title" /></title>
 	</head>
 	<body>
-		<content tag="header"><@s.text name="page.admin.role.header" /></content>
+		<content tag="header"><@s.text name="page.application.header" /></content>
 		<content tag="script">
 		<script type="text/javascript" src="<@s.url value="/scripts/jquery/simple-pagination.js" />"></script>
 		<script type="text/javascript">
 		$(function() {
 			$('#pagination').pagination({
-				pages: ${roles.totalPages},
-				currentPage: ${roles.number},
+				pages: ${apps.totalPages},
+				currentPage: ${apps.number},
 				hrefTextPrefix: '?q=${q!}&max=${max!}&page='
 			});
 		});
@@ -18,7 +18,7 @@
 		</content>
 		<div class="row">
 			<div class="col-md-6">
-				<a href="<@s.url value="/admin/roles/-/edit" />" class="btn btn-default col-md-3"><@s.text name="button.main.add" /></a>
+				<a href="<@s.url value="/applications/-/edit" />" class="btn btn-default col-md-3"><@s.text name="button.main.register" /></a>
 			</div>
 			<div class="col-md-6">
 				<@s.form theme="bootstrap" method="GET">
@@ -40,24 +40,17 @@
 							<table class="table">
 								<thead>
 									<tr>
-										<th><@s.text name="label.admin.role.name" /></th>
-										<th><@s.text name="label.admin.role.description" /></th>
-										<th><@s.text name="label.admin.role.enabled" /></th>
+										<th><@s.text name="label.application.id" /></th>
+										<th><@s.text name="label.application.name" /></th>
+										<th><@s.text name="label.application.site" /></th>
 									</tr>
 								</thead>
 								<tbody>
-									<#list roles.content as r>
+									<#list apps.content as r>
 									<tr>
-										<td><a href="<@s.url value="/admin/roles/${(r.name!'')?upper_case}/edit" />">${(r.name!"")?upper_case}</a></td>
-										<td>${r.description!}</td>
-										<td>
-											<#assign status = r.logInformation.activeFlag />
-											<#if status == 0>
-											<span class="glyphicon glyphicon-unchecked"></span>
-											<#elseif status == 1>
-											<span class="glyphicon glyphicon-check"></span>
-											</#if>
-										</td>
+										<td><a href="<@s.url value="/applications/${r.id!}/edit" />">${r.id!}</a></td>
+										<td>${r.displayName!}</td>
+										<td>${r.site!}</td>
 									</tr>
 									</#list>
 								</tbody>
@@ -70,7 +63,7 @@
 								<div id="pagination"></div>
 							</div>
 							<div class="col-md-6">
-								<div class="pagination alert pull-right">Found ${roles.numberOfElements} entries</div>
+								<div class="pagination alert pull-right">Found ${apps.numberOfElements} entries</div>
 							</div>
 						</div>
 					</div>

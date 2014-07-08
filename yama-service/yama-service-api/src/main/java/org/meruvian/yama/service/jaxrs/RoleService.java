@@ -25,6 +25,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import org.meruvian.yama.repository.role.DefaultRole;
 import org.meruvian.yama.repository.role.Role;
 import org.springframework.data.domain.Page;
 
@@ -49,5 +50,5 @@ public interface RoleService {
 	boolean removeRole(@PathParam("name") String name);
 
 	@POST
-	Role saveRole(Role role);
+	Role saveRole(DefaultRole role);
 }

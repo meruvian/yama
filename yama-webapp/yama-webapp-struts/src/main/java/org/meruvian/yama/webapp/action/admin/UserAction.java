@@ -90,11 +90,13 @@ public class UserAction extends ActionSupport {
 			}
 		}
 		
-		for (String r : roles) {
-			DefaultRole role = new DefaultRole();
-			role.setName(r);
-			
-			userManager.addRoleToUser(u, role);
+		if (roles != null) {
+			for (String r : roles) {
+				DefaultRole role = new DefaultRole();
+				role.setName(r);
+				
+				userManager.addRoleToUser(u, role);
+			}
 		}
 		
 		return new ActionResult("redirect", redirectUri);
@@ -124,10 +126,17 @@ public class UserAction extends ActionSupport {
 	}
 	
 	private void validateUser(DefaultUser user, String confirmPassword) {
+		User u = userManager.getUserById(user.getId());
+		String username = u == null ? "" : u.getUsername();
+		String email = u == null ? "" : u.getEmail();
+		
 		if (StringUtils.isBlank(user.getUsername())) {
 			addFieldError("user.username", getText("message.admin.user.username.notempty"));
-		} else if (userManager.getUserByUsername(user.getUsername()) != null) {
-			addFieldError("user.username", getText("message.admin.user.username.exist"));
+		} else {
+			if (!StringUtils.equals(username, user.getUsername())) {
+				if (userManager.getUserByUsername(user.getUsername()) != null)
+					addFieldError("user.username", getText("message.admin.user.username.exist"));
+			}
 		}
 			
 		if (StringUtils.isBlank(user.getEmail())) {
@@ -136,8 +145,6 @@ public class UserAction extends ActionSupport {
 			addFieldError("user.email", getText("message.admin.user.username.notvalid"));
 		} else {
 			if (StringUtils.isNotBlank(user.getId())) {
-				String email = userManager.getUserById(user.getId()).getEmail();
-			
 				if (!StringUtils.equals(email, user.getEmail())) {
 					if (userManager.getUserByEmail(user.getEmail()) != null)
 						addFieldError("user.email", getText("message.admin.user.username.exist"));
@@ -148,7 +155,7 @@ public class UserAction extends ActionSupport {
 			}
 		}
 		
-		if(StringUtils.isBlank(user.getPassword())) {
+		if(StringUtils.isBlank(user.getPassword()) && StringUtils.isBlank(user.getId())) {
 			addFieldError("user.password", getText("message.admin.user.password.notempty"));
 		}
 		

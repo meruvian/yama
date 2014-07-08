@@ -27,6 +27,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import org.meruvian.yama.repository.role.Role;
+import org.meruvian.yama.repository.user.DefaultUser;
 import org.meruvian.yama.repository.user.User;
 import org.springframework.data.domain.Page;
 
@@ -51,7 +52,7 @@ public interface UserService {
 	boolean removeUser(@PathParam("username") String username);
 
 	@POST
-	User saveUser(User user);
+	User saveUser(DefaultUser user);
 
 	@POST
 	@Path("/{username}/password")
@@ -60,14 +61,15 @@ public interface UserService {
 			@FormParam("nPassword") String newPassword);
 	
 	@POST
-	@Path("/{username}/role")
+	@Path("/{username}/roles")
 	boolean addRoleToUser(@PathParam("username") String username, String roleName);
 	
 	@DELETE
-	@Path("/{username}/role")
+	@Path("/{username}/roles")
 	boolean removeRoleFromUser(@PathParam("username") String username, String roleName);
 	
-	
+	@GET
+	@Path("/{username}/roles")
 	Page<? extends Role> findRoleByUser(@PathParam("username") String username, 
 			@QueryParam("max") @DefaultValue("10") int max,
 			@QueryParam("page") @DefaultValue("0") int page);
