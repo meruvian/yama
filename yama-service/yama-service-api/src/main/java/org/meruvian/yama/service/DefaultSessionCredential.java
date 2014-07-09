@@ -20,6 +20,7 @@ import java.util.Collection;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import org.meruvian.yama.service.security.DefaultUserDetails;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -45,6 +46,7 @@ public class DefaultSessionCredential implements SessionCredential {
 	}
 	
 	@Inject
+	@Named("userService")
 	public void setUserDetailsService(UserDetailsService userDetailsService) {
 		this.userDetailsService = userDetailsService;
 	}
