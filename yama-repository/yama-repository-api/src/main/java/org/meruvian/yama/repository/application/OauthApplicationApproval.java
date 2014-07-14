@@ -15,22 +15,25 @@
  */
 package org.meruvian.yama.repository.application;
 
-import org.meruvian.yama.repository.DefaultRepository;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import java.util.Date;
+
+import org.meruvian.yama.repository.DefaultPersistence;
+import org.meruvian.yama.repository.Updateable;
 
 /**
  * @author Dian Aditya
- *
+ * 
  */
-public interface ApplicationRepository<T extends Application> extends DefaultRepository<T> {
-	T findById(String id);
-	
-	T findByNamespace(String name);
-	
-	Page<T> findByNamespaceStartingWith(String name, Pageable pageable);
-	
-	Page<T> findByDisplayNameStartingWith(String name, Pageable pageable);
-	
-	Page<T> findByLogInformationCreateBy(String userId, Pageable pageable);
+public interface OauthApplicationApproval extends DefaultPersistence, Updateable<OauthApplicationApproval> {
+	public enum ApprovalStatus {
+		APPROVED, DENIED;
+	}
+
+	public String getClientId();
+
+	public String getScope();
+
+	public ApprovalStatus getStatus();
+
+	public Date getExpiresAt();
 }

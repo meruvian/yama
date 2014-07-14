@@ -23,14 +23,12 @@ import org.springframework.data.domain.Pageable;
  * @author Dian Aditya
  *
  */
-public interface ApplicationRepository<T extends Application> extends DefaultRepository<T> {
-	T findById(String id);
+public interface OauthApplicationApprovalRepository<T extends OauthApplicationApproval> extends DefaultRepository<T> {
+	OauthApplicationApproval findByLogInformationCreateByAndClientIdAndScope(String userId, String clientId, String scope);
 	
-	T findByNamespace(String name);
+	Page<? extends OauthApplicationApproval> findByLogInformationCreateByAndClientId(String userId, String clientId, Pageable pageable);
 	
-	Page<T> findByNamespaceStartingWith(String name, Pageable pageable);
+	Page<? extends OauthApplicationApproval> findByClientId(String clientId, Pageable pageable);
 	
-	Page<T> findByDisplayNameStartingWith(String name, Pageable pageable);
-	
-	Page<T> findByLogInformationCreateBy(String userId, Pageable pageable);
+	Page<? extends OauthApplicationApproval> findByLogInformationCreateBy(String userId, Pageable pageable);
 }
