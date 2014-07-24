@@ -11,6 +11,9 @@
 			<@s.form action="/oauth/authorize" method="post" theme="bootstrap">
 				<div class="body bg-gray">
 					<@s.hidden name="user_oauth_approval" value="true" />
+					<#list scopes as s>
+					<input type="hidden" name="scope.${s}" value="true" />
+					</#list>
 					<h4>
 						<@s.text name="label.oauth.approval">
 							<@s.param><strong>${app.displayName!}</strong></@s.param>

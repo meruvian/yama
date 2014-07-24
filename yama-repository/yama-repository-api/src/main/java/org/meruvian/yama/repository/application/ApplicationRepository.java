@@ -33,4 +33,6 @@ public interface ApplicationRepository<T extends Application> extends DefaultRep
 	Page<T> findByDisplayNameStartingWith(String name, Pageable pageable);
 	
 	Page<T> findByLogInformationCreateBy(String userId, Pageable pageable);
+	
+	Page<T> findByLogInformationCreateByAndDisplayNameStartingWith(String userId, String name, Pageable pageable);
 }

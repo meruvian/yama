@@ -21,10 +21,6 @@
 		<sc:access-denied-handler ref="oauthAccessDeniedHandler" />
 	</sc:http>
 
-	<bean id="oauthAuthenticationEntryPoint" class="org.springframework.security.oauth2.provider.error.OAuth2AuthenticationEntryPoint">
-		<property name="realmName" value="yama" />
-	</bean>
-
 	<bean id="clientAuthenticationEntryPoint" class="org.springframework.security.oauth2.provider.error.OAuth2AuthenticationEntryPoint">
 		<property name="realmName" value="yama/client" />
 		<property name="typeName" value="Basic" />
@@ -54,7 +50,14 @@
 		<constructor-arg ref="clientDetailsService" />
 	</bean>
 	
-	<bean id="tokenEnhancer" class="org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter" />
+	<bean id="tokenConverter" class="org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter">
+		<property name="signingKey" value="yama" />
+	</bean>
+	
+	<bean id="tokenEnhancer" class="org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter">
+		<property name="signingKey" value="yama" />
+		<property name="accessTokenConverter" ref="tokenConverter" />
+	</bean>	
 	
 	<!-- Used for the persistence of tokens -->
 	<bean id="tokenStore" class="org.springframework.security.oauth2.provider.token.store.JwtTokenStore">
@@ -83,7 +86,7 @@
 	<!-- authorization-server aka AuthorizationServerTokenServices is an interface 
 		that defines everything necessary for token management -->
 	<oauth2:authorization-server client-details-service-ref="clientDetailsService" token-services-ref="tokenServices"
-		user-approval-handler-ref="userApprovalHandler" user-approval-page="redirect:/oauth/approval">
+		user-approval-handler-ref="userApprovalHandler" user-approval-page="redirect:/oauth/approval" error-page="redirect:/oauth/error">
 		<oauth2:authorization-code />
 		<oauth2:implicit />
 		<oauth2:refresh-token />
@@ -91,7 +94,7 @@
 		<oauth2:password />
 	</oauth2:authorization-server>
 
-	<!-- ClientsDeailsService: Entry Point to clients database (given is in memory implementation) -->
+	<!-- ClientsDeailsService: Entry Point to clients database -->
 	<bean id="clientDetailsService" class="org.meruvian.yama.service.security.oauth2.DefaultClientDetailsService" />
 
 	<sc:global-method-security pre-post-annotations="enabled" proxy-target-class="true">

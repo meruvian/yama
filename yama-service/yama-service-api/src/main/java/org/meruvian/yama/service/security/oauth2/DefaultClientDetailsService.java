@@ -15,12 +15,16 @@
  */
 package org.meruvian.yama.service.security.oauth2;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import org.meruvian.yama.repository.application.Application;
 import org.meruvian.yama.service.ApplicationManager;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.provider.ClientDetails;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.ClientRegistrationException;
@@ -32,10 +36,32 @@ import org.springframework.security.oauth2.provider.client.BaseClientDetails;
  */
 public class DefaultClientDetailsService implements ClientDetailsService {
 	private ApplicationManager applicationManager;
-
+	private Collection<String> authorizedGrantTypes;
+	private Collection<String> scopes;
+	private Collection<String> resourceIds = new ArrayList<String>();
+	
+	
 	@Inject
 	public void setApplicationManager(ApplicationManager applicationManager) {
 		this.applicationManager = applicationManager;
+	}
+	
+	@PostConstruct
+	public void postConstruct() {
+		if (authorizedGrantTypes == null) {
+			authorizedGrantTypes = new ArrayList<String>();
+			authorizedGrantTypes.add("authorization_code");
+			authorizedGrantTypes.add("refresh_token");
+			authorizedGrantTypes.add("implicit");
+			authorizedGrantTypes.add("password");
+		}
+		
+		if (scopes == null) {
+			scopes = new ArrayList<String>();
+			scopes.add("read");
+			scopes.add("write");
+			scopes.add("trust");
+		}
 	}
 	
 	@Override
@@ -46,11 +72,27 @@ public class DefaultClientDetailsService implements ClientDetailsService {
 		BaseClientDetails details = new BaseClientDetails();
 		details.setClientId(application.getId());
 		details.setClientSecret(application.getSecret());
-		details.setAuthorizedGrantTypes(Arrays.asList("password", "authorization_code", "refresh_token", "implicit"));
-		details.setScope(Arrays.asList("read", "write", "trust"));
-		details.setResourceIds(Arrays.asList("yama"));
-
+		details.setAuthorizedGrantTypes(authorizedGrantTypes);
+		details.setScope(scopes);
+		details.setResourceIds(resourceIds);
+		details.setRegisteredRedirectUri(application.getRegisteredRedirectUris());
+		if (application.isAutoApprove())
+			details.setAutoApproveScopes(Arrays.asList("true"));
+		details.setAccessTokenValiditySeconds(application.getAccessTokenValiditySeconds());
+		details.setRefreshTokenValiditySeconds(application.getRefreshTokenValiditySeconds());
+		
 		return details;
 	}
 
+	public void setAuthorizedGrantTypes(Collection<String> authoritizedGrantTypes) {
+		this.authorizedGrantTypes = authoritizedGrantTypes;
+	}
+	
+	public void setScopes(Collection<String> scopes) {
+		this.scopes = scopes;
+	}
+	
+	public void setResourceIds(Collection<String> resourceIds) {
+		this.resourceIds = resourceIds;
+	}
 }

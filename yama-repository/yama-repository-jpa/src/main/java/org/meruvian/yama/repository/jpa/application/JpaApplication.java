@@ -15,11 +15,17 @@
  */
 package org.meruvian.yama.repository.jpa.application;
 
+import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Index;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
+import org.apache.commons.lang3.StringUtils;
 import org.meruvian.yama.repository.application.Application;
 import org.meruvian.yama.repository.jpa.DefaultJpaPersistence;
 import org.meruvian.yama.repository.jpa.JpaLogInformation;
@@ -36,7 +42,14 @@ public class JpaApplication extends DefaultJpaPersistence implements Application
 	private String displayName;
 	private String domain;
 	private String site;
-
+	private String redirectUris;
+	private String scopes;
+	private String authorizedGrantTypes;
+	private boolean autoApprove = false;
+	private Integer accessTokenValiditySeconds;
+	private Integer refreshTokenValiditySeconds;
+	private String resourceIds;
+	
 	public JpaApplication() {}
 	
 	public JpaApplication(Application application) {
@@ -90,6 +103,126 @@ public class JpaApplication extends DefaultJpaPersistence implements Application
 		this.site = site;
 	}
 
+	@Column(name = "registered_redirect_uri")
+	public String getRegisteredRedirectUri() {
+		return StringUtils.join(getRegisteredRedirectUris(), ',');
+	}
+	
+	protected void setRegisteredRedirectUri(String redirectUri) {
+		this.redirectUris = redirectUri;
+	}
+	
+	@Override
+	@Transient
+	public Set<String> getRegisteredRedirectUris() {
+		String[] redirectUris = StringUtils.split(this.redirectUris, ',');
+		if (redirectUris == null) return new LinkedHashSet<String>();
+		
+		return new LinkedHashSet<String>(Arrays.asList(redirectUris));
+	}
+	
+	public void setRegisteredRedirectUri(Set<String> uris) {
+		this.redirectUris = StringUtils.join(uris, ',');
+	}
+	
+	@Column(name = "scope")
+	public String getScope() {
+		return StringUtils.join(getScopes(), ',');
+	}
+	
+	protected void setScope(String scope) {
+		this.scopes = scope;
+	}
+	
+	@Override
+	@Transient
+	public Set<String> getScopes() {
+		String[] scopes = StringUtils.split(this.scopes, ',');
+		if (scopes == null) return new LinkedHashSet<String>();
+		
+		return new LinkedHashSet<String>(Arrays.asList(scopes));
+	}
+	
+	public void setScopes(Set<String> scopes) {
+		this.scopes = StringUtils.join(scopes, ',');
+	}
+	
+	@Column(name = "authorized_grant_type")
+	public String getAuthorizedGrantType() {
+		return StringUtils.join(getAuthorizedGrantTypes(), ',');
+	}
+	
+	protected void setAuthorizedGrantType(String authorizedGrantType) {
+		this.authorizedGrantTypes = authorizedGrantType;
+	}
+	
+	@Override
+	@Transient
+	public Set<String> getAuthorizedGrantTypes() {
+		String[] authorizedGrantTypes = StringUtils.split(this.authorizedGrantTypes, ',');
+		if (authorizedGrantTypes == null) return new LinkedHashSet<String>();
+		
+		return new LinkedHashSet<String>(Arrays.asList(authorizedGrantTypes));
+	}
+	
+	public void setAuthorizedGrantTypes(Set<String> authorizedGrantTypes) {
+		this.authorizedGrantTypes = StringUtils.join(authorizedGrantTypes, ',');
+	}
+	
+	@Override
+	@Column(name = "auto_approve")
+	public boolean isAutoApprove() {
+		return this.autoApprove;
+	}
+	
+	public void setAutoApprove(Boolean autoApprove) {
+		if (autoApprove == null) autoApprove = false;
+		
+		this.autoApprove = autoApprove;
+	}
+
+	@Override
+	@Column(name = "access_token_validity_seconds")
+	public Integer getAccessTokenValiditySeconds() {
+		return this.accessTokenValiditySeconds;
+	}
+	
+	public void setAccessTokenValiditySeconds(Integer accessTokenValiditySeconds) {
+		this.accessTokenValiditySeconds = accessTokenValiditySeconds;
+	}
+
+	@Override
+	@Column(name = "refresh_token_validity_seconds")
+	public Integer getRefreshTokenValiditySeconds() {
+		return this.refreshTokenValiditySeconds;
+	}
+	
+	public void setRefreshTokenValiditySeconds(Integer refreshTokenValiditySeconds) {
+		this.refreshTokenValiditySeconds = refreshTokenValiditySeconds;
+	}
+	
+	@Column(name = "resource_id")
+	public String getResourceId() {
+		return StringUtils.join(getResourceIds(), ',');
+	}
+	
+	protected void setResourceId(String resourceId) {
+		this.resourceIds = resourceId;
+	}
+
+	@Override
+	@Transient
+	public Set<String> getResourceIds() {
+		String[] resourceIds = StringUtils.split(this.resourceIds, ',');
+		if (resourceIds == null) return new LinkedHashSet<String>();
+		
+		return new LinkedHashSet<String>(Arrays.asList(resourceIds));
+	}
+	
+	public void setResourceIds(Set<String> resourceIds) {
+		this.resourceIds = StringUtils.join(resourceIds, ',');
+	}
+	
 	@Override
 	public void update(Application application) {
 		this.id = application.getId();
@@ -99,6 +232,12 @@ public class JpaApplication extends DefaultJpaPersistence implements Application
 		this.displayName = application.getDisplayName();
 		this.domain = application.getDomain();
 		this.site = application.getSite();
+		this.setRegisteredRedirectUri(application.getRegisteredRedirectUris());
+		this.setScopes(application.getScopes());
+		this.setAuthorizedGrantTypes(application.getAuthorizedGrantTypes());
+		this.autoApprove = application.isAutoApprove();
+		this.accessTokenValiditySeconds = application.getAccessTokenValiditySeconds();
+		this.refreshTokenValiditySeconds = application.getRefreshTokenValiditySeconds();
+		this.setResourceIds(application.getResourceIds());
 	}
-	
 }

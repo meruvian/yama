@@ -26,6 +26,12 @@
 							<@s.textfield key="label.application.name" name="app.displayName" />
 							<@s.textfield key="label.application.site" name="app.site" />
 							
+							<#if isAdmin>
+							<@s.checkbox key="label.application.autoapprove" name="app.autoApprove" fieldValue="true" />
+							</#if>
+							
+							<@s.textfield key="label.application.redirecturi" name="app.registeredRedirectUris" value="${redirectUri!}" />
+							
 							<@s.submit cssClass="btn btn-primary col-md-3" value="%{getText('button.main.save')}" />
 						</@s.form>
 					</div>

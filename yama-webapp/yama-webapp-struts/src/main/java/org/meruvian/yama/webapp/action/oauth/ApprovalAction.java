@@ -17,6 +17,7 @@ package org.meruvian.yama.webapp.action.oauth;
 
 import javax.inject.Inject;
 
+import org.apache.commons.lang3.StringUtils;
 import org.meruvian.inca.struts2.rest.ActionResult;
 import org.meruvian.inca.struts2.rest.annotation.Action;
 import org.meruvian.inca.struts2.rest.annotation.ActionParam;
@@ -33,9 +34,10 @@ public class ApprovalAction {
 	private ApplicationManager applicationManager;
 	
 	@Action(name = "/approval")
-	public ActionResult approvalForm(@ActionParam("client_id") String clientId) {
+	public ActionResult approvalForm(@ActionParam("client_id") String clientId, @ActionParam("scope") String scope) {
 		Application application = applicationManager.getApplicationById(clientId);
+		String[] scopes = StringUtils.split(scope);
 		
-		return new ActionResult("freemarker", "/view/oauth/approval.ftl").addToModel("app", application);
+		return new ActionResult("freemarker", "/view/oauth/approval.ftl").addToModel("app", application).addToModel("scopes", scopes);
 	}
 }

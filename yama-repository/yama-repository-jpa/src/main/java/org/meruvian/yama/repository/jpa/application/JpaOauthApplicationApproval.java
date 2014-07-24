@@ -35,7 +35,7 @@ import org.meruvian.yama.repository.jpa.JpaLogInformation;
 public class JpaOauthApplicationApproval extends DefaultJpaPersistence implements OauthApplicationApproval {
 	private String clientId;
 	private String scope;
-	private ApprovalStatus status;
+	private ApprovalStatus status = ApprovalStatus.APPROVED;
 	private Date expiresAt;
 
 	@Override

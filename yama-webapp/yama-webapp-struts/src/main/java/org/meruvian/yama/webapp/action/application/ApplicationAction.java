@@ -53,12 +53,16 @@ public class ApplicationAction extends ActionSupport {
 	@Action(name = "/{name}/edit", method = HttpMethod.GET)
 	public ActionResult appForm(@ActionParam("name") String name) {
 		ActionResult actionResult = new ActionResult("freemarker", "/view/application/application-form.ftl");
+		Application app = new DefaultApplication();
 		
 		if (!StringUtils.equalsIgnoreCase(name, "-")) {
-			Application app = appManager.getApplicationById(name);
-			actionResult.addToModel("app", app);
-		} else {
-			actionResult.addToModel("app", new DefaultApplication());
+			app = appManager.getApplicationById(name);
+		}
+		
+		actionResult.addToModel("app", app);
+		
+		if (app.getRegisteredRedirectUris() != null || app.getRegisteredRedirectUris().size() > 0) {
+			actionResult.addToModel("redirectUri", app.getRegisteredRedirectUris().iterator().next());
 		}
 		
 		return actionResult;
@@ -69,7 +73,12 @@ public class ApplicationAction extends ActionSupport {
 		validateApplication(app, name);
 		
 		if (hasFieldErrors()) {
-			return new ActionResult("freemarker", "/view/application/application-form.ftl");
+			ActionResult actionResult = new ActionResult("freemarker", "/view/application/application-form.ftl");
+			if (app.getRegisteredRedirectUris() != null || app.getRegisteredRedirectUris().size() > 0) {
+				actionResult.addToModel("redirectUri", app.getRegisteredRedirectUris().iterator().next());
+			}
+			
+			return actionResult;
 		}
 		
 		Application r = appManager.saveApplication(app);
@@ -97,6 +106,12 @@ public class ApplicationAction extends ActionSupport {
 		UrlValidator validator = new UrlValidator(new String[]{ "http", "https" });
 		if (!validator.isValid(app.getSite())) {
 			addFieldError("app.site", getText("message.application.site.notvalid"));
+		}
+		
+		for (String redirectUri : app.getRegisteredRedirectUris()) {
+			if (!validator.isValid(redirectUri)) {
+				addFieldError("app.registeredRedirectUris", getText("message.application.redirecturi.notvalid"));
+			}
 		}
 	}
 }
