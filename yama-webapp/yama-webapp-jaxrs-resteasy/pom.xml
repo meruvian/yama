@@ -78,22 +78,6 @@
 		</dependency>
 		
 		<dependency>
-			<groupId>org.apache.oltu.oauth2</groupId>
-			<artifactId>org.apache.oltu.oauth2.authzserver</artifactId>
-			<version>${oltu.oauth2.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.oltu.oauth2</groupId>
-			<artifactId>org.apache.oltu.oauth2.resourceserver</artifactId>
-			<version>${oltu.oauth2.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.oltu.oauth2</groupId>
-			<artifactId>org.apache.oltu.oauth2.resourceserver-filter</artifactId>
-			<version>${oltu.oauth2.version}</version>
-		</dependency>
-
-		<dependency>
 			<groupId>org.freemarker</groupId>
 			<artifactId>freemarker</artifactId>
 			<version>2.3.19</version>
