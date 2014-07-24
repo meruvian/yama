@@ -13,16 +13,24 @@ mvn test -Pyama-jaxrs-re-run
 Please change the yama.properties under /src/main/resource
 # database setting
 db.url=jdbc:mysql://localhost:3306/yama
+
 db.driver=com.mysql.jdbc.Driver
+
 db.datasource=com.mysql.jdbc.jdbc2.optional.MysqlDataSource
+
 db.username=root
+
 db.password=meruvian
 
 # initialization
 init.username=admin
+
 init.password=admin123
+
 init.email=yama@meruvian.org
+
 init.role.admin=administrator
+
 init.role.user=user
 
 Socmed integration 
