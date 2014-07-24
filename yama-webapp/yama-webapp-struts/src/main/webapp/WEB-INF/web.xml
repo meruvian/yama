@@ -4,11 +4,27 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
 	<display-name>Meruvian Yama</display-name>
 
+	<servlet>
+		<servlet-name>mvc-dispatcher</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath:/applicationContext-mvc.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>mvc-dispatcher</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
 			classpath:/applicationContext.xml
 			classpath:/applicationContext-persistence.xml
+			classpath:/applicationContext-security-oauth.xml
 			classpath:/applicationContext-security.xml
 			classpath:/applicationContext-social.xml
 		</param-value>
@@ -18,7 +34,6 @@
 		<param-name>log4jConfigLocation</param-name>
 		<param-value>classpath:/log4j.properties</param-value>
 	</context-param>
-	
 
 	<filter>
 		<filter-name>openEntityManagerInView</filter-name>
@@ -43,6 +58,10 @@
 	<filter>
 		<filter-name>struts-prepare</filter-name>
 		<filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareFilter</filter-class>
+		<init-param>
+			<param-name></param-name>
+			<param-value></param-value>
+		</init-param>
 	</filter>
 
 	<filter-mapping>
@@ -80,7 +99,7 @@
 			<param-name>default_encoding</param-name>
 			<param-value>UTF-8</param-value>
 		</init-param>
-		<load-on-startup>1</load-on-startup>
+		<load-on-startup>2</load-on-startup>
 	</servlet>
 
 	<servlet-mapping>

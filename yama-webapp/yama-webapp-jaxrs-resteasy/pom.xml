@@ -39,6 +39,16 @@
 			<artifactId>spring-aspects</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
 
 		<!-- Spring Security -->
 		<dependency>
@@ -61,23 +71,12 @@
 			<artifactId>spring-security-oauth2</artifactId>
 			<version>${spring.security.oauth.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-jwt</artifactId>
+			<version>${spring.security.jwt.version}</version>
+		</dependency>
 		
-		<dependency>
-			<groupId>org.apache.oltu.oauth2</groupId>
-			<artifactId>org.apache.oltu.oauth2.authzserver</artifactId>
-			<version>${oltu.oauth2.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.oltu.oauth2</groupId>
-			<artifactId>org.apache.oltu.oauth2.resourceserver</artifactId>
-			<version>${oltu.oauth2.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.oltu.oauth2</groupId>
-			<artifactId>org.apache.oltu.oauth2.resourceserver-filter</artifactId>
-			<version>${oltu.oauth2.version}</version>
-		</dependency>
-
 		<dependency>
 			<groupId>org.freemarker</groupId>
 			<artifactId>freemarker</artifactId>

@@ -15,6 +15,8 @@
  */
 package org.meruvian.yama.repository.application;
 
+import java.util.Set;
+
 import org.meruvian.yama.repository.DefaultPersistence;
 import org.meruvian.yama.repository.Updateable;
 
@@ -32,4 +34,18 @@ public interface Application extends DefaultPersistence, Updateable<Application>
 	String getDomain();
 	
 	String getSite();
+	
+	Set<String> getResourceIds();
+	
+	Set<String> getRegisteredRedirectUris();
+	
+	Set<String> getScopes();
+	
+	boolean isAutoApprove();
+	
+	Set<String> getAuthorizedGrantTypes();
+	
+	Integer getAccessTokenValiditySeconds();
+
+	Integer getRefreshTokenValiditySeconds();
 }

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:sc="http://www.springframework.org/schema/security" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:oauth2="http://www.springframework.org/schema/security/oauth2"
+	xsi:schemaLocation="http://www.springframework.org/schema/security/oauth2 http://www.springframework.org/schema/security/spring-security-oauth2.xsd
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<sc:http pattern="/oauth/cache_approvals" security="none" />
+	<sc:http pattern="/oauth/uncache_approvals" security="none" />
+
+	<sc:http pattern="/oauth/token" create-session="stateless" authentication-manager-ref="clientAuthenticationManager">
+		<sc:intercept-url pattern="/oauth/token" access="IS_AUTHENTICATED_FULLY" />
+		<sc:anonymous enabled="false" />
+		<sc:http-basic entry-point-ref="clientAuthenticationEntryPoint" />
+		<!-- include this only if you need to authenticate clients via request parameters -->
+		<sc:custom-filter ref="clientCredentialsTokenEndpointFilter" after="BASIC_AUTH_FILTER" />
+		<sc:access-denied-handler ref="oauthAccessDeniedHandler" />
+	</sc:http>
+
+	<bean id="clientAuthenticationEntryPoint" class="org.springframework.security.oauth2.provider.error.OAuth2AuthenticationEntryPoint">
+		<property name="realmName" value="yama/client" />
+		<property name="typeName" value="Basic" />
+	</bean>
+
+	<bean id="oauthAccessDeniedHandler" class="org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler" />
+
+	<bean id="clientCredentialsTokenEndpointFilter" class="org.springframework.security.oauth2.provider.client.ClientCredentialsTokenEndpointFilter">
+		<property name="authenticationManager" ref="clientAuthenticationManager" />
+	</bean>
+
+	<bean id="accessDecisionManager" class="org.springframework.security.access.vote.UnanimousBased">
+		<constructor-arg>
+			<list>
+				<bean class="org.springframework.security.oauth2.provider.vote.ScopeVoter" />
+				<bean class="org.springframework.security.access.vote.RoleVoter" />
+				<bean class="org.springframework.security.access.vote.AuthenticatedVoter" />
+			</list>
+		</constructor-arg>
+	</bean>
+
+	<sc:authentication-manager id="clientAuthenticationManager">
+		<sc:authentication-provider user-service-ref="clientDetailsUserService" />
+	</sc:authentication-manager>
+
+	<bean id="clientDetailsUserService" class="org.springframework.security.oauth2.provider.client.ClientDetailsUserDetailsService">
+		<constructor-arg ref="clientDetailsService" />
+	</bean>
+	
+	<bean id="tokenConverter" class="org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter">
+		<property name="signingKey" value="yama" />
+	</bean>
+	
+	<bean id="tokenEnhancer" class="org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter">
+		<property name="signingKey" value="yama" />
+		<property name="accessTokenConverter" ref="tokenConverter" />
+	</bean>	
+	
+	<!-- Used for the persistence of tokens -->
+	<bean id="tokenStore" class="org.springframework.security.oauth2.provider.token.store.JwtTokenStore">
+		<constructor-arg ref="tokenEnhancer" />
+	</bean>
+
+	<!-- Used to create token and and every thing about them except for their 
+		persistence that is reposibility of TokenStore (Given here is a default implementation) -->
+	<bean id="tokenServices" class="org.springframework.security.oauth2.provider.token.DefaultTokenServices">
+		<property name="tokenStore" ref="tokenStore" />
+		<property name="supportRefreshToken" value="true" />
+		<property name="clientDetailsService" ref="clientDetailsService" />
+		<property name="tokenEnhancer" ref="tokenEnhancer" />
+	</bean>
+	
+	<bean id="requestFactory" class="org.springframework.security.oauth2.provider.request.DefaultOAuth2RequestFactory">
+		<constructor-arg ref="clientDetailsService" />
+	</bean>
+	
+	<bean id="userApprovalHandler" class="org.springframework.security.oauth2.provider.approval.ApprovalStoreUserApprovalHandler">
+		<property name="approvalStore" ref="jpaOauthApplicationApprovalManager" />
+		<property name="clientDetailsService" ref="clientDetailsService" />
+		<property name="requestFactory" ref="requestFactory" />
+	</bean>
+
+	<!-- authorization-server aka AuthorizationServerTokenServices is an interface 
+		that defines everything necessary for token management -->
+	<oauth2:authorization-server client-details-service-ref="clientDetailsService" token-services-ref="tokenServices"
+		user-approval-handler-ref="userApprovalHandler" user-approval-page="redirect:/oauth/approval" error-page="redirect:/oauth/error">
+		<oauth2:authorization-code />
+		<oauth2:implicit />
+		<oauth2:refresh-token />
+		<oauth2:client-credentials />
+		<oauth2:password />
+	</oauth2:authorization-server>
+
+	<!-- ClientsDeailsService: Entry Point to clients database -->
+	<bean id="clientDetailsService" class="org.meruvian.yama.service.security.oauth2.DefaultClientDetailsService" />
+
+	<sc:global-method-security pre-post-annotations="enabled" proxy-target-class="true">
+		<!--you could also wire in the expression handler up at the layer of the  http filters. See https://jira.springsource.org/browse/SEC-1452 -->
+		<sc:expression-handler ref="oauthExpressionHandler" />
+	</sc:global-method-security>
+
+	<oauth2:expression-handler id="oauthExpressionHandler" />
+
+	<oauth2:web-expression-handler id="oauthWebExpressionHandler" />
+	
+	<bean id="tokenGranter" class="org.springframework.security.oauth2.provider.client.ClientCredentialsTokenGranter">
+		<constructor-arg ref="tokenServices" />
+		<constructor-arg ref="clientDetailsService" />
+		<constructor-arg ref="requestFactory" />
+	</bean>
+</beans>

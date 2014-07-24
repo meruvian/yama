@@ -13,26 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.meruvian.yama.webapp.oauth2.endpoint;
+package org.meruvian.yama.repository.application;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
+import java.util.Date;
 
-import com.sun.mail.iap.Response;
+import org.meruvian.yama.repository.DefaultPersistence;
+import org.meruvian.yama.repository.Updateable;
 
 /**
  * @author Dian Aditya
- *
+ * 
  */
-@Path("/oauth2/auth")
-@Produces(MediaType.APPLICATION_JSON)
-public interface AuthEndpoint {
-	@GET
-	Response authorize(@Context HttpServletRequest request);
-	
-	
+public interface OauthApplicationApproval extends DefaultPersistence, Updateable<OauthApplicationApproval> {
+	public enum ApprovalStatus {
+		APPROVED, DENIED;
+	}
+
+	public String getClientId();
+
+	public String getScope();
+
+	public ApprovalStatus getStatus();
+
+	public Date getExpiresAt();
 }

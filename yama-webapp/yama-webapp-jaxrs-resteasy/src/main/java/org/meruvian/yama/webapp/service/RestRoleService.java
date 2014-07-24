@@ -31,7 +31,7 @@ import org.springframework.stereotype.Service;
  *
  */
 @Service
-public class RestRoleService implements RoleService{
+public class RestRoleService implements RoleService {
 	@Inject
 	private RoleManager roleManager;
 	

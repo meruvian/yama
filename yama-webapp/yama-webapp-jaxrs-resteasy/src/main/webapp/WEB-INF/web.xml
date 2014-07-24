@@ -9,7 +9,7 @@
 		<param-value>
 			classpath:/applicationContext.xml
 			classpath:/applicationContext-persistence.xml
-			classpath:/applicationContext-security.xml
+			classpath:/applicationContext-security-oauth.xml
 		</param-value>
 	</context-param>
 	
@@ -64,7 +64,7 @@
 		<listener-class>org.jboss.resteasy.plugins.server.servlet.ResteasyBootstrap</listener-class>
 	</listener>
 	<listener>
-		<listener-class>org.jboss.resteasy.plugins.spring.SpringContextLoaderListener</listener-class>
+		<listener-class>org.meruvian.yama.webapp.resteasy.SpringContextLoaderListener</listener-class>
 	</listener>
 	<listener>
 		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>

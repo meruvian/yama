@@ -28,6 +28,7 @@ import org.meruvian.yama.repository.jpa.application.JpaApplicationRepository;
 import org.meruvian.yama.repository.jpa.user.JpaUserRepository;
 import org.meruvian.yama.repository.user.User;
 import org.meruvian.yama.service.ApplicationManager;
+import org.meruvian.yama.service.SessionCredential;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -42,6 +43,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class JpaApplicationManager implements ApplicationManager {
 	private JpaApplicationRepository applicationRepository;
 	private JpaUserRepository userRepository;
+	private SessionCredential sessionCredential;
 	private StringEncryptor encryptor;
 	
 	@Inject
@@ -52,6 +54,11 @@ public class JpaApplicationManager implements ApplicationManager {
 	@Inject
 	public void setUserRepository(JpaUserRepository userRepository) {
 		this.userRepository = userRepository;
+	}
+	
+	@Inject
+	public void setSessionCredential(SessionCredential sessionCredential) {
+		this.sessionCredential = sessionCredential;
 	}
 	
 	@Inject
@@ -72,6 +79,12 @@ public class JpaApplicationManager implements ApplicationManager {
 	@Override
 	public Page<JpaApplication> findApplicationByNamespace(String namespace, Pageable pageable) {
 		return applicationRepository.findByDisplayNameStartingWith(namespace, pageable);
+	}
+	
+	public Page<JpaApplication> findUsersApplicationByName(String name, Pageable pageable) {
+		String userId = sessionCredential.getCurrentUser().getId();
+		
+		return applicationRepository.findByLogInformationCreateByAndDisplayNameStartingWith(userId, name, pageable);
 	}
 
 	@Override

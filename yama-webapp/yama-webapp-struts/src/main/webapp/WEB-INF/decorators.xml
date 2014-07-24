@@ -11,6 +11,7 @@
 	<decorator name="frontpage" page="/view/decorator/default/frontpage.ftl">
 		<pattern>/login</pattern>
 		<pattern>/register</pattern>
+		<pattern>/oauth/approval</pattern>
 	</decorator>
 	<decorator name="dashboard" page="/view/decorator/default/dashboard.ftl">
 		<pattern>/</pattern>

@@ -15,6 +15,9 @@
  */
 package org.meruvian.yama.repository.application;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 import org.meruvian.yama.repository.LogInformation;
 
 /**
@@ -29,6 +32,13 @@ public class DefaultApplication implements Application {
 	private String displayName;
 	private String domain;
 	private String site;
+	private Set<String> redirectUris = new LinkedHashSet<String>();
+	private Set<String> scopes = new LinkedHashSet<String>();
+	private Set<String> authorizedGrantTypes = new LinkedHashSet<String>();
+	private boolean autoApprove = false;
+	private Integer accessTokenValiditySeconds;
+	private Integer refreshTokenValiditySeconds;
+	private Set<String> resourceIds = new LinkedHashSet<String>();
 
 	public DefaultApplication() {}
 	
@@ -98,6 +108,69 @@ public class DefaultApplication implements Application {
 	public void setSite(String site) {
 		this.site = site;
 	}
+	
+	@Override
+	public Set<String> getRegisteredRedirectUris() {
+		return redirectUris;
+	}
+	
+	public void setRegisteredRedirectUris(Set<String> redirectUris) {
+		this.redirectUris = redirectUris;
+	}
+	
+	@Override
+	public Set<String> getScopes() {
+		return scopes;
+	}
+	
+	public void setScopes(Set<String> scopes) {
+		this.scopes = scopes;
+	}
+	
+	@Override
+	public Set<String> getAuthorizedGrantTypes() {
+		return authorizedGrantTypes;
+	}
+	
+	public void setAuthorizedGrantTypes(Set<String> authorizedGrantTypes) {
+		this.authorizedGrantTypes = authorizedGrantTypes;
+	}
+	
+	@Override
+	public boolean isAutoApprove() {
+		return autoApprove;
+	}
+	
+	public void setAutoApprove(boolean autoApprove) {
+		this.autoApprove = autoApprove;
+	}
+
+	@Override
+	public Integer getAccessTokenValiditySeconds() {
+		return this.accessTokenValiditySeconds;
+	}
+	
+	public void setAccessTokenValiditySeconds(Integer accessTokenValiditySeconds) {
+		this.accessTokenValiditySeconds = accessTokenValiditySeconds;
+	}
+
+	@Override
+	public Integer getRefreshTokenValiditySeconds() {
+		return this.refreshTokenValiditySeconds;
+	}
+	
+	public void setRefreshTokenValiditySeconds(Integer refreshTokenValiditySeconds) {
+		this.refreshTokenValiditySeconds = refreshTokenValiditySeconds;
+	}
+	
+	@Override
+	public Set<String> getResourceIds() {
+		return resourceIds;
+	}
+	
+	public void setResourceIds(Set<String> resourceIds) {
+		this.resourceIds = resourceIds;
+	}
 
 	@Override
 	public void update(Application application) {
@@ -108,5 +181,12 @@ public class DefaultApplication implements Application {
 		this.displayName = application.getDisplayName();
 		this.domain = application.getDomain();
 		this.site = application.getSite();
+		this.redirectUris = application.getRegisteredRedirectUris();
+		this.scopes = application.getScopes();
+		this.authorizedGrantTypes = application.getAuthorizedGrantTypes();
+		this.autoApprove = application.isAutoApprove();
+		this.accessTokenValiditySeconds = application.getAccessTokenValiditySeconds();
+		this.refreshTokenValiditySeconds = application.getRefreshTokenValiditySeconds();
+		this.resourceIds= application.getResourceIds();
 	}
 }

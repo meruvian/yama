@@ -7,11 +7,9 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
 	<context:component-scan base-package="org.meruvian.yama.service, org.meruvian.yama.webapp">
-		<context:exclude-filter type="regex" expression="org.meruvian.yama.service.social.*"/>
-		<context:exclude-filter type="regex" expression="org.meruvian.yama.service.jpa.social.*"/>
+		<context:exclude-filter type="regex" expression="org.meruvian.yama.service.social.*" />
+		<context:exclude-filter type="regex" expression="org.meruvian.yama.service.jpa.social.*" />
 	</context:component-scan>
 	<context:property-placeholder location="classpath:/yama.properties" />
 
-	<bean id="reCaptcha" class="net.tanesha.recaptcha.ReCaptchaImpl"
-		p:privateKey="${recaptcha.private.key}" p:publicKey="${recaptcha.public.key}" />
 </beans>

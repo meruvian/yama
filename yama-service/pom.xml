@@ -13,6 +13,6 @@
 		<module>yama-service-jpa</module>
 		<module>yama-service-social-facebook</module>
 		<module>yama-service-social-google</module>
-		<module>yama-service-jaxrs</module>
+		
 	</modules>
 </project>
