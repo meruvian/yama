@@ -9,3 +9,8 @@ mvn test -Pyama-struts-run
 
 Web API version / JAXRS
 mvn test -Pyama-jaxrs-re-run
+
+yama.properties
+====
+
+
