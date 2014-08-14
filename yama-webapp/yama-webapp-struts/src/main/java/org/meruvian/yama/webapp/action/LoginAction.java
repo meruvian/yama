@@ -18,13 +18,17 @@ package org.meruvian.yama.webapp.action;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
+import org.apache.struts2.interceptor.ServletRequestAware;
 import org.meruvian.inca.struts2.rest.ActionResult;
 import org.meruvian.inca.struts2.rest.annotation.Action;
 import org.meruvian.inca.struts2.rest.annotation.ActionParam;
 import org.meruvian.yama.service.SessionCredential;
 import org.meruvian.yama.service.social.SocialManager;
 import org.meruvian.yama.service.social.SocialManagerLocator;
+import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.social.connect.Connection;
 
 /**
@@ -32,15 +36,21 @@ import org.springframework.social.connect.Connection;
  *
  */
 @Action(name = "/login")
-public class LoginAction {
+public class LoginAction implements ServletRequestAware {
 	@Inject
 	private SocialManagerLocator managerLocator;
 	
 	@Inject
 	private SessionCredential sessionCredential;
+
+	private HttpServletRequest request;
 	
 	@Action
 	public ActionResult loginForm() {
+		if (sessionCredential.getCurrentUser() != null) {
+			return new ActionResult("redirect", getRedirectUrlAfterLogin());
+		}
+		
 		return new ActionResult("freemarker", "/view/login.ftl");
 	}
 	
@@ -64,11 +74,27 @@ public class LoginAction {
 				String userId = userIds.get(0);
 
 				sessionCredential.registerAuthentication(userId);
-			} else {
-
 			}
 		}
 		
-		return new ActionResult("redirect", "/");
+		return new ActionResult("redirect", getRedirectUrlAfterLogin());
+	}
+	
+	protected String getRedirectUrlAfterLogin() {
+		HttpSession session = request.getSession(false);
+
+		if (session != null) {
+			SavedRequest savedRequest = (SavedRequest) session.getAttribute("SPRING_SECURITY_SAVED_REQUEST");
+			if (savedRequest != null) {
+				return savedRequest.getRedirectUrl();
+			}
+		}
+
+		return "/";
+	}
+
+	@Override
+	public void setServletRequest(HttpServletRequest request) {
+		this.request = request;
 	}
 }
