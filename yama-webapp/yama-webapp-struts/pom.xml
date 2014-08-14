@@ -116,6 +116,10 @@
 					<groupId>com.sun</groupId>
 					<artifactId>tools</artifactId>
 				</exclusion>
+				<exclusion>
+					<groupId>javassist</groupId>
+					<artifactId>javassist</artifactId>
+				</exclusion>
 			</exclusions>
 		</dependency>
 		<dependency>

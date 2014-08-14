@@ -61,8 +61,10 @@ public class ApplicationAction extends ActionSupport {
 		
 		actionResult.addToModel("app", app);
 		
-		if (app.getRegisteredRedirectUris() != null || app.getRegisteredRedirectUris().size() > 0) {
-			actionResult.addToModel("redirectUri", app.getRegisteredRedirectUris().iterator().next());
+		if (app.getRegisteredRedirectUris() != null) {
+			if (!app.getRegisteredRedirectUris().isEmpty()) {
+				actionResult.addToModel("redirectUri", app.getRegisteredRedirectUris().iterator().next());
+			}
 		}
 		
 		return actionResult;
