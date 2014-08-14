@@ -22,6 +22,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.meruvian.yama.repository.user.DefaultUser;
 import org.meruvian.yama.service.security.DefaultUserDetails;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -61,6 +62,12 @@ public class DefaultSessionCredential implements SessionCredential {
 		if (authentication.getPrincipal() instanceof DefaultUserDetails) {
 			DefaultUserDetails user = (DefaultUserDetails) authentication.getPrincipal();
 			return user.getUser();
+		}
+		
+		if (authentication.getPrincipal() instanceof String) {
+			DefaultUser user = new DefaultUser();
+			user.setUsername((String) authentication.getPrincipal());
+			return user;
 		}
 		
 		return null;
