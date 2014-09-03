@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<context:component-scan base-package="org.meruvian.yama.service, org.meruvian.yama.webapp" />
+	<context:property-placeholder properties-ref="yamaProperties" />
+	
+	<util:properties id="yamaProperties" location="classpath:/yama.properties" />
+	
+	<bean id="reCaptcha" class="net.tanesha.recaptcha.ReCaptchaImpl"
+		p:privateKey="${recaptcha.private.key}" p:publicKey="${recaptcha.public.key}" />
+	
+	<import resource="org/meruvian/yama/applicationContext-repository-jpa.xml"/>
+	<import resource="org/meruvian/yama/applicationContext-service-jpa.xml"/>
+	<import resource="org/meruvian/yama/applicationContext-web-jpa.xml"/>
+</beans>
