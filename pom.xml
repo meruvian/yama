@@ -14,6 +14,8 @@
 	</parent>
 
 	<properties>
+		<junit.version>4.10</junit.version>
+		<hsqldb.version>2.3.2</hsqldb.version>
 		<struts2.version>2.3.16.2</struts2.version>
 		<struts2.bootstrap.version>2.0.0</struts2.bootstrap.version>
 		<inca.version>1.1.0</inca.version>
@@ -37,6 +39,8 @@
 		<jackson2.version>2.3.2</jackson2.version>
 		<slf4j.version>1.7.7</slf4j.version>
 		<commons.lang.version>3.3.2</commons.lang.version>
+		<commons.validator.version>1.4.0</commons.validator.version>
+		<commons.io.version>2.2</commons.io.version>
 		<jasypt.version>1.9.2</jasypt.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.6</java.version>
@@ -134,13 +138,13 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.10</version>
+			<version>${junit.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
-			<version>3.1.1.RELEASE</version>
+			<version>${spring.version}</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -189,10 +193,11 @@
 	</distributionManagement>
 	
 	<modules>
-		<module>yama-webapp</module>
 		<module>yama-archetypes</module>
-		<module>yama-repository</module>
 		<module>yama-service</module>
+		<module>yama-data</module>
+		<module>yama-social</module>
+		<module>yama-web</module>
 	</modules>
 	
 	<profiles>

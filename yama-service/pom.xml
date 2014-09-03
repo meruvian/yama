@@ -9,10 +9,7 @@
 	<artifactId>yama-service</artifactId>
 	<packaging>pom</packaging>
 	<modules>
-		<module>yama-service-api</module>
-		<module>yama-service-jpa</module>
-		<module>yama-service-social-facebook</module>
-		<module>yama-service-social-google</module>
-		
+		<module>yama-service-web</module>
+		<module>yama-service-core</module>
 	</modules>
 </project>
