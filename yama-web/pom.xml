@@ -28,5 +28,6 @@
 
 	<modules>
 		<module>yama-webapp</module>
+		<module>yama-webapi</module>
 	</modules>
 </project>

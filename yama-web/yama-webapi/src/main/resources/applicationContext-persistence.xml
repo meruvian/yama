@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:data="http://www.springframework.org/schema/data/repository"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<bean id="dbConfig" class="com.zaxxer.hikari.HikariConfig"
+		p:dataSourceClassName="${db.datasource}" p:maximumPoolSize="100"
+		p:connectionTestQuery="SELECT 1">
+		<property name="dataSourceProperties">
+			<value>
+				user=${db.username}
+				password=${db.password}
+				url=${db.url}
+			</value>
+		</property>
+	</bean>
+
+	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="shutdown">
+		<constructor-arg ref="dbConfig" />
+	</bean>
+
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
+		p:dataSource-ref="dataSource" p:persistenceProviderClass="org.hibernate.jpa.HibernatePersistenceProvider">
+		<property name="packagesToScan">
+			<value>org.meruvian.yama</value>
+		</property>
+	</bean>
+
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
+		p:entityManagerFactory-ref="entityManagerFactory" />
+
+	<tx:annotation-driven />
+</beans>
