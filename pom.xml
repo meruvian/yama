@@ -1,0 +1,174 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.meruvian.yama</groupId>
+	<artifactId>yama</artifactId>
+	<version>2.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>Meruvian Yama</name>
+	<description>Meruvian Yama is a part of Meruvian Integrated Platform. An integrated platform to create Java WebApp based on Struts2, SpringMVC, JPA and many others popular framework quickly and easily.</description>
+
+	<parent>
+		<artifactId>jvnet-parent</artifactId>
+		<groupId>net.java</groupId>
+		<version>3</version>
+	</parent>
+
+	<properties>
+		<java.version>1.7</java.version>
+		<servlet-api.version>3.0.1</servlet-api.version>
+		<junit.version>4.10</junit.version>
+		<hsqldb.version>2.3.2</hsqldb.version>
+		<spring.boot.version>1.2.0.RELEASE</spring.boot.version>
+		<spring.social.google.version>1.0.0.RELEASE</spring.social.google.version>
+		<spring.security.oauth.version>2.0.2.RELEASE</spring.security.oauth.version>
+		<resteasy.version>3.0.8.Final</resteasy.version>
+		<commons.lang.version>3.3.2</commons.lang.version>
+		<commons.validator.version>1.4.0</commons.validator.version>
+		<commons.io.version>2.2</commons.io.version>
+		<jasypt.version>1.9.2</jasypt.version>
+		<jdbc.group.id>mysql</jdbc.group.id>
+		<jdbc.artifact.id>mysql-connector-java</jdbc.artifact.id>
+		<jdbc.version>5.1.18</jdbc.version>
+		<proxy.servlet.version>1.6</proxy.servlet.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0</url>
+		</license>
+	</licenses>
+
+	<url>http://yama.java.net</url>
+	<issueManagement>
+		<system>JIRA</system>
+		<url>http://java.net/jira/browse/YAMA</url>
+	</issueManagement>
+
+	<scm>
+		<connection>scm:git:https://github.com/meruvian/yama.git</connection>
+		<developerConnection>scm:git:https://github.com/meruvian/yama.git</developerConnection>
+		<url>https://github.com/meruvian/yama</url>
+	</scm>
+
+	<organization>
+		<name>Meruvian</name>
+		<url>http://www.meruvian.org</url>
+	</organization>
+
+	<developers>
+		<developer>
+			<id>fthamura</id>
+			<name>Frans Thamura</name>
+			<email>frans@meruvian.org</email>
+		</developer>
+		<developer>
+			<id>vickyfaizal</id>
+			<name>Vicky Faizal</name>
+			<email>vicky.faizal@meruvian.org</email>
+		</developer>
+		<developer>
+			<id>dianw</id>
+			<name>Dian Aditya</name>
+			<email>dian.aditya@meruvian.org</email>
+		</developer>
+		<developer>
+			<id>diasa</id>
+			<name>Dias Nurul Arifin</name>
+			<email>dias.arifin@meruvian.org</email>
+		</developer>
+	</developers>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<target>1.6</target>
+					<source>1.6</source>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>1.9</version>
+				<executions>
+					<execution>
+						<id>remove-old-artifacts</id>
+						<phase>clean</phase>
+						<goals>
+							<goal>remove-project-artifact</goal>
+						</goals>
+						<configuration>
+							<removeAll>true</removeAll>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-dependencies</artifactId>
+				<version>${spring.boot.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<distributionManagement>
+		<repository>
+			<id>jvnet-nexus-staging</id>
+			<name>Java.net Release Repository</name>
+			<url>https://maven.java.net/service/local/staging/deploy/maven2</url>
+		</repository>
+		<snapshotRepository>
+			<id>jvnet-nexus-snapshots</id>
+			<name>Java.net Snapshot Repository</name>
+			<url>https://maven.java.net/content/repositories/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+	<modules>
+		<module>social</module>
+		<module>core</module>
+		<module>webapi</module>
+	</modules>
+
+	<profiles>
+		<profile>
+			<id>release</id>
+			<activation>
+				<property>
+					<name>release</name>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<version>1.4</version>
+						<executions>
+							<execution>
+								<id>sign-artifact</id>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+								<phase>verify</phase>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+</project>

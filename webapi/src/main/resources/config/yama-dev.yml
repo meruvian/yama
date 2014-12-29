@@ -1,0 +1,45 @@
+spring:
+    profiles: dev
+    
+rest:
+    servlet_prefix: /v1
+    servlet_mapping: /v1/*    
+
+# database
+db:
+    url: jdbc:mysql://localhost:3306/yama
+    driver: com.mysql.jdbc.Driver
+    datasource: com.mysql.jdbc.jdbc2.optional.MysqlDataSource
+    username: root
+    password: root
+    max_pool_size: 100
+    test_query: SELECT 1
+    
+# upload
+upload:
+    path=/tmp/yama
+
+# social
+social:
+    facebook:
+        active: true
+        appId: 645592102187632
+        appSecret: 88ee3cdd671536f452879042a85ae780
+        redirectUri: http://localhost:8080/login/social/facebook/callback
+        scope: email,public_profile,user_friends
+        state: 6234
+
+    google:
+        active: true
+        appId: 712009183750-9102gsasvgb7nklms2opuo3oknk2cgm1.apps.googleusercontent.com
+        appSecret: tSN5B1QfGS0JIq69vHdNmRzt
+        redirectUri: http://localhost:8080/login/social/google/callback
+        scope: https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.me https://www.googleapis.com/auth/userinfo.email
+        state: 6234
+
+# recaptcha
+recaptcha:
+    active: true
+    public_key: 6LdoBdESAAAAAHXfBTxpdn0gdlo3Ov3oLaOf4Jeh
+    private_key: 6LdoBdESAAAAAKF_QC5MSRVwLbXvozXLjljUFEsG
+    include_noscript: false
