@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc function
- * @name yamaApp.controller:MainCtrl
+ * @name yamaAppApp.controller:RoleCtrl
  * @description
- * # MainCtrl
- * Controller of the yamaApp
+ * # RoleCtrl
+ * Controller of the yamaAppApp
  */
 angular.module('yamaApp')
-  .controller('MainCtrl', function ($scope) {
+  .controller('RoleCtrl', function ($scope) {
     $scope.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',

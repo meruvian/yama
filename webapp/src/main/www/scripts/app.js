@@ -2,20 +2,23 @@
 
 /**
  * @ngdoc overview
- * @name yama
+ * @name yamaApp
  * @description
- * # yama
+ * # yamaApp
  *
  * Main module of the application.
  */
 angular
-  .module('yama', [
+  .module('yamaApp', [
     'ngAnimate',
     'ngCookies',
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'ngTouch'
+    'ngTouch',
+    'ngSymbiosis.repository',
+    'ngSymbiosis.model',
+    'ui.bootstrap'
   ])
   .config(function ($routeProvider) {
     $routeProvider
@@ -26,6 +29,10 @@ angular
       .when('/about', {
         templateUrl: 'views/about.html',
         controller: 'AboutCtrl'
+      })
+      .when('/role', {
+        templateUrl: 'views/role.html',
+        controller: 'RoleCtrl'
       })
       .otherwise({
         redirectTo: '/'

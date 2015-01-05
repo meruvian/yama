@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name yama.controller:AboutCtrl
+ * @name yamaApp.controller:AboutCtrl
  * @description
  * # AboutCtrl
- * Controller of the yama
+ * Controller of the yamaApp
  */
-angular.module('yama')
+angular.module('yamaApp')
   .controller('AboutCtrl', function ($scope) {
     $scope.awesomeThings = [
       'HTML5 Boilerplate',

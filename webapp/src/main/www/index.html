@@ -9,34 +9,131 @@
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
     <!-- endbower -->
     <!-- endbuild -->
-    <!-- build:css(.tmp) styles/main.css -->
-    <link rel="stylesheet" href="styles/main.css">
+    <!-- build:css(src/main/www) styles/main.css -->
+    <link rel="stylesheet" href="styles/adminlte.css">
     <!-- endbuild -->
   </head>
-  <body ng-app="yama">
-    <!--[if lt IE 7]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
+  <body ng-app="yamaApp" class="skin-blue">
+    <!-- header logo: style can be found in header.less -->
+        <header class="header">
+            <a href="/" class="logo">
+                <!-- Add the class icon to your logo image or logo icon to add the margining -->
+                AdminLTE
+            </a>
+            <!-- Header Navbar: style can be found in header.less -->
+            <nav class="navbar navbar-static-top" role="navigation">
+                <!-- Sidebar toggle button-->
+                <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a>
+                <div class="navbar-right">
+                    <ul class="nav navbar-nav">
+                        <!-- User Account: style can be found in dropdown.less -->
+                        <li class="dropdown user user-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="glyphicon glyphicon-user"></i>
+                                <span>Jane Doe <i class="caret"></i></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <!-- User image -->
+                                <li class="user-header bg-light-blue">
+                                    <img src="img/avatar3.png" class="img-circle" alt="User Image" />
+                                    <p>
+                                        Jane Doe - Web Developer
+                                        <small>Member since Nov. 2012</small>
+                                    </p>
+                                </li>
+                                <!-- Menu Body -->
+                                <li class="user-body">
+                                    <div class="col-xs-4 text-center">
+                                        <a href="#">Followers</a>
+                                    </div>
+                                    <div class="col-xs-4 text-center">
+                                        <a href="#">Sales</a>
+                                    </div>
+                                    <div class="col-xs-4 text-center">
+                                        <a href="#">Friends</a>
+                                    </div>
+                                </li>
+                                <!-- Menu Footer-->
+                                <li class="user-footer">
+                                    <div class="pull-left">
+                                        <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                    </div>
+                                    <div class="pull-right">
+                                        <a href="/logout" class="btn btn-default btn-flat">Sign out</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <div class="wrapper row-offcanvas row-offcanvas-left">
+            <!-- Left side column. contains the logo and sidebar -->
+            <aside class="left-side sidebar-offcanvas">                
+                <!-- sidebar: style can be found in sidebar.less -->
+                <section class="sidebar">
+                    <!-- Sidebar user panel -->
+                    <div class="user-panel">
+                        <div class="pull-left image">
+                            <img src="img/avatar3.png" class="img-circle" alt="User Image" />
+                        </div>
+                        <div class="pull-left info">
+                            <p>Hello, Jane</p>
 
-    <!-- Add your site or application content here -->
-    <div class="container">
-      <div class="header">
-        <ul class="nav nav-pills pull-right">
-          <li class="active"><a ng-href="#">Home</a></li>
-          <li><a ng-href="#/about">About</a></li>
-          <li><a ng-href="#">Contact</a></li>
-        </ul>
-        <h3 class="text-muted">yama</h3>
-      </div>
+                            <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                        </div>
+                    </div>
+                    <!-- search form -->
+                    <form action="#" method="get" class="sidebar-form">
+                        <div class="input-group">
+                            <input type="text" name="q" class="form-control" placeholder="Search..."/>
+                            <span class="input-group-btn">
+                                <button type='submit' name='seach' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
+                            </span>
+                        </div>
+                    </form>
+                    <!-- /.search form -->
+                    <!-- sidebar menu: : style can be found in sidebar.less -->
+                    <ul class="sidebar-menu">
+                        <li class="active">
+                            <a href="#/">
+                                <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+                            </a>
+                        </li>
+                    </ul>
+                </section>
+                <!-- /.sidebar -->
+            </aside>
 
-      <div ng-view=""></div>
+            <!-- Right side column. Contains the navbar and content of the page -->
+            <aside class="right-side">                
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <h1>
+                        Blank page
+                        <small>Control panel</small>
+                    </h1>
+                    <ol class="breadcrumb">
+                        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                        <li class="active">Blank page</li>
+                    </ol>
+                </section>
 
-      <div class="footer">
-        <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
-      </div>
-    </div>
+                <!-- Main content -->
+                <section class="content">
+                	<ng-view></ng-view>
+                </section><!-- /.content -->
+            </aside><!-- /.right-side -->
+        </div><!-- ./wrapper -->
 
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
@@ -68,13 +165,21 @@
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/ng-symbiosis-model/ng-symbiosis-model.src.js"></script>
+    <script src="bower_components/ng-symbiosis-repository/ng-symbiosis-repository.src.js"></script>
+    <script src="bower_components/angular-translate/angular-translate.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
-        <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <!-- build:js({.tmp,src/main/www}) scripts/scripts.js -->
+        <script src="scripts/adminlte.js"></script>
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/controllers/about.js"></script>
+        <script src="scripts/controllers/role.js"></script>
+        <script src="scripts/models/role.js"></script>
+        <script src="scripts/repositories/role-repository.js"></script>
         <!-- endbuild -->
 </body>
 </html>

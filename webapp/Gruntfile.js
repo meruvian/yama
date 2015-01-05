@@ -3,9 +3,9 @@
 
 // # Globbing
 // for performance reasons we're only matching one level down:
-// 'test/spec/{,*/}*.js'
+// 'src/test/www/spec/{,*/}*.js'
 // use this if you want to recursively match all subfolders:
-// 'test/spec/**/*.js'
+// 'src/test/www/spec/**/*.js'
 
 module.exports = function (grunt) {
 
@@ -41,19 +41,24 @@ module.exports = function (grunt) {
         }
       },
       jsTest: {
-        files: ['test/spec/{,*/}*.js'],
+        files: ['src/test/www/spec/{,*/}*.js'],
         tasks: ['newer:jshint:test', 'karma']
       },
       styles: {
         files: ['<%= yeoman.app %>/styles/{,*/}*.css'],
         tasks: ['newer:copy:styles', 'autoprefixer']
       },
+      html: {
+    	files: [
+    	  '<%= yeoman.app %>/*.html',
+    	  '<%= yeoman.app %>/views/{,*/}*.html'
+    	],
+    	tasks: ['newer:copy:html']  
+      },
       dev: {
         files: [
             '<%= yeoman.app %>/*.{ico,png,txt}',
             '<%= yeoman.app %>/.htaccess',
-            '<%= yeoman.app %>/*.html',
-            '<%= yeoman.app %>/views/{,*/}*.html',
             '<%= yeoman.app %>/images/{,*/}*.{webp}',
             '<%= yeoman.app %>/fonts/{,*/}*.*'
         ],
@@ -148,9 +153,9 @@ module.exports = function (grunt) {
       },
       test: {
         options: {
-          jshintrc: 'test/.jshintrc'
+          jshintrc: 'src/test/www/.jshintrc'
         },
-        src: ['test/spec/{,*/}*.js']
+        src: ['src/test/www/spec/{,*/}*.js']
       }
     },
 
@@ -187,7 +192,7 @@ module.exports = function (grunt) {
     // Automatically inject Bower components into the app
     wiredep: {
       app: {
-        src: ['<%= yeoman.app %>/index.html'],
+        src: ['<%= yeoman.app %>/*.html'],
         // ignorePath:  /\.\.\//
         ignorePath: '../../../'
       }
@@ -209,7 +214,7 @@ module.exports = function (grunt) {
     // concat, minify and revision files. Creates configurations in memory so
     // additional tasks can operate on them
     useminPrepare: {
-      html: '<%= yeoman.app %>/index.html',
+      html: '<%= yeoman.app %>/*.html',
       options: {
         dest: '<%= yeoman.dist %>',
         flow: {
@@ -305,9 +310,9 @@ module.exports = function (grunt) {
       dist: {
         files: [{
           expand: true,
-          cwd: '<%= yeoman.dist %>/concat/scripts',
+          cwd: '.tmp/concat/scripts',
           src: ['*.js', '!oldieshim.js'],
-          dest: '<%= yeoman.dist %>/concat/scripts'
+          dest: '.tmp/concat/scripts'
         }]
       }
     },
@@ -345,6 +350,11 @@ module.exports = function (grunt) {
           cwd: 'bower_components/bootstrap/dist',
           src: 'fonts/*',
           dest: '<%= yeoman.dist %>'
+        }, {
+            expand: true,
+            cwd: 'bower_components/font-awesome',
+            src: 'fonts/*',
+            dest: '<%= yeoman.dist %>'
         }]
       },
       styles: {
@@ -359,6 +369,18 @@ module.exports = function (grunt) {
         dest: '<%= yeoman.dist %>/scripts/',
         src: '{,*/}*.js'
       },
+      html: {
+	    files: [{
+	      expand: true,
+	      dot: true,
+	      cwd: '<%= yeoman.app %>',
+	      dest: '<%= yeoman.dist %>',
+	      src: [
+	        '*.html',
+	        'views/{,*/}*.html',
+	      ]
+	    }]
+	  },
       dev: {
         files: [{
           expand: true,
@@ -368,9 +390,7 @@ module.exports = function (grunt) {
           src: [
             '*.{ico,png,txt}',
             '.htaccess',
-            '*.html',
-            'views/{,*/}*.html',
-            'images/{,*/}*.{webp}',
+            'images/{,*/}*.*',
             'fonts/{,*/}*.*'
           ]
         }]
@@ -382,6 +402,7 @@ module.exports = function (grunt) {
       server: [
         'copy:styles',
         'copy:js',
+        'copy:html',
         'copy:dev',
         'bower:dev'
       ],
@@ -398,7 +419,7 @@ module.exports = function (grunt) {
     // Test settings
     karma: {
       unit: {
-        configFile: 'test/karma.conf.js',
+        configFile: 'src/test/www/karma.conf.js',
         singleRun: true
       }
     }
@@ -415,7 +436,7 @@ module.exports = function (grunt) {
       'wiredep',
       'concurrent:server',
       'autoprefixer',
-      'connect:livereload',
+//      'connect:livereload',
       'watch'
     ]);
   });
