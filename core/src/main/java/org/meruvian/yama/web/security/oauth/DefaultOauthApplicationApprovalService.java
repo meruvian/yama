@@ -35,7 +35,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Dian Aditya
  *
  */
-@Service
+@Service("oauthApplicationApprovalService")
 public class DefaultOauthApplicationApprovalService implements OauthApplicationApprovalService {
 	@Inject
 	private OauthApplicationApprovalRepository approvalRepository;

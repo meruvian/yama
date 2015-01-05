@@ -39,7 +39,7 @@ import org.springframework.stereotype.Service;
  * @author Dian Aditya
  *
  */
-@Service
+@Service("userDetailsService")
 public class DefaultUserDetailsService implements UserDetailsService {
 	@Inject
 	private UserRepository userRepository;

@@ -17,22 +17,26 @@ package org.meruvian.yama.webapi.config;
 
 import javax.inject.Inject;
 
-import org.meruvian.yama.web.security.oauth.DefaultClientDetailsService;
-import org.meruvian.yama.web.security.oauth.OauthApplicationApprovalService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
-import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
-import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
-import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
-import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.context.annotation.ImportResource;
+import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.OAuth2RequestFactory;
 import org.springframework.security.oauth2.provider.TokenGranter;
-import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationManager;
+import org.springframework.security.oauth2.provider.approval.ApprovalStore;
+import org.springframework.security.oauth2.provider.approval.ApprovalStoreUserApprovalHandler;
+import org.springframework.security.oauth2.provider.approval.UserApprovalHandler;
 import org.springframework.security.oauth2.provider.client.ClientCredentialsTokenGranter;
+import org.springframework.security.oauth2.provider.client.ClientDetailsUserDetailsService;
+import org.springframework.security.oauth2.provider.expression.OAuth2MethodSecurityExpressionHandler;
 import org.springframework.security.oauth2.provider.request.DefaultOAuth2RequestFactory;
+import org.springframework.security.oauth2.provider.token.AccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
+import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
@@ -42,78 +46,78 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
  *
  */
 @Configuration
+@ImportResource({ "classpath:config/oauth2/authorization-server.xml",
+		"classpath:config/oauth2/resource-server.xml" })
 public class Oauth2ServerConfig {
 	@Configuration
-	@EnableAuthorizationServer
-	protected static class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
+	@EnableGlobalMethodSecurity(prePostEnabled = true, proxyTargetClass = true)
+	public static class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {
+	    @Override
+	    protected MethodSecurityExpressionHandler createExpressionHandler() {
+	        return new OAuth2MethodSecurityExpressionHandler();
+	    }
+	}
+	
+	@Configuration
+	public static class Oauth2Stuff {
 		@Inject
-		private DefaultClientDetailsService clientDetailsService;
+		private ClientDetailsService clientDetailsService;
 		
 		@Inject
-		private OauthApplicationApprovalService approvalService;
+		private ApprovalStore approvalStore;
 		
-		@Override
-		public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-			clients.withClientDetails(clientDetailsService);
-		}
-		
-		@Override
-		public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-			endpoints.accessTokenConverter(tokenConverter())
-					.approvalStore(approvalService)
-					.authenticationManager(authenticationManager())
-					.clientDetailsService(clientDetailsService)
-					.tokenEnhancer(tokenConverter())
-					.tokenGranter(tokenGranter())
-					.tokenServices(tokenServices());
-		}
-		
-		@Override
-		public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
+		@Bean
+		public AccessTokenConverter tokenConverter() {
+			return new JwtAccessTokenConverter();
 		}
 		
 		@Bean
-		public JwtAccessTokenConverter tokenConverter() {
-			JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-			converter.setSigningKey("yama");
-			converter.setAccessTokenConverter(new JwtAccessTokenConverter());
+		public TokenEnhancer tokenEnhancer() {
+			JwtAccessTokenConverter enhancer = new JwtAccessTokenConverter();
+			enhancer.setAccessTokenConverter(tokenConverter());
 			
-			return converter;
+			return enhancer;
 		}
 		
 		@Bean
 		public TokenStore tokenStore() {
-			return new JwtTokenStore(tokenConverter());
+			return new JwtTokenStore((JwtAccessTokenConverter) tokenEnhancer());
 		}
 		
 		@Bean
 		public DefaultTokenServices tokenServices() {
 			DefaultTokenServices tokenServices = new DefaultTokenServices();
+			tokenServices.setTokenEnhancer(tokenEnhancer());
 			tokenServices.setTokenStore(tokenStore());
 			tokenServices.setSupportRefreshToken(true);
 			tokenServices.setClientDetailsService(clientDetailsService);
-			tokenServices.setTokenEnhancer(tokenConverter());
 			
 			return tokenServices;
 		}
-		
-		@Bean
-		public AuthenticationManager authenticationManager() {
-			OAuth2AuthenticationManager authManager = new OAuth2AuthenticationManager();
-			authManager.setTokenServices(tokenServices());
-			
-			return authManager;
-		}
-		
+	
 		@Bean
 		public OAuth2RequestFactory requestFactory() {
 			return new DefaultOAuth2RequestFactory(clientDetailsService);
 		}
 		
 		@Bean
+		public UserApprovalHandler userApprovalHandler() {
+			ApprovalStoreUserApprovalHandler approvalHandler = new ApprovalStoreUserApprovalHandler();
+			approvalHandler.setApprovalStore(approvalStore);
+			approvalHandler.setClientDetailsService(clientDetailsService);
+			approvalHandler.setRequestFactory(requestFactory());
+			
+			return approvalHandler;
+		}
+		
+		@Bean
 		public TokenGranter tokenGranter() {
-			return new ClientCredentialsTokenGranter(tokenServices(), clientDetailsService, 
-					requestFactory());
+			return new ClientCredentialsTokenGranter(tokenServices(), clientDetailsService, requestFactory());
+		}
+		
+		@Bean
+		public UserDetailsService clientDetailsUserDetailsService() {
+			return new ClientDetailsUserDetailsService(clientDetailsService);
 		}
 	}
 }

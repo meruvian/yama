@@ -141,6 +141,7 @@
 		<module>social</module>
 		<module>core</module>
 		<module>webapi</module>
+		<module>webapp</module>
 	</modules>
 
 	<profiles>

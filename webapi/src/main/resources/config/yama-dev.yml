@@ -1,6 +1,13 @@
 spring:
     profiles: dev
-    
+
+server.port: 8080
+
+logging:
+    level:
+        org.springframework.security: DEBUG
+        org.jboss.resteasy.springmvc.ResteasyHandlerMapping: ERROR
+
 rest:
     servlet_prefix: /v1
     servlet_mapping: /v1/*    
