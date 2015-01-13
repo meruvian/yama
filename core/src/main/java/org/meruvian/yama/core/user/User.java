@@ -27,6 +27,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.meruvian.yama.core.DefaultPersistence;
 import org.meruvian.yama.core.commons.Address;
@@ -51,6 +53,8 @@ public class User extends DefaultPersistence {
 	private FileInfo fileInfo;
 	private List<UserRole> roles = new ArrayList<UserRole>();
 	
+	@NotNull
+	@Size(min = 6)
 	@Column(name = "username", unique = true, nullable = false)
 	public String getUsername() {
 		return username;
@@ -69,6 +73,7 @@ public class User extends DefaultPersistence {
 		this.password = password;
 	}
 
+	@NotNull
 	@Column(name = "email", unique = true, nullable = false)
 	public String getEmail() {
 		return email;

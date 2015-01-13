@@ -8,9 +8,22 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 	
+	<sc:http pattern="/" security="none" />
+	<sc:http pattern="/*.html" security="none" />
+	<sc:http pattern="/html/**" security="none" />
+	<sc:http pattern="/scripts/**" security="none" />
+	<sc:http pattern="/styles/**" security="none" />
+	<sc:http pattern="/images/**" security="none" />
+	<sc:http pattern="/bower_components/**" security="none" />
+	
 	<sc:http create-session="never" entry-point-ref="oauthAuthenticationEntryPoint" 
-		access-decision-manager-ref="accessDecisionManager">
-		<sc:intercept-url pattern="/**" access="SCOPE_READ,SCOPE_WRITE" />
+		access-decision-manager-ref="accessDecisionManager" use-expressions="true">
+		<sc:intercept-url pattern="/a/**" method="GET" access="#oauth2.hasScope('READ') and isFullyAuthenticated()" />
+		<sc:intercept-url pattern="/a/**" method="HEAD" access="#oauth2.hasScope('READ') and isFullyAuthenticated()" />
+		<sc:intercept-url pattern="/a/**" method="POST" access="#oauth2.hasScope('WRITE') and isFullyAuthenticated()" />
+		<sc:intercept-url pattern="/a/**" method="PUT" access="#oauth2.hasScope('WRITE') and isFullyAuthenticated()" />
+		<sc:intercept-url pattern="/a/**" method="DELETE" access="#oauth2.hasScope('WRITE') and isFullyAuthenticated()" />
+		<sc:intercept-url pattern="/a/**" method="PATCH" access="#oauth2.hasScope('WRITE') and isFullyAuthenticated()" />
 		
 		<sc:custom-filter ref="resourceServerFilter" before="PRE_AUTH_FILTER" />
 		<sc:access-denied-handler ref="oauthAccessDeniedHandler" />
@@ -22,6 +35,7 @@
 	<bean id="accessDecisionManager" class="org.springframework.security.access.vote.UnanimousBased">
 		<constructor-arg>
 			<list>
+				<bean class="org.springframework.security.web.access.expression.WebExpressionVoter" />
 				<bean class="org.springframework.security.oauth2.provider.vote.ScopeVoter" />
 				<bean class="org.springframework.security.access.vote.RoleVoter" />
 				<bean class="org.springframework.security.access.vote.AuthenticatedVoter" />

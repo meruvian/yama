@@ -3,3 +3,7 @@
 /.classpath
 /.project
 /.springBeans
+/bower_components/
+/node_modules/
+/.tmp/
+/test/

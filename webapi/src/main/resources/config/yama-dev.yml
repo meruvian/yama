@@ -5,7 +5,7 @@ server.port: 8080
 
 logging:
     level:
-        org.springframework.security: DEBUG
+#        org.springframework.security: DEBUG
         org.jboss.resteasy.springmvc.ResteasyHandlerMapping: ERROR
 
 rest:

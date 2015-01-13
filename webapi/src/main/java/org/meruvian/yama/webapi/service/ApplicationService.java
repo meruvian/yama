@@ -15,10 +15,36 @@
  */
 package org.meruvian.yama.webapi.service;
 
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
+import org.meruvian.yama.core.application.Application;
+
 /**
  * @author Dian Aditya
  *
  */
+@Path("/users")
+@Produces(MediaType.APPLICATION_JSON)
 public interface ApplicationService {
-
+	@GET
+	@Path("/{id}")
+	Application getApplicationById(@PathParam("id") String id);
+	
+	@POST
+	Application saveApplication(Application application);
+	
+	@PUT
+	@Path("/{id}")
+	Application updateApplication(Application application);
+	
+	@DELETE
+	@Path("/{id}")
+	Application removeApplication(@PathParam("id") String id);
 }

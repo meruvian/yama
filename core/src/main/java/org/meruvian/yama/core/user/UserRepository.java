@@ -18,6 +18,7 @@ package org.meruvian.yama.core.user;
 import org.meruvian.yama.core.DefaultRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
 
 /**
  * @author Dian Aditya
@@ -28,7 +29,6 @@ public interface UserRepository extends DefaultRepository<User> {
 
 	User findByEmail(String email);
 
-	Page<User> findByUsernameStartingWith(String username, Pageable pageable);
-
-	Page<User> findByUsernameStartingWithAndLogInformationActiveFlag(String username, int activeFlag, Pageable pageable);
+	@Query("SELECT u FROM User u WHERE u.username LIKE ?1% AND u.logInformation.activeFlag = ?2")
+	Page<User> findByUsername(String username, int activeFlag, Pageable pageable);
 }

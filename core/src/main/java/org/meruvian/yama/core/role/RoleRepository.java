@@ -18,6 +18,7 @@ package org.meruvian.yama.core.role;
 import org.meruvian.yama.core.DefaultRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -28,8 +29,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RoleRepository extends DefaultRepository<Role> {
 	Role findByName(String name);
-
-	Page<Role> findByNameContainsOrDescriptionContains(String name, String description, Pageable pageable);
-
-	Page<Role> findByNameContainsOrDescriptionContainsAndLogInformationActiveFlag(String name, String description, int activeFlag, Pageable pageable);
+	
+	@Query("SELECT r FROM Role r WHERE (r.name LIKE ?1% OR r.description LIKE ?2%) AND r.logInformation.activeFlag = ?3")
+	Page<Role> findByNameOrDescription(String name, String description, int activeFlag, Pageable pageable);
 }

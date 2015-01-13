@@ -25,7 +25,7 @@ import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.ext.Provider;
 
 import org.meruvian.yama.web.SessionCredentials;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 /**
  * Intercept request URI with path parameter {username}, replace parameter value
@@ -35,7 +35,7 @@ import org.springframework.stereotype.Service;
  * 
  */
 @Provider
-@Service
+@Component
 @DetectCurrentUser
 public class CurrentUserFilter implements ContainerRequestFilter {
 	@Override

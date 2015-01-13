@@ -24,6 +24,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.meruvian.yama.core.DefaultPersistence;
 
@@ -40,6 +41,7 @@ public class Role extends DefaultPersistence {
 	private String description;
 	private List<UserRole> users = new ArrayList<UserRole>();
 	
+	@NotNull
 	@Column(nullable = false, unique = true)
 	public String getName() {
 		return name;

@@ -1,0 +1,119 @@
+<div class="row">
+	<div class="col-md-6">
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">Basic</h3>
+			</div>
+
+			<div class="box-body">
+				<form name="userForm" ng-submit="submit(user)" novalidate>
+					<div class="modal-body">
+						<fieldset>
+							<div class="form-group">
+								<label class="control-label" for="username">Username</label>
+								<div class="controls">
+									<input type="text" id="username" class="form-control" ng-model="user.username" required>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<label class="control-label" for="first-name">First Name</label>
+										<div class="controls">
+											<input type="text" id="first-name" class="form-control" ng-model="user.name.first" required>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label class="control-label" for="last-name">Last Name</label>
+										<div class="controls">
+											<input type="text" id="last-name" class="form-control" ng-model="user.name.last">
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label" for="email">Email</label>
+								<div class="  controls">
+									<input type="email" id="email" class="form-control" ng-model="user.email" required>
+								</div>
+							</div>
+						</fieldset>
+					</div>
+					<div class="modal-footer">
+						<input type="submit" value="Save" class="btn btn-primary col-md-3 col-xs-12">
+						<span class="label label-danger" ng-show="error">Ops something went wrong!</span>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-6">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="box box-primary">
+					<div class="box-header">
+						<h3 class="box-title">Profile Picture</h3>
+					</div>
+
+					<div class="box-body">
+						<form ame="profileImageForm">
+							<fieldset>
+								<div class="row">
+									<img src="/profile/photo" class="img-thumbnail col-md-3 col-md-offset-4" alt="User Image">
+								</div>
+
+								<div class="form-group ">
+									<label class="control-label" for="profile-picture">Browse</label>
+									<div class="controls">
+										<input type="file" id="profile-picture" class="form-control">
+									</div>
+								</div>
+
+								<input type="submit" value="Upload" class="btn btn-primary col-md-3">
+							</fieldset>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="box box-primary">
+					<div class="box-header">
+						<h3 class="box-title">Change Password</h3>
+					</div>
+
+					<div class="box-body">
+						<form name="changePasswdForm">
+							<fieldset>
+								<input type="hidden" name="edit" value="password" id="profile_edit">
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group ">
+											<label class="control-label" for="password">New Password</label>
+											<div class="  controls">
+												<input type="password" id="password" class="form-control">
+											</div>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group ">
+											<label class="  control-label" for="confirm-password">Confirm New Password</label>
+											<div class="  controls">
+												<input type="password" id="confirm-password" class="form-control">
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<input type="submit" value="Save" class="btn btn-primary col-md-3">
+							</fieldset>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

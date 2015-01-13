@@ -16,40 +16,61 @@
 package org.meruvian.yama.webapi.service;
 
 import javax.inject.Inject;
+import javax.ws.rs.BadRequestException;
 
+import org.apache.commons.lang3.StringUtils;
+import org.meruvian.yama.core.LogInformation;
 import org.meruvian.yama.core.role.Role;
 import org.meruvian.yama.core.role.RoleRepository;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author Dian Aditya
  *
  */
 @Service
+@Transactional(readOnly = true)
 public class RestRoleService implements RoleService {
 	@Inject
 	private RoleRepository roleRepository;
 	
 	@Override
-	public Role getRoleByName(String name) {
-		return roleRepository.findByName(name);
+	public Role getRoleById(String id) {
+		return roleRepository.findById(id);
 	}
 
 	@Override
-	public Page<Role> findRoleByKeyword(String keyword, int max, int page) {
-		return roleRepository.findByNameContainsOrDescriptionContains(keyword, keyword, new PageRequest(page, max));
+	public Page<Role> findRoleByKeyword(String keyword, Pageable pageable) {
+		return roleRepository.findByNameOrDescription(keyword, keyword, LogInformation.ACTIVE, pageable);
 	}
 
 	@Override
-	public void removeRole(final String name) {
-		roleRepository.delete(getRoleByName(name));
+	@Transactional
+	public void removeRole(String id) {
+		getRoleById(id).getLogInformation().setActiveFlag(LogInformation.INACTIVE);
 	}
 
 	@Override
+	@Transactional
 	public Role saveRole(Role role) {
-		return null;
+		if (StringUtils.isBlank(role.getId())) {
+			role.setId(null);
+			return roleRepository.save(role);
+		}
+		
+		throw new BadRequestException("Id must be empty, use PUT method to update record");
 	}
 
+	@Override
+	@Transactional
+	public Role updateRole(Role role) {
+		Role r = roleRepository.findById(role.getId());
+		r.setName(role.getName());
+		r.setDescription(role.getDescription());
+		
+		return r;
+	}
 }

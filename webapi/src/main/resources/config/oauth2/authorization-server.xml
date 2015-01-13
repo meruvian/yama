@@ -11,9 +11,20 @@
 
 	<sc:http pattern="/oauth/cache_approvals" security="none" />
 	<sc:http pattern="/oauth/uncache_approvals" security="none" />
+	
+<!-- 	<sc:http pattern="/oauth/authorize" use-expressions="true"> -->
+<!-- 		<sc:intercept-url pattern="/oauth/authorize" access="isFullyAuthenticated()" /> -->
 
-	<sc:http pattern="/oauth/token" create-session="stateless" authentication-manager-ref="clientAuthenticationManager">
-		<sc:intercept-url pattern="/oauth/token" access="IS_AUTHENTICATED_FULLY" />
+<!-- 		<sc:form-login login-page="/login.html" default-target-url="/" -->
+<!-- 			login-processing-url="/login" username-parameter="username" -->
+<!-- 			password-parameter="password" authentication-failure-url="/login?failure" /> -->
+<!-- 		<sc:remember-me user-service-ref="userDetailsService" remember-me-parameter="rememberMe" /> -->
+<!-- 		<sc:logout logout-url="/logout" logout-success-url="/" invalidate-session="true" /> -->
+<!-- 	</sc:http> -->
+	
+	<sc:http pattern="/oauth/token" create-session="stateless" authentication-manager-ref="clientAuthenticationManager"
+		use-expressions="true">
+		<sc:intercept-url pattern="/oauth/token" access="isFullyAuthenticated()" />
 		<sc:anonymous enabled="false" />
 		<sc:http-basic entry-point-ref="clientAuthenticationEntryPoint" />
 		<!-- include this only if you need to authenticate clients via request parameters -->
@@ -53,8 +64,9 @@
 		that defines everything necessary for token management -->
 	<oauth2:authorization-server client-details-service-ref="clientDetailsService" 
 		token-services-ref="tokenServices" user-approval-handler-ref="userApprovalHandler" 
-		user-approval-page="redirect:/oauth/approval" error-page="redirect:/oauth/error">
+		user-approval-page="redirect:/approval.html" error-page="redirect:/oauth/error">
 		<oauth2:authorization-code />
+		<oauth2:implicit />
 		<oauth2:refresh-token/>
 		<oauth2:password />	
 	</oauth2:authorization-server>
