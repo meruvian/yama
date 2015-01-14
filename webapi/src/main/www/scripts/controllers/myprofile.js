@@ -7,7 +7,7 @@
  * # MyprofileCtrl
  * Controller of the yamaApp
  */
-angular.module('yamaApp').controller('MyprofileCtrl', function ($scope, Users) {
+angular.module('yamaApp').controller('MyProfileCtrl', function ($scope, Users) {
 	$scope.refresh = function() {
 		Users.one('me').get().then(function(user) {
 			$scope.user = user;

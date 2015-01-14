@@ -24,9 +24,12 @@ import javax.persistence.Entity;
 import javax.persistence.Index;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 
 import org.apache.commons.lang3.StringUtils;
 import org.meruvian.yama.core.DefaultPersistence;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * @author Dian Aditya
@@ -35,6 +38,10 @@ import org.meruvian.yama.core.DefaultPersistence;
 @Entity
 @Table(name = "yama_application", indexes = { @Index(columnList = "create_by", unique = false) })
 public class Application extends DefaultPersistence {
+	public enum GrantType {
+		AUTHORIZATION_CODE, IMPLICIT, PASSWORD, REFRESH_TOKEN
+	}
+	
 	private String secret;
 	private String namespace;
 	private String displayName;
@@ -48,6 +55,7 @@ public class Application extends DefaultPersistence {
 	private Integer refreshTokenValiditySeconds;
 	private String resourceIds;
 
+	@NotNull
 	public String getSecret() {
 		return secret;
 	}
@@ -56,7 +64,7 @@ public class Application extends DefaultPersistence {
 		this.secret = secret;
 	}
 
-	@Column(unique = true)
+	@Column(unique = true, nullable = true)
 	public String getNamespace() {
 		return namespace;
 	}
@@ -65,6 +73,7 @@ public class Application extends DefaultPersistence {
 		this.namespace = namespace;
 	}
 
+	@NotNull
 	@Column(name = "display_name")
 	public String getDisplayName() {
 		return displayName;
@@ -82,6 +91,7 @@ public class Application extends DefaultPersistence {
 		this.domain = domain;
 	}
 
+	@NotNull
 	public String getSite() {
 		return site;
 	}
@@ -90,12 +100,14 @@ public class Application extends DefaultPersistence {
 		this.site = site;
 	}
 
+	@NotNull
+	@JsonIgnore
 	@Column(name = "registered_redirect_uri")
 	public String getRegisteredRedirectUri() {
-		return StringUtils.join(getRegisteredRedirectUris(), ',');
+		return redirectUris;
 	}
 
-	protected void setRegisteredRedirectUri(String redirectUri) {
+	public void setRegisteredRedirectUri(String redirectUri) {
 		this.redirectUris = redirectUri;
 	}
 
@@ -108,13 +120,13 @@ public class Application extends DefaultPersistence {
 		return new LinkedHashSet<String>(Arrays.asList(redirectUris));
 	}
 
-	public void setRegisteredRedirectUri(Set<String> uris) {
+	public void setRegisteredRedirectUris(Set<String> uris) {
 		this.redirectUris = StringUtils.join(uris, ',');
 	}
 
 	@Column(name = "scope")
 	public String getScope() {
-		return StringUtils.join(getScopes(), ',');
+		return scopes;
 	}
 
 	protected void setScope(String scope) {
@@ -134,9 +146,10 @@ public class Application extends DefaultPersistence {
 		this.scopes = StringUtils.join(scopes, ',');
 	}
 
+	@JsonIgnore
 	@Column(name = "authorized_grant_type")
 	public String getAuthorizedGrantType() {
-		return StringUtils.join(getAuthorizedGrantTypes(), ',');
+		return authorizedGrantTypes;
 	}
 
 	protected void setAuthorizedGrantType(String authorizedGrantType) {
@@ -187,6 +200,7 @@ public class Application extends DefaultPersistence {
 		this.refreshTokenValiditySeconds = refreshTokenValiditySeconds;
 	}
 
+	@JsonIgnore
 	@Column(name = "resource_id")
 	public String getResourceId() {
 		return StringUtils.join(getResourceIds(), ',');

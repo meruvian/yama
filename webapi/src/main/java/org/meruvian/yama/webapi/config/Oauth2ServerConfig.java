@@ -123,8 +123,10 @@ public class Oauth2ServerConfig {
 		public void configure(HttpSecurity http) throws Exception {
 			http
 				.requestMatchers()
-					.antMatchers("/oauth/token", "/roles", "/roles/**", 
-							"/users", "/users/**")
+					.antMatchers("/oauth/token", 
+							"/roles", "/roles/**",  
+							"/users", "/users/**", 
+							"/applications", "/applications/**")
 					.and()
 				.authorizeRequests()
 					.antMatchers("/oauth/token").fullyAuthenticated()

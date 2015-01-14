@@ -40,6 +40,10 @@ angular.module('yamaApp', [
 		templateUrl: 'views/user.html',
 		controller: 'UserCtrl'
 	})
+	.when('/applications', {
+		templateUrl: 'views/application.html',
+		controller: 'ApplicationCtrl'
+	})
 	.when('/myprofile', {
 		templateUrl: 'views/myprofile.html',
 		controller: 'MyprofileCtrl'

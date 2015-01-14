@@ -34,6 +34,12 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.tomcat</groupId>
+					<artifactId>tomcat-jdbc</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -47,7 +53,7 @@
 		<!-- Database -->
 		<dependency>
 			<groupId>com.zaxxer</groupId>
-			<artifactId>HikariCP</artifactId>
+			<artifactId>HikariCP-java6</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>${jdbc.group.id}</groupId>
@@ -91,6 +97,12 @@
 			<groupId>org.jboss.resteasy</groupId>
 			<artifactId>resteasy-spring</artifactId>
 			<version>${resteasy.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.jboss.resteasy</groupId>
+					<artifactId>resteasy-jettison-provider</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<!-- Hibernate -->
@@ -111,11 +123,6 @@
 			<groupId>commons-validator</groupId>
 			<artifactId>commons-validator</artifactId>
 			<version>1.4.0</version>
-		</dependency>
-		<dependency>
-			<groupId>net.wimpi</groupId>
-			<artifactId>telnetd-x</artifactId>
-			<version>2.1.1</version>
 		</dependency>
 	</dependencies>
 
@@ -144,12 +151,6 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<version>${spring.boot.version}</version>
-				<configuration>
-					<arguments>
-						<argument>--spring.config.name=yama</argument>
-						<argument>--spring.profiles.active=prod</argument>
-					</arguments>
-				</configuration>
 				<executions>
 					<execution>
 						<goals>
