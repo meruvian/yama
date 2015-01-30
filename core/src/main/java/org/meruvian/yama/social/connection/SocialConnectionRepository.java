@@ -19,6 +19,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.meruvian.yama.core.DefaultRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -37,11 +38,15 @@ public interface SocialConnectionRepository extends DefaultRepository<SocialConn
 	
 	List<SocialConnection> findByUserIdAndProviderAndRank(String userId, String provider, int rank);
 	
+	@Query("SELECT c.user.id FROM SocialConnection c WHERE c.provider = ?1 AND c.providerUserId = ?2")
 	List<String> findUserIdByProviderAndProviderUserId(String provider, String providerUserId);
 
+
+	@Query("SELECT c.user.id FROM SocialConnection c WHERE c.provider = ?1 AND c.providerUserId IN ?2")
 	List<String> findUserIdByProviderAndProviderUserIdIn(String provider, Collection<String> providerUserIds);
 	
 	int findRankByUserId(String userId, String provider);
 
-//	int getRank(String userId, String provider);
+	@Query("SELECT COALESCE(MAX(c.rank) + 1, 1) FROM SocialConnection c WHERE c.providerUserId = ?1 AND c.provider = ?2")
+	int getRank(String userId, String provider);
 }
