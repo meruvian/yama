@@ -11,13 +11,14 @@
 	<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
 	<link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
 	<link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.css" />
+	<link rel="stylesheet" href="bower_components/angular-ui-select/dist/select.css" />
 	<!-- endbower -->
 	<!-- endbuild -->
 	<!-- build:css(src/main/www) styles/main.css -->
 	<link rel="stylesheet" href="styles/adminlte.css">
 	<!-- endbuild -->
 </head>
-<body ng-app="yamaApp" class="skin-blue">
+<body ng-app="yamaApp" class="skin-blue fixed">
 	<oauth
 		template="views/oauth2.html"
 		site="http://localhost:8080"
@@ -26,7 +27,7 @@
 		scope="read write">
 	</oauth>
 	<!-- header logo: style can be found in header.less -->
-	<header class="header" ng-controller="HeaderCtrl">
+	<header class="header">
 		<a href="#!/" class="logo">
 			<!-- Add the class icon to your logo image or logo icon to add the margining -->
 			Yama
@@ -54,7 +55,7 @@
 						<ul class="dropdown-menu">
 							<!-- User image -->
 							<li class="user-header bg-light-blue">
-								<img src="img/avatar3.png" class="img-circle" alt="User Image" />
+								<img ng-src="{{ currentUserPhoto }}" class="img-circle" alt="User Image" />
 								<p>
 									<span ng-bind="currentUser.name.first + ' ' + currentUser.name.last"></span>
 									<small ng-bind="currentUser.username"></small>
@@ -77,10 +78,10 @@
 							<!-- Menu Footer-->
 							<li class="user-footer">
 								<div class="pull-left">
-									<a href="#!/myprofile" class="btn btn-default btn-flat">Profile</a>
+									<a href="#!/my/profile" class="btn btn-default btn-flat">Profile</a>
 								</div>
 								<div class="pull-right">
-									<a href="#!/" ng-click="logout()" class="btn btn-default btn-flat">Sign out</a>
+									<a href="" ng-click="logout()" class="btn btn-default btn-flat">Sign out</a>
 								</div>
 							</li>
 						</ul>
@@ -93,11 +94,11 @@
 		<!-- Left side column. contains the logo and sidebar -->
 		<aside class="left-side sidebar-offcanvas">
 			<!-- sidebar: style can be found in sidebar.less -->
-			<section class="sidebar" ng-controller="HeaderCtrl">
+			<section class="sidebar">
 				<!-- Sidebar user panel -->
 				<div class="user-panel">
 					<div class="pull-left image">
-						<img src="img/avatar3.png" class="img-circle" alt="User Image" />
+						<img ng-src="{{ currentUserPhoto }}" class="img-circle" alt="User Image" />
 					</div>
 					<div class="pull-left info">
 						<p>Hello, <span ng-bind="currentUser.username"></span></p>
@@ -213,7 +214,9 @@
     <script src="bower_components/lodash/dist/lodash.compat.js"></script>
     <script src="bower_components/restangular/dist/restangular.js"></script>
     <script src="bower_components/angular-popup-box/angular-popup-boxes.js"></script>
-    <script src="bower_components/angular-file-upload/angular-file-upload.js"></script>
+    <script src="bower_components/angular-ui-select/dist/select.js"></script>
+    <script src="bower_components/ng-file-upload/angular-file-upload.js"></script>
+    <script src="bower_components/ng-file-upload-shim/angular-file-upload-shim.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -236,6 +239,7 @@
     <script src="scripts/services/applications.js"></script>
     <script src="scripts/directives/header.js"></script>
     <script src="scripts/services/monitoring.js"></script>
+    <script src="scripts/services/profilepictures.js"></script>
     <!-- endbuild -->
 </body>
 </html>

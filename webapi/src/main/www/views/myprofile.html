@@ -58,20 +58,20 @@
 					</div>
 
 					<div class="box-body">
-						<form ame="profileImageForm">
+						<form id="profileImageForm" ng-submit="uploadPhoto">
 							<fieldset>
-								<div class="row">
-									<img src="/profile/photo" class="img-thumbnail col-md-3 col-md-offset-4" alt="User Image">
+								<div class="row" nv-file-drop nv-file-over uploader="uploader">
+									<img ng-src="{{ currentUserPhoto }}" class="img-thumbnail col-md-4 col-md-offset-4 col-xs-8 col-xs-offset-2" alt="User Image">
 								</div>
 
 								<div class="form-group ">
-									<label class="control-label" for="profile-picture">Browse</label>
+									<label class="control-label" for="profile-picture"></label>
 									<div class="controls">
-										<input type="file" id="profile-picture" class="form-control">
+										<div class="btn btn-default" ng-file-select ng-model="files">
+											<i class="fa fa-paperclip"></i> Choose file...
+										</div>
 									</div>
 								</div>
-
-								<input type="submit" value="Upload" class="btn btn-primary col-md-3">
 							</fieldset>
 						</form>
 					</div>

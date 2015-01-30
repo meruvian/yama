@@ -13,24 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.meruvian.yama.webapi;
+package org.meruvian.yama.webapi.service;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.social.SocialWebAutoConfiguration;
-import org.springframework.context.annotation.ComponentScan;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Response;
 
 /**
  * @author Dian Aditya
  *
  */
-@EnableAutoConfiguration(exclude = { SocialWebAutoConfiguration.class })
-@ComponentScan({ "org.meruvian.yama" })
-public class Application {
-	public static void main(String[] args) {
-		SpringApplication application = new SpringApplication(Application.class);
-		application.setShowBanner(false);
-		
-		application.run(args);
-	}
+@Path("/login/social")
+public interface SocialSignInService {
+	@GET
+	@Path("/{provider}")
+	Response socialSignIn(@PathParam("provider") String provider);
+	
+	@GET
+	@Path("/{provider}/callback")
+	Response socialSignInCallback(@PathParam("provider") String provider, @QueryParam("code") String code);
 }

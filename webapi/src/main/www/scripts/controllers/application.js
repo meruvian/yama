@@ -18,8 +18,8 @@ angular.module('yamaApp').controller('ApplicationCtrl', function ($scope, $modal
 
 	// Search form submitted or page changed
 	$scope.search = function(p) {
-		p.hash = p.hash || 0;
-		p.hash++;
+		p.cache = p.cache || 0;
+		p.cache++;
 		p.page = $scope.page - 1;
 
 		$location.search(p);

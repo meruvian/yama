@@ -14,12 +14,18 @@ angular.module('yamaApp').controller('UserCtrl', function ($scope, $modal, $loca
 	Users.getList($scope.searchParams).then(function(users) {
 		$scope.users = users;
 		$scope.page = users.meta.number + 1;
+
+		angular.forEach(users, function(user) {
+			user.getList('roles').then(function(roles) {
+				user.roles = roles;
+			});
+		});
 	});
 
 	// Search form submitted or page changed
 	$scope.search = function(p) {
-		p.hash = p.hash || 0;
-		p.hash++;
+		p.cache = p.cache || 0;
+		p.cache++;
 		p.page = $scope.page - 1;
 
 		$location.search(p);
@@ -68,7 +74,10 @@ angular.module('yamaApp').controller('UserCtrl', function ($scope, $modal, $loca
 			});
 		});
 	};
-}).controller('UserFormCtrl', function($scope, $modalInstance, Users, user) {
+}).controller('UserFormCtrl', function($scope, $modalInstance, Users, user, Roles) {
+	user.roles = user.roles || [];
+	$scope.roles = user.roles;
+
 	if (user) {
 		$scope.user = user;
 	}
@@ -85,12 +94,25 @@ angular.module('yamaApp').controller('UserCtrl', function ($scope, $modal, $loca
 
 	$scope.submit = function(user) {
 		$scope.error = false;
-
 		if (user.id) {
 			user.put().then(success, error);
 		} else {
 			Users.post(user).then(success, error);
 		}
+	};
+
+	$scope.loadRoles = function(search) {
+		Roles.getList({ q: search }).then(function(roles) {
+			$scope.roles = roles;
+		});
+	};
+
+	$scope.addRole = function(role) {
+		user.one('roles', role.id).put();
+	};
+
+	$scope.removeRole = function(role) {
+		user.one('roles', role.id).remove();
 	};
 }).controller('UserChangePasswdFormCtrl', function($scope, $modalInstance, user) {
 	user.password = '';

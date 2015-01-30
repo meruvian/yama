@@ -7,18 +7,6 @@
  * # HeaderCtrl
  * Controller of the yamaApp
  */
-angular.module('yamaApp').controller('HeaderCtrl', function ($scope, Endpoint, AccessToken, Users) {
-	$scope.$on('oauth:loggedOut', function() {
-		Endpoint.redirect();
-	});
+angular.module('yamaApp').controller('HeaderCtrl', function () {
 
-	$scope.$on('oauth:authorized', function() {
-		Users.one('me').get().then(function(user) {
-			$scope.currentUser = user;
-		});
-	});
-
-	$scope.logout = function() {
-		AccessToken.destroy($scope);
-	};
 });

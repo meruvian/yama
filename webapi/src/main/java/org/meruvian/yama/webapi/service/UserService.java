@@ -30,6 +30,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.meruvian.yama.core.role.Role;
 import org.meruvian.yama.core.user.User;
@@ -73,8 +74,8 @@ public interface UserService {
 	Page<Role> findRoleByUser(@PathParam("username") String username, Pageable pageable);
 	
 	@PUT
-	@Path("/{username}/roles")
-	boolean addRoleToUser(@PathParam("username") String username, Role role);
+	@Path("/{username}/roles/{roleId}")
+	boolean addRoleToUser(@PathParam("username") String username, @PathParam("roleId") String roleId);
 	
 	@DELETE
 	@Path("/{username}/roles/{roleId}")
@@ -83,10 +84,10 @@ public interface UserService {
 	@GET
 	@Path("/{username}/photo")
 	@Produces(MediaType.APPLICATION_OCTET_STREAM)
-	InputStream getUserPhoto(@PathParam("username") String username) throws FileNotFoundException;
+	Response getUserPhoto(@PathParam("username") String username) throws FileNotFoundException;
 	
 	@POST
+	@Consumes("image/*")
 	@Path("/{username}/photo")
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	boolean updateUserPhoto(InputStream stream) throws IOException;
+	boolean updateUserPhoto(@PathParam("username") String username, InputStream inputStream) throws IOException;
 }

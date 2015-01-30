@@ -7,17 +7,25 @@
  * # MyprofileCtrl
  * Controller of the yamaApp
  */
-angular.module('yamaApp').controller('MyProfileCtrl', function ($scope, Users) {
-	$scope.refresh = function() {
-		Users.one('me').get().then(function(user) {
-			$scope.user = user;
+angular.module('yamaApp').controller('MyProfileCtrl', function ($rootScope, $scope, Users, ProfilePictures) {
+	var users = Users.one('me');
+
+	users.get().then(function(user) {
+		$scope.user = user;
+	});
+
+	$scope.$watch('files', function() {
+		var file = $scope.files[0];
+
+		ProfilePictures.uploadPhoto(file, function() {
+
+		}, function() {
+			ProfilePictures.reloadPhoto();
 		});
-	};
+	});
 
-	$scope.refresh();
-
-	var success = function() {
-		$scope.refresh();
+	var success = function(user) {
+		$rootScope.currentUser = user;
 	};
 
 	var error = function() {

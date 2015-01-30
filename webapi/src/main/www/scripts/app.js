@@ -16,11 +16,13 @@ angular.module('yamaApp', [
 	'ngSanitize',
 	'ngTouch',
 	'ui.bootstrap',
+	'ui.select',
 	'oauth',
 	'angular-loading-bar',
 	'jcs-autoValidate',
 	'restangular',
-	'angularPopupBoxes'
+	'angularPopupBoxes',
+	'angularFileUpload'
 ]).config(function ($routeProvider, $locationProvider) {
 	$locationProvider.html5Mode(false).hashPrefix('!');
 	$routeProvider
@@ -44,17 +46,19 @@ angular.module('yamaApp', [
 		templateUrl: 'views/application.html',
 		controller: 'ApplicationCtrl'
 	})
-	.when('/myprofile', {
+	.when('/my/profile', {
 		templateUrl: 'views/myprofile.html',
-		controller: 'MyprofileCtrl'
+		controller: 'MyProfileCtrl'
 	})
 	.otherwise({
 		redirectTo: '/'
 	});
-}).config(function($httpProvider, RestangularProvider) {
+}).config(function($httpProvider, RestangularProvider, uiSelectConfig) {
+	// Http and Restangular
 	$httpProvider.interceptors.push('Oauth2RequestInterceptor');
 
-	RestangularProvider.setBaseUrl('http://localhost:8080');
+	// RestangularProvider.setBaseUrl('http://localhost:8080');
+	RestangularProvider.setDefaultHttpFields({cache: true});
 
 	RestangularProvider.addResponseInterceptor(function(data, operation) {
 		var extractedData;
@@ -69,6 +73,33 @@ angular.module('yamaApp', [
 
 		return extractedData;
 	});
+
+	// UI-Select
+	uiSelectConfig.theme = 'bootstrap';
+	uiSelectConfig.resetSearchInput = true;
 }).run(function (bootstrap3ElementModifier) {
 	bootstrap3ElementModifier.enableValidationStateIcons(false);
+}).run(function($rootScope, $http, AccessToken, Endpoint, Users, ProfilePictures) {
+	$rootScope.$on('oauth:loggedOut', function() {
+		Endpoint.redirect();
+	});
+
+	$rootScope.$on('oauth:authorized', function() {
+		Users.one('me').get().then(function(user) {
+			$rootScope.currentUser = user;
+		});
+
+		ProfilePictures.reloadPhoto();
+	});
+
+	$rootScope.logout = function() {
+		$http.get('/logout').success(function() {
+			AccessToken.destroy();
+
+			setTimeout(function() {
+				$rootScope.$broadcast('oauth:logout');
+				$rootScope.$broadcast('oauth:loggedOut');
+			}, 500);
+		});
+	};
 });

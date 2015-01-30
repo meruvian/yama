@@ -7,7 +7,7 @@
  * # RoleCtrl
  * Controller of the yamaAppApp
  */
-angular.module('yamaApp').controller('RoleCtrl', function ($rootScope, $scope, $modal, $location, Roles, angularPopupBoxes) {
+angular.module('yamaApp').controller('RoleCtrl', function ($scope, $modal, $location, Roles, angularPopupBoxes) {
 	$scope.searchParams = $location.search();
 
 	// Load list on page loaded
@@ -18,8 +18,8 @@ angular.module('yamaApp').controller('RoleCtrl', function ($rootScope, $scope, $
 
 	// Search form submitted or page changed
 	$scope.search = function(p) {
-		p.hash = p.hash || 0;
-		p.hash++;
+		p.cache = p.cache || 0;
+		p.cache++;
 		p.page = $scope.page - 1;
 
 		$location.search(p);

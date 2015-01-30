@@ -33,6 +33,7 @@
 										<th>Username</th>
 										<th>Full Name</th>
 										<th>Email</th>
+										<th>Roles</th>
 										<th>Action</th>
 									</tr>
 								</thead>
@@ -41,6 +42,9 @@
 										<td><a href="" ng-click="openForm(user)"><span ng-bind="user.username"></a></span></td>
 										<td ng-bind="user.name.first + ' ' + user.name.last"></td>
 										<td ng-bind="user.email"></td>
+										<td>
+											<span class="label label-default" ng-repeat="r in user.roles" ng-bind="r.name"></span>
+										</td>
 										<td>
 											<a href="" class="btn btn-default btn-xs" ng-click="changePasswd(user)" title="Change Password">
 												<span class="fa fa-key"></span>
@@ -121,8 +125,20 @@
 				</div>
 				<div class="form-group">
 					<label class="control-label" for="email">Email</label>
-					<div class="  controls">
+					<div class="controls">
 						<input type="email" id="email" class="form-control" ng-model="user.email" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label" for="roles">Roles</label>
+					<div class="controls">
+						<ui-select multiple ng-model="user.roles" on-select="addRole($model)" on-remove="removeRole($model)">
+							<ui-select-match placeholder="Select roles...">{{ $item.name }}</ui-select-match>
+							<ui-select-choices repeat="role in roles" refresh="loadRoles($select.search)">
+								<div ng-bind-html="role.name | highlight: $select.search"></div>
+								<small ng-bind-html="role.description | highlight: $select.search"></small>
+							</ui-select-choices>
+						</ui-select>
 					</div>
 				</div>
 			</fieldset>

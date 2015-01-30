@@ -55,7 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 				.antMatchers("/").permitAll()
-				.antMatchers("/login", "/login.html").hasRole("ANONYMOUS")
+				.antMatchers("/login", "/login.html", "/login/social/**").hasRole("ANONYMOUS")
 				.antMatchers("/oauth/authorize").fullyAuthenticated()
 				.and()
 			.formLogin()
@@ -68,7 +68,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.and()
 			.logout()
 				.logoutUrl("/logout")
-				.logoutSuccessUrl("/")
+				.logoutSuccessUrl("/login.html")
+				.invalidateHttpSession(true)
 				.and()
 			.rememberMe()
 				.userDetailsService(userDetailsService)

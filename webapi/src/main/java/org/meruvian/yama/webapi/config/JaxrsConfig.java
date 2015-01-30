@@ -16,6 +16,7 @@
 
 package org.meruvian.yama.webapi.config;
 
+import org.jboss.resteasy.plugins.providers.jackson.Jackson2JsonpInterceptor;
 import org.jboss.resteasy.plugins.spring.SpringBeanProcessor;
 import org.jboss.resteasy.spi.ResteasyDeployment;
 import org.jboss.resteasy.spi.ResteasyProviderFactory;
@@ -34,9 +35,9 @@ import org.springframework.core.Ordered;
 @ConditionalOnClass(ResteasyHandlerMapping.class)
 public class JaxrsConfig {
 		
+	@Bean(initMethod="start", destroyMethod="stop")
 	@ConditionalOnMissingBean(ResteasyDeployment.class)
 	@ConfigurationProperties(prefix="resteasy.deployment")
-	@Bean(initMethod="start", destroyMethod="stop")
 	public ResteasyDeployment resteasyDeployment(final SpringBeanProcessor springBeanProcessor) {
 		ResteasyDeployment resteasyDeployment = new ResteasyDeployment() {
 			public void start() {
@@ -50,25 +51,30 @@ public class JaxrsConfig {
 		return resteasyDeployment;
 	}
 
-	@ConditionalOnMissingBean(SpringBeanProcessor.class)
 	@Bean
+	@ConditionalOnMissingBean(SpringBeanProcessor.class)
 	public SpringBeanProcessor springBeanProcessor() {
 		SpringBeanProcessor springBeanProcessor = new SpringBeanProcessor();
 		springBeanProcessor.setProviderFactory(new ResteasyProviderFactory());
 		return springBeanProcessor;
 	}
 
-	@ConditionalOnMissingBean(ResteasyHandlerMapping.class)
 	@Bean
+	@ConditionalOnMissingBean(ResteasyHandlerMapping.class)
 	public ResteasyHandlerMapping resteasyHandlerMapper(ResteasyDeployment deployment) {
 		ResteasyHandlerMapping handlerMapping = new ResteasyHandlerMapping(deployment);
 		handlerMapping.setOrder(Ordered.LOWEST_PRECEDENCE - 10);
 		return handlerMapping;
 	}
 
-	@ConditionalOnMissingBean(ResteasyHandlerAdapter.class)
 	@Bean
+	@ConditionalOnMissingBean(ResteasyHandlerAdapter.class)
 	public ResteasyHandlerAdapter resteasyHandlerAdapter(ResteasyDeployment deployment) {
 		return new ResteasyHandlerAdapter(deployment);
+	}
+	
+	@Bean
+	public Jackson2JsonpInterceptor jsonpInterceptor() {
+		return new Jackson2JsonpInterceptor();
 	}
 }

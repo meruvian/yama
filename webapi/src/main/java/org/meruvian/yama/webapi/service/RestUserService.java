@@ -15,7 +15,7 @@
  */
 package org.meruvian.yama.webapi.service;
 
-import java.io.FileInputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -25,6 +25,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -66,6 +69,9 @@ public class RestUserService implements UserService {
 	
 	@Value("${upload.path}")
 	private String uploadPath;
+	
+	@Context
+	private HttpServletRequest request;
 	
 	@Override
 	public User getUserByUsernameOrId(String username) {
@@ -120,13 +126,34 @@ public class RestUserService implements UserService {
 	}
 
 	@Override
-	public boolean addRoleToUser(String username, Role role) {
-		return false;
+	@Transactional
+	public boolean addRoleToUser(String username, String roleId) {
+		User u = getUserByUsernameOrId(username);
+		for (UserRole ur : u.getRoles()) {
+			if (ur.getRole().getId().equals(roleId)) {
+				return false;
+			}
+		}
+		
+		UserRole userRole = new UserRole();
+		userRole.setUser(u);
+		Role role = new Role();
+		role.setId(roleId);
+		userRole.setRole(role);
+		
+		userRoleRepository.save(userRole);
+		
+		return true;
 	}
 
 	@Override
+	@Transactional
 	public boolean removeRoleFromUser(String username, String roleId) {
-		return false;
+		User u = getUserByUsernameOrId(username);
+		UserRole ur = userRoleRepository.findByUserIdAndRoleId(u.getId(), roleId);
+		userRoleRepository.delete(ur);
+		
+		return true;
 	}
 
 	@Override
@@ -143,13 +170,13 @@ public class RestUserService implements UserService {
 	}
 
 	@Override
-	public InputStream getUserPhoto(String username) throws FileNotFoundException {
+	public Response getUserPhoto(String username) throws FileNotFoundException {
 		User u = getUserByUsernameOrId(username);
 		FileInfo info = u.getFileInfo();
 		
 		if (info != null) {
 			String filePath = info.getPath();
-			return new FileInputStream(filePath);
+			return Response.ok(new File(filePath), info.getContentType()).build();
 		}
 		
 		return null;
@@ -157,17 +184,28 @@ public class RestUserService implements UserService {
 
 	@Override
 	@Transactional
-	public boolean updateUserPhoto(InputStream stream) throws IOException {		
+	public boolean updateUserPhoto(String username, InputStream inputStream) throws IOException {
 		FileInfo info = new FileInfo();
-		info.setPath(StringUtils.join(uploadPath));
+		info.setPath(StringUtils.join(uploadPath, "/profile_pic/"));
+		info.setOriginalName("");
+		
+		File file = new File(info.getPath());
+		if (!file.exists()) {
+			file.mkdirs();
+		}
 		
 		info = fileInfoRepository.save(info);
-		info.setPath(StringUtils.join(info.getPath(), "/profile_pic/", info.getId()));
+		info.setPath(StringUtils.join(info.getPath(), info.getId()));
+		info.setOriginalName(info.getId());
 		
+		info.setContentType(request.getContentType());
 		OutputStream outputStream = new FileOutputStream(info.getPath());
-		IOUtils.copy(stream, outputStream);
-		IOUtils.closeQuietly(stream);
+		info.setSize(IOUtils.copy(inputStream, outputStream));
+		IOUtils.closeQuietly(inputStream);
 		IOUtils.closeQuietly(outputStream);
+		
+		User u = getUserByUsernameOrId(username);
+		u.setFileInfo(info);
 		
 		return true;
 	}
