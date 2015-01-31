@@ -121,12 +121,19 @@ public class Oauth2ServerConfig {
 		
 		@Override
 		public void configure(HttpSecurity http) throws Exception {
+			String[] authorizedUrl = {
+					"/autoconfig", "/beans", "/configprops", "/dump", "/env", 
+					"/health", "/info", "/metrics", "/mappings", "/shutdown",
+					"/trace",	
+					"/oauth/token", 
+					"/roles", "/roles/**",
+					"/users", "/users/**",
+					"/applications", "/applications/**"
+			};
+			
 			http
 				.requestMatchers()
-					.antMatchers("/oauth/token", 
-							"/roles", "/roles/**",  
-							"/users", "/users/**", 
-							"/applications", "/applications/**")
+					.antMatchers(authorizedUrl)
 					.and()
 				.authorizeRequests()
 					.antMatchers("/oauth/token").fullyAuthenticated()
