@@ -1,0 +1,2 @@
+id;display_name;secret;site;registered_redirect_uri;auto_approve;active_flag
+419c6697-14b7-4853-880e-b68e3731e317;Yama;s3cr3t;http://yama2.meruvian.org;http://localhost:8080;true;1

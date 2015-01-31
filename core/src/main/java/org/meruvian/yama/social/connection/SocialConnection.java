@@ -18,6 +18,7 @@ package org.meruvian.yama.social.connection;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -109,6 +110,7 @@ public class SocialConnection extends DefaultPersistence {
 		this.imageUrl = imageUrl;
 	}
 
+	@Lob
 	@Column(nullable = false, name = "access_token")
 	public String getAccessToken() {
 		return accessToken;
@@ -118,6 +120,7 @@ public class SocialConnection extends DefaultPersistence {
 		this.accessToken = accessToken;
 	}
 
+	@Lob
 	public String getSecret() {
 		return secret;
 	}
@@ -126,6 +129,7 @@ public class SocialConnection extends DefaultPersistence {
 		this.secret = secret;
 	}
 
+	@Lob
 	@Column(name = "refresh_token")
 	public String getRefreshToken() {
 		return refreshToken;

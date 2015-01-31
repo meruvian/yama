@@ -1,5 +1,6 @@
 spring:
     profiles: dev
+    jpa.hibernate.ddl-auto: validate
 
 server.port: 8080
 
@@ -14,13 +15,14 @@ rest:
 
 # database
 db:
-    url: jdbc:mysql://localhost:3306/yama
+    url: jdbc:mysql://localhost:3306/yama2
     driver: com.mysql.jdbc.Driver
     datasource: com.mysql.jdbc.jdbc2.optional.MysqlDataSource
     username: root
     password: root
     max_pool_size: 100
     test_query: SELECT 1
+    run_migration: true
     
 # upload
 upload:

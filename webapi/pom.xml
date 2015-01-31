@@ -60,6 +60,10 @@
 			<artifactId>${jdbc.artifact.id}</artifactId>
 			<version>${jdbc.version}</version>
 		</dependency>
+		<dependency>
+			<groupId> org.liquibase</groupId>
+			<artifactId>liquibase-core</artifactId>
+		</dependency>
 
 		<!-- Spring Security -->
 		<dependency>

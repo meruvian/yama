@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog 
+	http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd">
+	
+	<property name="now" value="now()" dbms="mysql,h2"/>
+    <property name="now" value="current_timestamp" dbms="postgresql"/>
+	
+	<changeSet id="0001" author="yama">
+		<createTable tableName="yama_backend_user">
+			<column name="id" type="varchar(50)">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="create_by" type="varchar(50)" />
+			<column name="create_date" type="datetime" />
+			<column name="update_by" type="varchar(50)" />
+			<column name="update_date" type="datetime" />
+			<column name="active_flag" type="int(10)" />
+			
+			<column name="username" type="varchar(50)">
+				<constraints unique="true" nullable="false" />
+			</column>
+			<column name="password" type="varchar(100)" />
+			<column name="email" type="varchar(100)">
+				<constraints unique="true" nullable="false" />
+			</column>
+			<column name="name_prefix" type="varchar(50)" />
+			<column name="name_first" type="varchar(50)" />
+			<column name="name_middle" type="varchar(50)" />
+			<column name="name_last" type="varchar(50)" />
+			<column name="address_street1" type="varchar(100)" />
+			<column name="address_street2" type="varchar(100)" />
+			<column name="address_city" type="varchar(50)" />
+			<column name="address_state" type="varchar(50)" />
+			<column name="address_zip" type="varchar(50)" />
+			<column name="file_info_id" type="varchar(50)" />
+		</createTable>
+		
+		<createTable tableName="yama_workflow_role">
+			<column name="id" type="varchar(50)">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="create_by" type="varchar(50)" />
+			<column name="create_date" type="datetime" />
+			<column name="update_by" type="varchar(50)" />
+			<column name="update_date" type="datetime" />
+			<column name="active_flag" type="int(10)" />
+			
+			<column name="name" type="varchar(50)">
+				<constraints unique="true" nullable="false" />
+			</column>
+			<column name="description" type="varchar(100)" />
+		</createTable>
+		
+		<createTable tableName="yama_user_role">
+			<column name="id" type="varchar(50)">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="create_by" type="varchar(50)" />
+			<column name="create_date" type="datetime" />
+			<column name="update_by" type="varchar(50)" />
+			<column name="update_date" type="datetime" />
+			<column name="active_flag" type="int(10)" />
+			
+			<column name="user_id" type="varchar(50)" />
+			<column name="role_id" type="varchar(50)" />
+		</createTable>
+		
+		<createTable tableName="yama_application">
+			<column name="id" type="varchar(50)">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="create_by" type="varchar(50)" />
+			<column name="create_date" type="datetime" />
+			<column name="update_by" type="varchar(50)" />
+			<column name="update_date" type="datetime" />
+			<column name="active_flag" type="int(10)" />
+			
+			<column name="display_name" type="varchar(50)" />
+			<column name="domain" type="varchar(50)" />
+			<column name="namespace" type="varchar(50)" />
+			<column name="secret" type="varchar(50)" />
+			<column name="site" type="varchar(50)" />
+			<column name="access_token_validity_seconds" type="int(10)" />
+			<column name="authorized_grant_type" type="varchar(100)" />
+			<column name="auto_approve" type="bit(1)" />
+			<column name="refresh_token_validity_seconds" type="int(10)" />
+			<column name="registered_redirect_uri" type="varchar(100)" />
+			<column name="resource_id" type="varchar(50)" />
+			<column name="scope" type="varchar(50)" />
+		</createTable>
+		
+		<createTable tableName="yama_oauth_application_approval">
+			<column name="id" type="varchar(50)">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="create_by" type="varchar(50)" />
+			<column name="create_date" type="datetime" />
+			<column name="update_by" type="varchar(50)" />
+			<column name="update_date" type="datetime" />
+			<column name="active_flag" type="int(10)" />
+			
+			<column name="expires_at" type="datetime" />
+			<column name="scope" type="varchar(50)" />
+			<column name="status" type="varchar(50)" />
+			<column name="application_id" type="varchar(50)" />
+		</createTable>
+		
+		<createTable tableName="yama_social_connection">
+			<column name="id" type="varchar(50)">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="create_by" type="varchar(50)" />
+			<column name="create_date" type="datetime" />
+			<column name="update_by" type="varchar(50)" />
+			<column name="update_date" type="datetime" />
+			<column name="active_flag" type="int(10)" />
+			
+			<column name="access_token" type="longtext" />
+			<column name="refresh_token" type="longtext" />
+			<column name="display_name" type="varchar(50)" />
+			<column name="expire_time" type="bigint(20)" />
+			<column name="image_url" type="varchar(100)" />
+			<column name="profile_url" type="varchar(100)" />
+			<column name="provider" type="varchar(50)" />
+			<column name="provider_user_id" type="varchar(50)" />
+			<column name="rank" type="int(10)" />
+			<column name="secret" type="longtext" />
+			<column name="user_id" type="varchar(50)" />
+		</createTable>
+		
+		<createTable tableName="yama_file_info">
+			<column name="id" type="varchar(50)">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="create_by" type="varchar(50)" />
+			<column name="create_date" type="datetime" />
+			<column name="update_by" type="varchar(50)" />
+			<column name="update_date" type="datetime" />
+			<column name="active_flag" type="int(10)" />
+			
+			<column name="original_name" type="varchar(50)" />
+			<column name="content_type" type="varchar(50)" />
+			<column name="path" type="longtext">
+				<constraints nullable="false" />
+			</column>
+			<column name="size" type="bigint(20)" />
+		</createTable>
+		
+		<addForeignKeyConstraint constraintName="fk_user_role_user_id"
+			baseTableName="yama_user_role"
+			baseColumnNames="user_id"
+			referencedTableName="yama_backend_user" 
+			referencedColumnNames="id" />
+		
+		<addForeignKeyConstraint constraintName="fk_user_role_role_id"
+			baseTableName="yama_user_role"
+			baseColumnNames="role_id"
+			referencedTableName="yama_workflow_role" 
+			referencedColumnNames="id" />
+			
+		<addUniqueConstraint columnNames="user_id, role_id" 
+			tableName="yama_user_role" />
+		
+		<addForeignKeyConstraint constraintName="fk_approval_application_id"
+			baseTableName="yama_oauth_application_approval"
+			baseColumnNames="application_id"
+			referencedTableName="yama_application" 
+			referencedColumnNames="id" />
+			
+		<addUniqueConstraint columnNames="application_id, create_by, scope"
+			tableName="yama_oauth_application_approval"/>
+		
+		<addForeignKeyConstraint constraintName="fk_social_user_id"
+			baseTableName="yama_social_connection"
+			baseColumnNames="user_id"
+			referencedTableName="yama_backend_user" 
+			referencedColumnNames="id" />
+			
+		<addUniqueConstraint columnNames="user_id, provider, rank"
+			tableName="yama_social_connection"/>
+		
+		<addUniqueConstraint columnNames="user_id, provider, provider_user_id"
+			tableName="yama_social_connection"/>
+		
+		<addForeignKeyConstraint constraintName="fk_user_file_info_id"
+			baseTableName="yama_backend_user"
+			baseColumnNames="file_info_id"
+			referencedTableName="yama_file_info" 
+			referencedColumnNames="id" />
+			
+		<loadData tableName="yama_backend_user" file="db/users.csv" 
+			encoding="UTF-8" separator=";" />
+		
+		<loadData tableName="yama_workflow_role" file="db/roles.csv" 
+			encoding="UTF-8" separator=";" />
+			
+		<loadData tableName="yama_user_role" file="db/users_roles.csv" 
+			encoding="UTF-8" separator=";" />
+			
+		<loadData tableName="yama_application" file="db/applications.csv" 
+			encoding="UTF-8" separator=";">
+			<column name="auto_approve" type="boolean" />
+		</loadData>
+	</changeSet>
+</databaseChangeLog>

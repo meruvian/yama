@@ -19,6 +19,7 @@ import java.io.InputStream;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -64,6 +65,7 @@ public class FileInfo extends DefaultPersistence {
 		this.originalName = originalName;
 	}
 	
+	@Lob
 	@Column(nullable = false)
 	public String getPath() {
 		return path;
