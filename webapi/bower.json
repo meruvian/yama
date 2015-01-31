@@ -30,12 +30,6 @@
   },
   "appPath": "src/main/www",
   "overrides": {
-    "ng-symbiosis-model": {
-      "main": "ng-symbiosis-model.src.js"
-    },
-    "ng-symbiosis-repository": {
-      "main": "ng-symbiosis-repository.src.js"
-    },
     "angular-popup-box": {
       "main": "angular-popup-boxes.js"
     }
