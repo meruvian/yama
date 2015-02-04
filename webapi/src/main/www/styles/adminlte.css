@@ -16,7 +16,7 @@ body {
   font-family: 'Source Sans Pro', sans-serif;
   -webkit-font-smoothing: antialiased;
   min-height: 100%;
-  background: #f9f9f9;
+  /*background: #f9f9f9;*/
 }
 a {
   color: #3c8dbc;
@@ -2304,7 +2304,7 @@ Component: timeline
 */
 /* ADD THIS CLASS TO THE <HTML> TAG */
 .lockscreen {
-  background: url(../img/blur-background09.jpg) repeat center center fixed;
+  /*background: url(../img/blur-background09.jpg) repeat center center fixed;*/
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -2410,7 +2410,8 @@ Component: timeline
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
   background: #fff;
-  box-shadow: inset 0px -3px 0px rgba(0, 0, 0, 0.2);
+  /*box-shadow: inset 0px -3px 0px rgba(0, 0, 0, 0.2);*/
+  box-shadow: inset 0px -2px 0px rgba(0, 176, 240, 1);
   padding: 20px 10px;
   text-align: center;
   font-size: 26px;

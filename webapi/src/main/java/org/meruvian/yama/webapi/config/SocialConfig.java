@@ -25,6 +25,8 @@ import org.meruvian.yama.social.core.SocialServiceRegistry;
 import org.meruvian.yama.social.core.SocialUsersConnectionService;
 import org.meruvian.yama.social.facebook.FacebookService;
 import org.meruvian.yama.social.google.GooglePlusService;
+import org.meruvian.yama.social.mervid.MervidService;
+import org.meruvian.yama.social.mervid.connect.MervidConnectionFactory;
 import org.meruvian.yama.web.SessionCredentials;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -49,6 +51,7 @@ public class SocialConfig {
 		SocialServiceRegistry registry = new SocialServiceRegistry();
 		registry.addSocialService(facebookService());
 		registry.addSocialService(googlePlusService());
+		registry.addSocialService(mervidService());
 		
 		return registry;
 	}
@@ -100,5 +103,20 @@ public class SocialConfig {
 		gPlusService.setScope(scope);
 		
 		return gPlusService;
+	}
+	
+	@Bean
+	public MervidService mervidService() {
+		String appId = env.getProperty("social.mervid.appId");
+		String appSecret = env.getProperty("social.mervid.appSecret");
+		String redirectUri = env.getProperty("social.mervid.redirectUri");
+		String scope = env.getProperty("social.mervid.scope");
+		
+		MervidConnectionFactory factory = new MervidConnectionFactory(appId, appSecret);
+		MervidService mervidService = new MervidService(factory);
+		mervidService.setRedirectUri(redirectUri);
+		mervidService.setScope(scope);
+		
+		return mervidService;
 	}
 }
