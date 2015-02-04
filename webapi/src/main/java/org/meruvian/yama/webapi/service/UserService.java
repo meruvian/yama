@@ -81,6 +81,10 @@ public interface UserService {
 	@Path("/{username}/roles/{roleId}")
 	boolean removeRoleFromUser(@PathParam("username") String username, @PathParam("roleId") String roleId);
 	
+	@DELETE
+	@Path("/{username}/roles")
+	boolean removeAllRoleFromUser(@PathParam("username") String username);
+	
 	@GET
 	@Path("/{username}/photo")
 	@Produces(MediaType.APPLICATION_OCTET_STREAM)

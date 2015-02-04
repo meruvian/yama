@@ -16,7 +16,7 @@ body {
   font-family: 'Source Sans Pro', sans-serif;
   -webkit-font-smoothing: antialiased;
   min-height: 100%;
-  /*background: #f9f9f9;*/
+  /* background: #f9f9f9; */
 }
 a {
   color: #3c8dbc;
@@ -56,7 +56,7 @@ body > .header {
 }
 /*right side - contins main content*/
 .right-side {
-  background-color: #f9f9f9;
+  /* background-color: #f9f9f9; */
   margin-left: 220px;
 }
 /*left side - contains sidebar*/
@@ -111,7 +111,7 @@ body.fixed .wrapper {
 /* Content */
 .content {
   padding: 20px 15px;
-  background: #f9f9f9;
+  /* background: #f9f9f9; */
 }
 /* Utility */
 /* H1 - H6 font */
@@ -144,7 +144,7 @@ img {
   max-width: 100% !important;
 }
 .sort-highlight {
-  background: #f4f4f4;
+  /* background: #f4f4f4; */
   border: 1px dashed #ddd;
   margin-bottom: 10px;
 }
@@ -847,7 +847,7 @@ body > .header .logo .icon {
 .navbar-nav > .notifications-menu > .dropdown-menu > li.footer > a:hover,
 .navbar-nav > .messages-menu > .dropdown-menu > li.footer > a:hover,
 .navbar-nav > .tasks-menu > .dropdown-menu > li.footer > a:hover {
-  background: #f4f4f4;
+  /* background: #f4f4f4; */
   text-decoration: none;
   font-weight: normal;
 }
@@ -1027,7 +1027,7 @@ body > .header .logo .icon {
   color: #0073b7;
 }
 .navbar-nav > .user-menu > .dropdown-menu > li.user-footer {
-  background-color: #f9f9f9;
+  /* background-color: #f9f9f9; */
   padding: 10px;
 }
 .navbar-nav > .user-menu > .dropdown-menu > li.user-footer:before,
@@ -1992,7 +1992,7 @@ Component: timeline
   display: block;
 }
 .btn.btn-app:hover {
-  background: #f4f4f4;
+  /* background: #f4f4f4; */
   color: #444;
   border-color: #aaa;
 }
@@ -2584,7 +2584,7 @@ Component: timeline
 }
 /* skin-blue content header */
 .skin-blue .right-side > .content-header {
-  background: #fbfbfb;
+  /* background: #fbfbfb; */
   box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 /* Skin-blue user panel */
@@ -2615,14 +2615,14 @@ Component: timeline
 .skin-blue .sidebar > .sidebar-menu > li > a:hover,
 .skin-blue .sidebar > .sidebar-menu > li.active > a {
   color: #222;
-  background: #f9f9f9;
+  /* background: #f9f9f9; */
 }
 .skin-blue .sidebar > .sidebar-menu > li > .treeview-menu {
   margin: 0 1px;
-  background: #f9f9f9;
+  /* background: #f9f9f9; */
 }
 .skin-blue .left-side {
-  background: #f4f4f4;
+  /* background: #f4f4f4; */
   -webkit-box-shadow: inset -3px 0px 8px -4px rgba(0, 0, 0, 0.1);
   -moz-box-shadow: inset -3px 0px 8px -4px rgba(0, 0, 0, 0.1);
   box-shadow: inset -3px 0px 8px -4px rgba(0, 0, 0, 0.07);

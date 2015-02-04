@@ -169,6 +169,15 @@ public class RestUserService implements UserService, EnvironmentAware {
 		
 		return true;
 	}
+	
+	@Override
+	@Transactional
+	public boolean removeAllRoleFromUser(String username) {
+		User u = getUserByUsernameOrId(username);
+		userRoleRepository.delete(u.getRoles());
+		
+		return true;
+	}
 
 	@Override
 	public Page<Role> findRoleByUser(String username, Pageable pageable) {

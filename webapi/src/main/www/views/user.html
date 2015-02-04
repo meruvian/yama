@@ -43,7 +43,9 @@
 										<td ng-bind="user.name.first + ' ' + user.name.last"></td>
 										<td ng-bind="user.email"></td>
 										<td>
-											<span class="label label-default" ng-repeat="r in user.roles" ng-bind="r.name"></span>
+											<span ng-repeat="r in user.roles">
+											<span class="label label-default" ng-bind="r.name"></span>&nbsp;
+											</span>
 										</td>
 										<td>
 											<a href="" class="btn btn-default btn-xs" ng-click="changePasswd(user)" title="Change Password">
@@ -84,7 +86,7 @@
 				<div class="form-group">
 					<label class="control-label" for="username">Username</label>
 					<div class="controls">
-						<input type="text" id="username" class="form-control" ng-model="user.username" required>
+						<input type="text" id="username" class="form-control" ng-model="user.username" ng-minlength="6" required>
 					</div>
 				</div>
 				<div class="row" ng-show="isNew">
@@ -92,7 +94,7 @@
 						<div class="form-group">
 							<label class="control-label" for="password">Password</label>
 							<div class="controls">
-								<input type="password" id="password" class="form-control" ng-model="user.password" required>
+								<input type="password" id="password" class="form-control" ng-model="user.password" ng-minlength="6" required>
 							</div>
 						</div>
 					</div>
@@ -100,7 +102,7 @@
 						<div class="form-group">
 							<label class="control-label" for="confirm-password">Confirm Password</label>
 							<div class="controls">
-								<input type="password" id="confirm-password" class="form-control" ng-model="user.confirmPassword" required>
+								<input type="password" id="confirm-password" class="form-control" ng-model="user.confirmPassword" ng-minlength="6" required>
 							</div>
 						</div>
 					</div>
@@ -132,7 +134,7 @@
 				<div class="form-group">
 					<label class="control-label" for="roles">Roles</label>
 					<div class="controls">
-						<ui-select multiple ng-model="user.roles" on-select="addRole($model)" on-remove="removeRole($model)">
+						<ui-select multiple ng-model="user.roles">
 							<ui-select-match placeholder="Select roles...">{{ $item.name }}</ui-select-match>
 							<ui-select-choices repeat="role in roles" refresh="loadRoles($select.search)">
 								<div ng-bind-html="role.name | highlight: $select.search"></div>
