@@ -15,14 +15,18 @@
  */
 package org.meruvian.yama.social.facebook;
 
+import java.io.ByteArrayInputStream;
+
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.meruvian.yama.core.commons.FileInfo;
 import org.meruvian.yama.core.user.User;
 import org.meruvian.yama.social.core.AbstractSocialService;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.support.OAuth2ConnectionFactory;
 import org.springframework.social.facebook.api.Facebook;
 import org.springframework.social.facebook.api.FacebookProfile;
+import org.springframework.social.facebook.api.ImageType;
 
 /**
  * @author Dian Aditya
@@ -53,7 +57,11 @@ public class FacebookService extends AbstractSocialService<Facebook> {
 		
 		user.setPassword(RandomStringUtils.randomAlphanumeric(8));
 		
+		FileInfo fileInfo = new FileInfo();
+		fileInfo.setDataBlob(new ByteArrayInputStream(
+				facebook.userOperations().getUserProfileImage(ImageType.NORMAL)));
+		user.setFileInfo(fileInfo);
+		
 		return user;
 	}
-
 }

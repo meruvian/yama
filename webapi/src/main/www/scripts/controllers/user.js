@@ -75,16 +75,20 @@ angular.module('yamaApp').controller('UserCtrl', function ($scope, $modal, $loca
 		});
 	};
 }).controller('UserFormCtrl', function($scope, $modalInstance, Users, user, Roles) {
-	user.roles = user.roles || [];
-	$scope.roles = user.roles;
+	$scope.roles = [];
+	$scope.originalRoles = [];
 
 	if (user) {
 		$scope.user = user;
+
+		user.roles = user.roles || [];
+		$scope.roles = user.roles;
+		$scope.originalRoles = angular.copy(user.roles, $scope.originalRoles);
 	}
 
 	$scope.isNew = !angular.isDefined($scope.user);
 
-	var success = function() {
+	var success = function(user) {
 		$modalInstance.close();
 	};
 
@@ -108,11 +112,13 @@ angular.module('yamaApp').controller('UserCtrl', function ($scope, $modal, $loca
 	};
 
 	$scope.addRole = function(role) {
-		user.one('roles', role.id).put();
+		console.log(role);
+		// user.one('roles', role.id).put();
 	};
 
 	$scope.removeRole = function(role) {
-		user.one('roles', role.id).remove();
+		console.log(role);
+		// user.one('roles', role.id).remove();
 	};
 }).controller('UserChangePasswdFormCtrl', function($scope, $modalInstance, user) {
 	user.password = '';
@@ -120,8 +126,6 @@ angular.module('yamaApp').controller('UserCtrl', function ($scope, $modal, $loca
 
 	$scope.submit = function(u) {
 		$scope.error = false;
-
-		console.log(u.password);
 
 		u.post('password').then(function() {
 			$modalInstance.close();

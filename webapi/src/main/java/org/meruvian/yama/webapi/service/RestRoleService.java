@@ -58,6 +58,7 @@ public class RestRoleService implements RoleService {
 	public Role saveRole(Role role) {
 		if (StringUtils.isBlank(role.getId())) {
 			role.setId(null);
+			role.setName(StringUtils.upperCase(role.getName()));
 			return roleRepository.save(role);
 		}
 		
@@ -68,7 +69,7 @@ public class RestRoleService implements RoleService {
 	@Transactional
 	public Role updateRole(Role role) {
 		Role r = roleRepository.findById(role.getId());
-		r.setName(role.getName());
+		r.setName(StringUtils.upperCase(role.getName()));
 		r.setDescription(role.getDescription());
 		
 		return r;

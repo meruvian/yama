@@ -74,8 +74,6 @@ angular.module('yamaApp').controller('ApplicationCtrl', function ($scope, $modal
 		application.registeredRedirectUris = [];
 		application.registeredRedirectUris.push(application.redirectUri);
 
-		console.log(application);
-
 		$scope.error = false;
 
 		if (application.id) {

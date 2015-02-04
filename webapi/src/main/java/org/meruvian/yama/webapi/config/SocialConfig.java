@@ -31,6 +31,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.core.env.Environment;
+import org.springframework.social.connect.ConnectionSignUp;
 import org.springframework.social.facebook.connect.FacebookConnectionFactory;
 import org.springframework.social.google.connect.GoogleConnectionFactory;
 
@@ -54,8 +55,11 @@ public class SocialConfig {
 	
 	@Bean
 	public SocialUsersConnectionService usersConnectionRepository(SocialServiceLocator locator,
-			SocialConnectionRepository repository) {
-		return new SocialUsersConnectionService(locator, repository);
+			SocialConnectionRepository repository, ConnectionSignUp connectionSignUp) {
+		SocialUsersConnectionService s = new SocialUsersConnectionService(locator, repository);
+		s.setConnectionSignUp(connectionSignUp);
+		
+		return s;
 	}
 	
 	@Bean
