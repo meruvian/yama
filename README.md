@@ -1,6 +1,8 @@
 Yama
 ====
 
+[![Join the chat at https://gitter.im/meruvian/yama](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/meruvian/yama?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Meruvian Yama is an integration framework that help programmer to create a web app or a web api easily. With current version we share the same services that use by both web app and web api.
 
 To run Yama
