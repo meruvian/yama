@@ -74,11 +74,6 @@
 			<name>Dian Aditya</name>
 			<email>dian.aditya@meruvian.org</email>
 		</developer>
-		<developer>
-			<id>diasa</id>
-			<name>Dias Nurul Arifin</name>
-			<email>dias.arifin@meruvian.org</email>
-		</developer>
 	</developers>
 
 	<build>
