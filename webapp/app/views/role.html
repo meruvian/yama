@@ -1,0 +1,94 @@
+<header header="Roles" />
+<div class="row">
+	<div class="col-xs-12">
+		<div class="row">
+			<div class="col-xs-12">
+				<button class="btn btn-primary col-md-1 col-xs-12" ng-click="openForm()">
+					<span class="fa fa-plus"></span>
+				</button>
+
+				<form ng-submit="searchParams.page=1;search(searchParams);" class="pull-right col-md-6 col-xs-12">
+					<fieldset>
+						<div class="form-group col-md-10 col-xs-12">
+							<input type="text" class="form-control" ng-model="searchParams.q" placeholder="Search..." autofocus>
+						</div>
+						<button type="submit" value="Search" class="btn btn-default col-md-2 col-xs-12">
+							<span class="fa fa-search"></span>
+						</button>
+					</fieldset>
+				</form>
+			</div>
+		</div>
+		<br>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="box">
+					<div class="box-header">
+					</div>
+					<div class="box-body">
+						<div class="table-responsive">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Description</th>
+										<th>Action</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="role in roles">
+										<td><a href="" ng-click="openForm(role)"><span ng-bind="role.name"></a></span></td>
+										<td ng-bind="role.description"></td>
+										<td>
+											<a href="" class="btn btn-danger btn-xs" ng-click="remove(role)">
+												<span class="fa fa-trash"></span>
+											</a>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="box-footer">
+						<div class="row">
+							<div class="col-md-6">
+								<pagination total-items="roles.meta.totalElements" ng-model="page" items-per-page="roles.meta.size" ng-change="search(searchParams)"></pagination>
+							</div>
+							<div class="col-md-6">
+								<div class="pagination alert pull-right">Found <span ng-bind="roles.meta.totalElements"></span> entries</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div><!-- /.col -->
+</div>
+
+<script type="text/ng-template" id="roleForm.html">
+	<div class="modal-header">
+		<h3 class="modal-title">Add Role</h3>
+	</div>
+	<form name="roleForm" ng-submit="submit(role)" novalidate>
+		<div class="modal-body">
+			<fieldset>
+				<div class="form-group">
+					<label class="control-label" for="name">Name</label>
+					<div class="controls">
+						<input type="text" id="name" class="form-control" ng-model="role.name" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label" for="description">Description</label>
+					<div class="  controls">
+						<textarea rows="2" id="description" class="form-control" ng-model="role.description"></textarea>
+					</div>
+				</div>
+			</fieldset>
+		</div>
+		<div class="modal-footer">
+			<input type="submit" value="Save" class="btn btn-primary col-md-3 col-xs-12">
+			<span class="label label-danger" ng-show="error">Ops something went wrong!</span>
+		</div>
+	</form>
+</script>
