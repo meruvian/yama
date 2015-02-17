@@ -17,10 +17,8 @@ package org.meruvian.yama.webapi.service;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,18 +27,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.meruvian.yama.core.LogInformation;
 import org.meruvian.yama.core.commons.FileInfo;
-import org.meruvian.yama.core.commons.FileInfoRepository;
 import org.meruvian.yama.core.role.Role;
 import org.meruvian.yama.core.role.UserRole;
 import org.meruvian.yama.core.role.UserRoleRepository;
 import org.meruvian.yama.core.user.User;
 import org.meruvian.yama.core.user.UserRepository;
-import org.springframework.beans.factory.annotation.Value;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.EnvironmentAware;
+import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -54,7 +54,9 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional(readOnly = true)
-public class RestUserService implements UserService {
+public class RestUserService implements UserService, EnvironmentAware {
+	private static final Logger LOG = LoggerFactory.getLogger(RestUserService.class);
+	
 	@Inject
 	private UserRepository userRepository;
 	
@@ -62,22 +64,34 @@ public class RestUserService implements UserService {
 	private UserRoleRepository userRoleRepository;
 	
 	@Inject
-	private FileInfoRepository fileInfoRepository;
-	
-	@Inject
 	private PasswordEncoder passwordEncoder;
 	
-	@Value("${upload.path}")
+	@Inject
+	private FileInfoService fileInfoService;
+	
+	@Inject
+	private ApplicationContext context;
+	
 	private String uploadPath;
+	private String profilePicPath;
+	private String profilePicContentType;
 	
 	@Context
 	private HttpServletRequest request;
 	
 	@Override
+	public void setEnvironment(Environment environment) {
+		uploadPath = environment.getProperty("upload.path.profile_pic");
+		profilePicPath = environment.getProperty("default.profile_pic.path");
+		profilePicContentType = environment.getProperty("default.profile_pic.content_type");
+	}
+	
+	@Override
 	public User getUserByUsernameOrId(String username) {
 		User u = userRepository.findById(username);
 		u = (u == null) ? userRepository.findByUsername(username) : u;
-
+		u = (u == null) ? userRepository.findByEmail(username) : u;
+		
 		return u;
 	}
 
@@ -155,6 +169,15 @@ public class RestUserService implements UserService {
 		
 		return true;
 	}
+	
+	@Override
+	@Transactional
+	public boolean removeAllRoleFromUser(String username) {
+		User u = getUserByUsernameOrId(username);
+		userRoleRepository.delete(u.getRoles());
+		
+		return true;
+	}
 
 	@Override
 	public Page<Role> findRoleByUser(String username, Pageable pageable) {
@@ -176,7 +199,17 @@ public class RestUserService implements UserService {
 		
 		if (info != null) {
 			String filePath = info.getPath();
-			return Response.ok(new File(filePath), info.getContentType()).build();
+			File file = new File(filePath);
+			if (file.exists()) {
+				return Response.ok(file, info.getContentType()).build();
+			}
+		}
+		
+		try {
+			File file = context.getResource(profilePicPath).getFile();
+			return Response.ok(file, profilePicContentType).build();
+		} catch (IOException e) {
+			LOG.error(e.getMessage(), e);
 		}
 		
 		return null;
@@ -185,27 +218,15 @@ public class RestUserService implements UserService {
 	@Override
 	@Transactional
 	public boolean updateUserPhoto(String username, InputStream inputStream) throws IOException {
-		FileInfo info = new FileInfo();
-		info.setPath(StringUtils.join(uploadPath, "/profile_pic/"));
-		info.setOriginalName("");
-		
-		File file = new File(info.getPath());
-		if (!file.exists()) {
-			file.mkdirs();
-		}
-		
-		info = fileInfoRepository.save(info);
-		info.setPath(StringUtils.join(info.getPath(), info.getId()));
-		info.setOriginalName(info.getId());
-		
-		info.setContentType(request.getContentType());
-		OutputStream outputStream = new FileOutputStream(info.getPath());
-		info.setSize(IOUtils.copy(inputStream, outputStream));
-		IOUtils.closeQuietly(inputStream);
-		IOUtils.closeQuietly(outputStream);
-		
 		User u = getUserByUsernameOrId(username);
-		u.setFileInfo(info);
+		String uploadPath = StringUtils.join(this.uploadPath, "/", u.getId());
+		
+		FileInfo fileInfo = new FileInfo();
+		fileInfo.setDataBlob(inputStream);
+		fileInfo.setContentType(request.getContentType());
+		fileInfo = fileInfoService.saveFileInfo(uploadPath, fileInfo);
+		
+		u.setFileInfo(fileInfo);
 		
 		return true;
 	}

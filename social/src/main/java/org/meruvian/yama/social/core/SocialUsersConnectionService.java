@@ -47,6 +47,7 @@ public class SocialUsersConnectionService implements UsersConnectionRepository {
 	}
 	
 	@Override
+	@Transactional
 	public List<String> findUserIdsWithConnection(Connection<?> connection) {
 		ConnectionKey key = connection.getKey();
 		List<String> localUserIds = connectionRepository.findUserIdByProviderAndProviderUserId(

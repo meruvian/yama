@@ -26,10 +26,27 @@ db:
     
 # upload
 upload:
-    path: /tmp/yama
+    path:
+        base: /tmp/yama
+        profile_pic: /profile_pic
+
+# default
+default:
+    role: USER
+    site: DEFAULT
+    profile_pic:
+        path: classpath:/public/images/unknown_user.png
+        content_type: image/png
 
 # social
 social:
+    mervid:
+        active: true
+        appId: 69718777-b3f5-4d53-be85-fde18528ea5f
+        appSecret: j/jygXp6JczO5pIJ/PXNn/x9iFrOp7pibJ6SBjDeA87R1Fj+BaP/9rfqUTT9LGJr
+        redirectUri: http://localhost:8080/login/social/mervid/callback
+        scope: read write
+        state: 6234
     facebook:
         active: true
         appId: 645592102187632
