@@ -22,6 +22,7 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Index;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
@@ -56,6 +57,7 @@ public class Application extends DefaultPersistence {
 	private String resourceIds;
 
 	@NotNull
+	@Lob
 	public String getSecret() {
 		return secret;
 	}

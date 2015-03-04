@@ -81,7 +81,7 @@
 			<column name="display_name" type="varchar(50)" />
 			<column name="domain" type="varchar(50)" />
 			<column name="namespace" type="varchar(50)" />
-			<column name="secret" type="varchar(50)" />
+			<column name="secret" type="longtext" />
 			<column name="site" type="varchar(50)" />
 			<column name="access_token_validity_seconds" type="int(10)" />
 			<column name="authorized_grant_type" type="varchar(100)" />
