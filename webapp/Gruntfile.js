@@ -58,6 +58,10 @@ module.exports = function (grunt) {
 				],
 				tasks: ['newer:copy:dev']
 			},
+			config: {
+				files: ['config-*-dev.json'],
+				tasks: ['clean:config', 'newer:ngconstant:client-dev']
+			},
 			gruntfile: {
 				files: ['Gruntfile.js']
 			},
@@ -173,7 +177,7 @@ module.exports = function (grunt) {
 					]
 				}]
 			},
-			login: '<%= yama.dist %>/login',
+			config: '<%= yama.app %>/scripts/config.js',
 			server: '.tmp'
 		},
 
@@ -398,9 +402,35 @@ module.exports = function (grunt) {
 			}
 		},
 
+		ngconstant: {
+			options: {
+				dest: '<%= yama.app %>/scripts/config.js',
+				name: 'yama-config',
+				constants: {
+					oauthConfig: {
+						authorizePath: '/oauth/authorize',
+						tokenPath: '/oauth/token',
+						template: 'views/oauth2.html',
+						responseType: 'token'
+					}
+				}
+			},
+			'client-dev': {
+				constants: {
+					oauthConfig: grunt.file.readJSON('config-client-dev.json').oauth
+				}
+			},
+			'server-dev': {
+				constants: {
+					oauthConfig: grunt.file.readJSON('config-server-dev.json').oauth
+				}
+			}
+		},
+
 		// Run some tasks in parallel to speed up the build process
 		concurrent: {
 			dev: [
+				'ngconstant:client-dev',
 				'copy:styles'
 			],
 			test: [
@@ -408,6 +438,7 @@ module.exports = function (grunt) {
 			],
 			dist: [
 				'copy:styles',
+				'ngconstant:server-dev',
 				'imagemin',
 				'svgmin'
 			]

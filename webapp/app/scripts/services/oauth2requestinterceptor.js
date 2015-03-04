@@ -10,8 +10,6 @@
 angular.module('yamaApp').factory('Oauth2RequestInterceptor', function ($rootScope, $q, AccessToken) {
 	return {
 		request: function($config) {
-			console.log('request');
-
 			if (AccessToken.get()) {
 				$config.headers.Authorization = 'Bearer ' + AccessToken.get().access_token;
 			}

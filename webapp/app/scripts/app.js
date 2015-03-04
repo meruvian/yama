@@ -9,6 +9,7 @@
  * Main module of the application.
  */
 angular.module('yamaApp', [
+	'yama-config',
 	'ngAnimate',
 	'ngCookies',
 	'ngResource',
@@ -79,7 +80,10 @@ angular.module('yamaApp', [
 	uiSelectConfig.resetSearchInput = true;
 }).run(function (bootstrap3ElementModifier) {
 	bootstrap3ElementModifier.enableValidationStateIcons(false);
-}).run(function($rootScope, $http, AccessToken, Endpoint, Users, ProfilePictures) {
+}).run(function($rootScope, $http, AccessToken, Endpoint, Users, ProfilePictures, oauthConfig) {
+	Endpoint.set(oauthConfig);
+	AccessToken.set(oauthConfig);
+
 	$rootScope.$on('oauth:loggedOut', function() {
 		Endpoint.redirect();
 	});

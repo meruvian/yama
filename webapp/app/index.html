@@ -19,13 +19,13 @@
 	<!-- endbuild -->
 </head>
 <body ng-app="yamaApp" class="skin-blue fixed">
-	<oauth
+	<!-- <oauth
 		template="views/oauth2.html"
 		site="http://localhost:8080"
 		client-id="419c6697-14b7-4853-880e-b68e3731e317"
 		redirect-uri="http://localhost:8081"
 		scope="read write">
-	</oauth>
+	</oauth> -->
 	<!-- header logo: style can be found in header.less -->
 	<header class="header">
 		<a href="#!/" class="logo">
@@ -221,12 +221,13 @@
     <!-- endbower -->
     <!-- endbuild -->
 
-    <!-- build:js({.tmp}) scripts/dashboard.js -->
+    <!-- build:js({.tmp,app}) scripts/dashboard.js -->
     <script src="scripts/adminlte.js"></script>
 	<!-- endbuild -->
 
-    <!-- build:js({.tmp}) scripts/scripts.js -->
+    <!-- build:js({.tmp,app}) scripts/scripts.js -->
     <script src="scripts/app.js"></script>
+    <script src="scripts/config.js"></script>
     <script src="scripts/services/oauth2requestinterceptor.js"></script>
     <script src="scripts/controllers/header.js"></script>
     <script src="scripts/controllers/main.js"></script>

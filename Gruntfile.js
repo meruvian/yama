@@ -18,15 +18,7 @@ module.exports = function (grunt) {
 
 		exec: {
 			run_server: 'mvn test -Pwebapi',
-			build_jar: 'mvn clean package',
-			npm_install: {
-				cwd: 'webapp',
-				cmd: 'npm install'
-			},
-			bower_install: {
-				cwd: 'webapp',
-				cmd: 'bower install'
-			}
+			build_jar: 'mvn clean package'
 		},
 		subgrunt: {
 			run_client: {
@@ -40,41 +32,33 @@ module.exports = function (grunt) {
 			webapi: '<%= yama.apidist %>'
 		},
 		copy: {
-			login: {
-				files: [{
-					expand: true,
-					dot: true,
-					cwd: '<%= yama.webdist %>',
-					dest: '<%= yama.apidist %>',
-					src: [
-						'*.{ico,png,txt}',
-						'login.html',
-						'images/{,*/}*.*',
-						'styles/{,*/}*.css',
-						'fonts/{,*/}*.*'
-					]
-				}]
-			},
 			dist: {
 				expand: true,
 				cwd: '<%= yama.webdist %>',
 				dest: '<%= yama.apidist %>',
 				src: '**'
 			}
+		},
+		auto_install: {
+			webapp: {
+				options: {
+					cwd: 'webapp',
+					bower: '--force-latest'
+				}
+			}
 		}
 	});
 
 	grunt.registerTask('init', [
-		'exec:npm_install',
-		'exec:bower_install',
+		'clean:webapi',
+		'auto_install:webapp',
 		'subgrunt:build_client',
-		'copy:login'
+		'copy:dist'
 	]);
 
 	grunt.registerTask('build', [
 		'clean:webapi',
-		'exec:npm_install',
-		'exec:bower_install',
+		'auto_install:webapp',
 		'subgrunt:build_client',
 		'copy:dist',
 		'exec:build_jar'
