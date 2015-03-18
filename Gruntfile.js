@@ -29,9 +29,14 @@ module.exports = function (grunt) {
 			}
 		},
 		clean: {
+			webapi_conf: 'webapi/src/main/resources/application.yml',
 			webapi: '<%= yama.apidist %>'
 		},
 		copy: {
+			webapi_conf: {
+				dest: 'webapi/src/main/resources/application.yml',
+				src: 'webapi/src/main/resources/config/yama-prod.yml'
+			},
 			dist: {
 				expand: true,
 				cwd: '<%= yama.webdist %>',
@@ -57,9 +62,11 @@ module.exports = function (grunt) {
 	]);
 
 	grunt.registerTask('build', [
+		'clean:webapi_conf',
 		'clean:webapi',
 		'auto_install:webapp',
 		'subgrunt:build_client',
+		'copy:webapi_conf',
 		'copy:dist',
 		'exec:build_jar'
 	]);
