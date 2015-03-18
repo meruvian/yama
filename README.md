@@ -17,7 +17,6 @@ Checkout Yama from github
 ``` 
 git clone https://github.com/meruvian/yama.git
 cd yama/
-git checkout 2.x
 ```
 Change database configuration on `` webapi/src/main/resources/config/yama-dev.yml ``
 Create database schema
@@ -32,6 +31,23 @@ $ grunt server
 ```
 Run Web Application (run in separate console)
 ```
-grunt client
+$ grunt client
 ```
 Open your browser, go to http://localhost:8081/ (user/passwd: administrator/admin123)
+
+### Production
+##### Package Yama as Production WAR
+To package application as WAR, type:
+```
+$ grunt build
+```
+This will generate war file on ```webapi/target``` directory:
+* ``` yama-webapi-2.0.0-SNAPSHOT.war ```; and
+* ``` yama-webapi-2.0.0-SNAPSHOT.war.original ```
+ 
+##### Running Yama without an Application Server
+You can execute WAR file by typing:
+```
+$ java -jar yama-webapi-2.0.0-SNAPSHOT.war
+```
+this will run yama in embedded jetty server
