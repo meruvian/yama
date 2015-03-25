@@ -34,7 +34,7 @@ import org.springframework.data.domain.Pageable;
  * @author Dian Aditya
  * 
  */
-@Path("/roles")
+@Path("/api/roles")
 @Produces(MediaType.APPLICATION_JSON)
 public interface RoleService {
 	@GET

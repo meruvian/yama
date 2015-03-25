@@ -1,16 +1,16 @@
 spring:
+    profiles: dev
     jpa.hibernate.ddl-auto: validate
 
-server.port: ${port:8080}
+server.port: 8080
 
 logging:
     level:
         org.jboss.resteasy.springmvc.ResteasyHandlerMapping: ERROR
+        org.meruvian.yama: DEBUG
 
 rest:
     login_form: /index.html
-    servlet_prefix: /v1
-    servlet_mapping: /v1/*    
 
 # database
 db:
@@ -61,6 +61,17 @@ social:
         redirectUri: http://localhost:8080/login/social/google/callback
         scope: https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.me https://www.googleapis.com/auth/userinfo.email
         state: 6234
+
+# email
+email:
+    host: localhost
+    port: 25
+    username: 
+    password: 
+    from_email: yama@localhost
+    from_alias: Yama
+    ssl: false
+    tls: false
 
 # recaptcha
 recaptcha:

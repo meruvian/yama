@@ -34,7 +34,7 @@ import org.springframework.data.domain.Pageable;
  * @author Dian Aditya
  *
  */
-@Path("/applications")
+@Path("/api/applications")
 @Produces(MediaType.APPLICATION_JSON)
 public interface ApplicationService {
 	@GET

@@ -90,11 +90,11 @@ angular.module('yamaApp').controller('UserCtrl', function ($scope, $modal, $loca
 		$modalInstance.close();
 	};
 
-	var success = function() {
+	var success = function(u) {
 		// update Roles
-		user.one('roles').remove().then(function() {
+		u.one('roles').remove().then(function() {
 			angular.forEach(user.roles, function(role) {
-				user.one('roles', role.id).put();
+				u.one('roles', role.id).put();
 			});
 		}, closeModal);
 

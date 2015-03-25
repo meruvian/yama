@@ -58,9 +58,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 				"/health", "/info", "/metrics", "/mappings", "/shutdown",
 				"/trace",	
 				"/oauth/token", 
-				"/roles", "/roles/**",
-				"/users", "/users/**",
-				"/applications", "/applications/**"
+				"/api/**"
 		};
 		
 		http
@@ -69,9 +67,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 				.and()
 			.authorizeRequests()
 				.antMatchers("/oauth/token").fullyAuthenticated()
-				.antMatchers("/roles", "/roles/**").hasAuthority("ADMINISTRATOR")
-				.antMatchers("/users/me", "/users/me/**").fullyAuthenticated()
-				.antMatchers("/users", "/users/**").hasAuthority("ADMINISTRATOR")
+				.antMatchers("/api/roles", "/api/roles/**").hasAuthority("ADMINISTRATOR")
+				.antMatchers("/api/users/me", "/api/users/me/**").fullyAuthenticated()
+				.antMatchers("/api/users", "/api/users/**").hasAuthority("ADMINISTRATOR")
 				.antMatchers("/**").fullyAuthenticated()
 				.and()
 			.sessionManagement()

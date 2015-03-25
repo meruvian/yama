@@ -36,6 +36,7 @@ import org.meruvian.yama.core.role.UserRole;
 import org.meruvian.yama.core.role.UserRoleRepository;
 import org.meruvian.yama.core.user.User;
 import org.meruvian.yama.core.user.UserRepository;
+import org.meruvian.yama.webapi.service.commons.FileInfoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;

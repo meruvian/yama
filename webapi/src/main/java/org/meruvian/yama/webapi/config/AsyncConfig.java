@@ -13,18 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.meruvian.yama.webapi.service;
+package org.meruvian.yama.webapi.config;
 
-import javax.ws.rs.Path;
-
-import org.meruvian.yama.core.user.User;
-
+import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 /**
  * @author Dian Aditya
  *
  */
-@Path("/signup")
-public interface SignUpService {
-	User signUp(User user);
+@Configuration
+@EnableAsync
+public class AsyncConfig {
 }

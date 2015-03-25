@@ -42,7 +42,7 @@ import org.springframework.data.domain.Pageable;
  * @author Dian Aditya
  * 
  */
-@Path("/users")
+@Path("/api/users")
 @Produces(MediaType.APPLICATION_JSON)
 @DetectCurrentUser
 public interface UserService {
