@@ -39,6 +39,24 @@ angular.module('yamaApp').controller('UserCtrl', function ($scope, $modal, $loca
 			size: 'lg',
 			resolve: {
 				user: function() {
+					return user || {};
+				}
+			}
+		});
+
+		modal.result.then(function(u) {
+			$scope.searchParams.q = u.username;
+			$scope.search($scope.searchParams);
+		});
+	};
+
+	$scope.changePasswd = function(user) {
+		var modal = $modal.open({
+			templateUrl: 'userChangePasswdForm.html',
+			controller: 'UserChangePasswdFormCtrl',
+			size: 'lg',
+			resolve: {
+				user: function() {
 					return user;
 				}
 			}
@@ -49,10 +67,10 @@ angular.module('yamaApp').controller('UserCtrl', function ($scope, $modal, $loca
 		});
 	};
 
-	$scope.changePasswd = function(user) {
+	$scope.addRole = function(user) {
 		var modal = $modal.open({
-			templateUrl: 'userChangePasswdForm.html',
-			controller: 'UserChangePasswdFormCtrl',
+			templateUrl: 'userEditRoleForm.html',
+			controller: 'UserEditRoleFormCtrl',
 			size: 'lg',
 			resolve: {
 				user: function() {
@@ -76,29 +94,12 @@ angular.module('yamaApp').controller('UserCtrl', function ($scope, $modal, $loca
 	};
 }).controller('UserFormCtrl', function($scope, $modalInstance, Users, Roles, user) {
 	$scope.roles = [];
-
-	if (user) {
-		$scope.user = user;
-
-		user.roles = user.roles || [];
-		$scope.roles = user.roles;
-	}
+	$scope.user = user;
 
 	$scope.isNew = !angular.isDefined($scope.user);
 
-	var closeModal = function() {
-		$modalInstance.close();
-	};
-
 	var success = function(u) {
-		// update Roles
-		u.one('roles').remove().then(function() {
-			angular.forEach(user.roles, function(role) {
-				u.one('roles', role.id).put();
-			});
-		}, closeModal);
-
-		closeModal();
+		$modalInstance.close(u);
 	};
 
 	var error = function() {
@@ -113,12 +114,6 @@ angular.module('yamaApp').controller('UserCtrl', function ($scope, $modal, $loca
 			Users.post(user).then(success, error);
 		}
 	};
-
-	$scope.loadRoles = function(search) {
-		Roles.getList({ q: search }).then(function(roles) {
-			$scope.roles = roles;
-		});
-	};
 }).controller('UserChangePasswdFormCtrl', function($scope, $modalInstance, user) {
 	user.password = '';
 	$scope.user = user;
@@ -132,4 +127,31 @@ angular.module('yamaApp').controller('UserCtrl', function ($scope, $modal, $loca
 			$scope.error = true;
 		});
 	};
+}).controller('UserEditRoleFormCtrl', function($scope, $modalInstance, $cacheFactory, Roles, user) {
+	$scope.user = user;
+	$scope.roles = [];
+
+	var invalidateCache = function() {
+		$cacheFactory.get('$http').remove(user.one('roles').getRequestedUrl());
+	};
+
+	$scope.loadRoles = function(search) {
+		Roles.getList({ q: search }).then(function(roles) {
+			$scope.roles = roles;
+		});
+	};
+
+	$scope.addRole = function(role) {
+		user.one('roles', role.id).put().then(function() {
+			invalidateCache();
+		});
+	};
+
+	$scope.removeRole = function(role) {
+		user.one('roles', role.id).remove().then(function() {
+			invalidateCache();
+		});
+	};
+
+	$scope.done = $modalInstance.close;
 });
