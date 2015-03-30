@@ -1,5 +1,5 @@
 spring:
-    profiles: dev
+    profiles: prod
     jpa.hibernate.ddl-auto: validate
 
 server.port: 8080
@@ -18,7 +18,7 @@ db:
     driver: com.mysql.jdbc.Driver
     datasource: com.mysql.jdbc.jdbc2.optional.MysqlDataSource
     username: root
-    password: root
+    password: 
     max_pool_size: 100
     test_query: SELECT 1
     run_migration: true

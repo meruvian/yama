@@ -1,0 +1,8 @@
+spring:
+    profiles:
+        active: prod
+    config:
+        name: yama
+
+management:
+    context-path: /api/actuator

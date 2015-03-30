@@ -9,6 +9,6 @@
  */
 angular.module('yamaApp').factory('Monitoring', function (Restangular) {
 	return {
-		metrics: Restangular.service('metrics')
+		metrics: Restangular.service('actuator/metrics')
 	};
 });

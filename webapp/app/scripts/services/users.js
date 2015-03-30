@@ -8,5 +8,5 @@
  * Factory in the yamaApp.
  */
 angular.module('yamaApp').factory('Users', function (Restangular) {
-	return Restangular.service('api/users');
+	return Restangular.service('users');
 });
