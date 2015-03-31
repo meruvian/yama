@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +40,6 @@ import org.meruvian.yama.core.user.UserRepository;
 import org.meruvian.yama.webapi.service.commons.FileInfoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Page;
@@ -56,7 +56,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional(readOnly = true)
 public class RestUserService implements UserService, EnvironmentAware {
-	private static final Logger LOG = LoggerFactory.getLogger(RestUserService.class);
+	private final Logger log = LoggerFactory.getLogger(RestUserService.class);
 	
 	@Inject
 	private UserRepository userRepository;
@@ -69,9 +69,6 @@ public class RestUserService implements UserService, EnvironmentAware {
 	
 	@Inject
 	private FileInfoService fileInfoService;
-	
-	@Inject
-	private ApplicationContext context;
 	
 	private String uploadPath;
 	private String profilePicPath;
@@ -206,14 +203,7 @@ public class RestUserService implements UserService, EnvironmentAware {
 			}
 		}
 		
-		try {
-			File file = context.getResource(profilePicPath).getFile();
-			return Response.ok(file, profilePicContentType).build();
-		} catch (IOException e) {
-			LOG.error(e.getMessage(), e);
-		}
-		
-		return null;
+		return Response.seeOther(URI.create(profilePicPath)).build();
 	}
 
 	@Override

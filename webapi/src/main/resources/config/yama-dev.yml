@@ -34,8 +34,8 @@ default:
     role: USER
     site: DEFAULT
     profile_pic:
-        path: classpath:/public/images/unknown_user.png
-        content_type: image/png
+        path: /images/default_profile.gif
+        content_type: image/gif
 
 # social
 social:

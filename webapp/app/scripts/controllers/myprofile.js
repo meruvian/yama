@@ -7,7 +7,7 @@
  * # MyprofileCtrl
  * Controller of the yamaApp
  */
-angular.module('yamaApp').controller('MyProfileCtrl', function ($rootScope, $scope, Users, ProfilePictures) {
+angular.module('yamaApp').controller('MyProfileCtrl', function ($rootScope, $scope, Users, ProfilePictures, angularPopupBoxes) {
 	var users = Users.one('me');
 
 	users.get().then(function(user) {
@@ -15,17 +15,22 @@ angular.module('yamaApp').controller('MyProfileCtrl', function ($rootScope, $sco
 	});
 
 	$scope.$watch('files', function() {
-		var file = $scope.files[0];
+		if ($scope.files) {
+			var file = $scope.files[0];
 
-		ProfilePictures.uploadPhoto(file, function() {
+			ProfilePictures.uploadPhoto(file, function() {
 
-		}, function() {
-			ProfilePictures.reloadPhoto();
-		});
+			}, function() {
+				ProfilePictures.reloadPhoto();
+			});
+		}
 	});
 
 	var success = function(user) {
 		$rootScope.currentUser = user;
+		$scope.passwd = {};
+
+		angularPopupBoxes.alert('Update success');
 	};
 
 	var error = function() {
@@ -40,5 +45,10 @@ angular.module('yamaApp').controller('MyProfileCtrl', function ($rootScope, $sco
 		} else {
 			Users.post(user).then(success, error);
 		}
+	};
+
+	$scope.updatePassword = function(passwd) {
+		users.password = passwd.newpass;
+		users.post('password').then(success);
 	};
 });

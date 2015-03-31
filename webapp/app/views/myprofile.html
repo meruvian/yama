@@ -86,15 +86,21 @@
 					</div>
 
 					<div class="box-body">
-						<form name="changePasswdForm">
+						<form name="changePasswdForm" ng-submit="updatePassword(passwd)">
 							<fieldset>
 								<input type="hidden" name="edit" value="password" id="profile_edit">
+								<div class="form-group ">
+									<label class="control-label" for="password">Old Password</label>
+									<div class="  controls">
+										<input type="password" id="old-password" class="form-control" ng-model="passwd.old">
+									</div>
+								</div>
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group ">
 											<label class="control-label" for="password">New Password</label>
 											<div class="  controls">
-												<input type="password" id="password" class="form-control">
+												<input type="password" id="password" class="form-control" ng-model="passwd.newpass">
 											</div>
 										</div>
 									</div>
@@ -102,13 +108,13 @@
 										<div class="form-group ">
 											<label class="  control-label" for="confirm-password">Confirm New Password</label>
 											<div class="  controls">
-												<input type="password" id="confirm-password" class="form-control">
+												<input type="password" id="confirm-password" class="form-control" ng-model="passwd.confirm">
 											</div>
 										</div>
 									</div>
 								</div>
 
-								<input type="submit" value="Save" class="btn btn-primary col-md-3">
+								<input type="submit" value="Update Password" class="btn btn-primary col-md-3">
 							</fieldset>
 						</form>
 					</div>

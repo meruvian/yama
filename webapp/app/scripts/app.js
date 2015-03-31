@@ -88,13 +88,14 @@ angular.module('yamaApp', [
 		Endpoint.redirect();
 	});
 
-	$rootScope.$on('oauth:authorized', function() {
+
+	if (AccessToken.get()) {
 		Users.one('me').get().then(function(user) {
 			$rootScope.currentUser = user;
 		});
 
 		ProfilePictures.reloadPhoto();
-	});
+	}
 
 	$rootScope.logout = function() {
 		$http.get('/logout').success(function() {
