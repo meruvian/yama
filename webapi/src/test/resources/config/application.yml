@@ -1,0 +1,6 @@
+spring:
+    profiles:
+        active: test
+
+management:
+    context-path: /api/actuator
