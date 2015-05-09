@@ -15,9 +15,14 @@
  */
 package org.meruvian.yama.webapi.config.oauth;
 
+import java.util.Arrays;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.meruvian.yama.webapi.interceptor.SameOriginOauthClientFilter;
+import org.springframework.boot.context.embedded.FilterRegistrationBean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
@@ -59,5 +64,13 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 		endpoints.authenticationManager(authenticationManager)
 			.tokenServices(tokenServices)
 			.accessTokenConverter(accessTokenConverter);
+	}
+	
+	@Bean
+	public FilterRegistrationBean sameOriginOauthFilter(SameOriginOauthClientFilter filter) {
+		FilterRegistrationBean bean = new FilterRegistrationBean(filter);
+		bean.setUrlPatterns(Arrays.asList("/oauth/token"));
+		
+		return bean;
 	}
 }

@@ -38,15 +38,18 @@ import org.springframework.stereotype.Service;
  */
 @Service("clientDetailsService")
 public class DefaultClientDetailsService implements ClientDetailsService {
-	private static final Logger LOG = LoggerFactory.getLogger(DefaultClientDetailsService.class);
+	private final Logger log = LoggerFactory.getLogger(DefaultClientDetailsService.class);
 	
 	@Inject
 	private ApplicationRepository applicationRepository;
 
+	@Inject
+	private DefaultOauthApplications defaultOauthApplications;
+	
 	private Collection<String> authorizedGrantTypes;
 	private Collection<String> scopes;
 	private Collection<String> resourceIds = new ArrayList<String>();
-	
+
 	@PostConstruct
 	public void postConstruct() {
 		if (authorizedGrantTypes == null) {
@@ -67,7 +70,13 @@ public class DefaultClientDetailsService implements ClientDetailsService {
 	
 	@Override
 	public ClientDetails loadClientByClientId(String clientId) throws ClientRegistrationException {
-		Application application = applicationRepository.findById(clientId);
+		Application application = null;
+		if (defaultOauthApplications.containsKey(clientId)) {
+			application = defaultOauthApplications.get(clientId);
+		} else {
+			applicationRepository.findById(clientId);
+		}
+		
 		if (application == null) return null;
 		
 		BaseClientDetails details = new BaseClientDetails();

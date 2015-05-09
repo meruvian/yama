@@ -17,6 +17,7 @@ package org.meruvian.yama.webapi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.social.SocialWebAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 
@@ -24,9 +25,13 @@ import org.springframework.context.annotation.ComponentScan;
  * @author Dian Aditya
  *
  */
+@SpringBootApplication
 @EnableAutoConfiguration(exclude = { SocialWebAutoConfiguration.class })
 @ComponentScan({ "org.meruvian.yama" })
 public class Application {
+	public static final String PROFILE_DEV = "dev";
+	public static final String PROFILE_PROD = "prod";
+	
 	public static void main(String[] args) {
 		SpringApplication application = new SpringApplication(Application.class);
 		application.setShowBanner(false);

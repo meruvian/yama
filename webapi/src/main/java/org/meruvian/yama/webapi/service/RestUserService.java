@@ -72,7 +72,6 @@ public class RestUserService implements UserService, EnvironmentAware {
 	
 	private String uploadPath;
 	private String profilePicPath;
-	private String profilePicContentType;
 	
 	@Context
 	private HttpServletRequest request;
@@ -81,7 +80,6 @@ public class RestUserService implements UserService, EnvironmentAware {
 	public void setEnvironment(Environment environment) {
 		uploadPath = environment.getProperty("upload.path.profile_pic");
 		profilePicPath = environment.getProperty("default.profile_pic.path");
-		profilePicContentType = environment.getProperty("default.profile_pic.content_type");
 	}
 	
 	@Override

@@ -10,7 +10,11 @@ logging:
         org.meruvian.yama: DEBUG
 
 rest:
-    login_form: /index.html
+    login_form: /
+    clients:
+        - id: yama
+          secret: yamameruvianorgsecret
+          redirect: /
 
 # database
 db:
