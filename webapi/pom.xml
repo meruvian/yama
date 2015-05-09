@@ -232,5 +232,11 @@
 				</plugins>
 			</build>
 		</profile>
+		<profile>
+			<id>dev</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
 	</profiles>
 </project>
