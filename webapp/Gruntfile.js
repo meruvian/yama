@@ -57,10 +57,6 @@ module.exports = function (grunt) {
 				],
 				tasks: ['newer:copy:dev']
 			},
-			config: {
-				files: ['config/*.json'],
-				tasks: ['newer:ngconstant:standalone-dev']
-			},
 			gruntfile: {
 				files: ['Gruntfile.js']
 			},
@@ -417,35 +413,9 @@ module.exports = function (grunt) {
 			}
 		},
 
-		ngconstant: {
-			options: {
-				dest: '.tmp/scripts/config.js',
-				name: 'yama-config',
-				constants: {
-					oauthConfig: {
-						authorizePath: '/oauth/authorize',
-						tokenPath: '/oauth/token',
-						template: 'views/oauth2.html',
-						responseType: 'token'
-					}
-				}
-			},
-			'standalone-dev': {
-				constants: {
-					oauthConfig: grunt.file.readJSON('config/standalone-dev.json').oauth
-				}
-			},
-			'standalone-prod': {
-				constants: {
-					oauthConfig: grunt.file.readJSON('config/standalone-prod.json').oauth
-				}
-			}
-		},
-
 		// Run some tasks in parallel to speed up the build process
 		concurrent: {
 			dev: [
-				'ngconstant:standalone-dev',
 				'copy:styles'
 			],
 			test: [
@@ -453,7 +423,6 @@ module.exports = function (grunt) {
 			],
 			dist: [
 				'copy:styles',
-				'ngconstant:standalone-prod',
 				'imagemin',
 				'svgmin'
 			]
