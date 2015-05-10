@@ -187,7 +187,7 @@ module.exports = function (grunt) {
 				files: [{
 					expand: true,
 					cwd: '.tmp/styles/',
-					src: '{,*/}*.css',
+					src: '**/*.css',
 					dest: '.tmp/styles/'
 				}]
 			},
@@ -195,7 +195,7 @@ module.exports = function (grunt) {
 				files: [{
 					expand: true,
 					cwd: '.tmp/styles/',
-					src: '{,*/}*.css',
+					src: '**/*.css',
 					dest: '.tmp/styles/'
 				}]
 			}
@@ -249,6 +249,7 @@ module.exports = function (grunt) {
 					'<%= yama.dist %>/scripts/{,*/}*.js',
 					'<%= yama.dist %>/styles/{,*/}*.css',
 					'<%= yama.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
+					'!<%= yama.dist %>/images/default_profile.gif',
 					'<%= yama.dist %>/styles/fonts/*'
 				]
 			}
@@ -275,8 +276,8 @@ module.exports = function (grunt) {
 
 		// Performs rewrites based on filerev and the useminPrepare configuration
 		usemin: {
-			html: ['<%= yama.dist %>/{,*/}*.html'],
-			css: ['<%= yama.dist %>/styles/{,*/}*.css'],
+			html: ['<%= yama.dist %>/**/*.html'],
+			css: ['<%= yama.dist %>/**/*.css'],
 			options: {
 				assetsDirs: [
 					'<%= yama.dist %>',

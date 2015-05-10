@@ -92,6 +92,10 @@ angular.module('yamaApp').controller('UserCtrl', function ($scope, $modal, $loca
 	$scope.roles = [];
 	$scope.user = user;
 
+	if (user) {
+		user.confirmPassword = user.password;
+	}
+
 	var success = function(u) {
 		$modalInstance.close(u);
 	};

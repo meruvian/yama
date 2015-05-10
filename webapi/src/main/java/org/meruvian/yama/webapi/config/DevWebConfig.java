@@ -30,7 +30,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
  *
  */
 @Configuration
-@Profile(Application.PROFILE_DEV)
+@Profile(Application.PROFILE_WEB)
 @AutoConfigureAfter(DispatcherServletAutoConfiguration.class)
 public class DevWebConfig extends WebMvcAutoConfigurationAdapter {	
 	private final Logger log = LoggerFactory.getLogger(DevWebConfig.class);

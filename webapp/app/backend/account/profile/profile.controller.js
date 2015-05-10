@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('yamaApp').controller('ProfileCtrl', function ($rootScope, $scope, Users, ProfilePictures, angularPopupBoxes) {
+angular.module('yamaApp').controller('ProfileCtrl', function ($rootScope, $scope, $validation, Users, ProfilePictures, angularPopupBoxes) {
 	var users = Users.one('me');
 
 	users.get().then(function(user) {
@@ -30,18 +30,22 @@ angular.module('yamaApp').controller('ProfileCtrl', function ($rootScope, $scope
 		$scope.error = true;
 	};
 
-	$scope.submit = function(user) {
-		$scope.error = false;
+	$scope.submit = function(user, form) {
+		$validation.validate(form).success(function() {
+			$scope.error = false;
 
-		if (user.id) {
-			user.put().then(success, error);
-		} else {
-			Users.post(user).then(success, error);
-		}
+			if (user.id) {
+				user.put().then(success, error);
+			} else {
+				Users.post(user).then(success, error);
+			}
+		});
 	};
 
-	$scope.updatePassword = function(passwd) {
-		users.password = passwd.newpass;
-		users.post('password').then(success);
+	$scope.updatePassword = function(passwd, form) {
+		$validation.validate(form).success(function() {
+			users.password = passwd.newpass;
+			users.post('password').then(success);
+		});
 	};
 });
