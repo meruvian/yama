@@ -16,14 +16,14 @@ angular.module('yamaApp', [
 	'ui.bootstrap',
 	'ui.select',
 	'ui.router',
-	'angular-oauth2',
 	'angular-loading-bar',
 	'restangular',
 	'angularPopupBoxes',
 	'angularFileUpload',
 	'validation',
 	'validation.rule',
-	'validation.schema'
+	'validation.schema',
+	'yamaOauth'
 ]).config(function ($locationProvider, $urlRouterProvider) {
 	$locationProvider.html5Mode(false).hashPrefix('!');
 
@@ -49,14 +49,11 @@ angular.module('yamaApp', [
 	// UI-Select
 	uiSelectConfig.theme = 'bootstrap';
 	uiSelectConfig.resetSearchInput = true;
-}).config(function(OAuthProvider) {
-	OAuthProvider.configure({
-		baseUrl: location.protocol + '//' + location.host,
+}).config(function(YamaOAuthProvider) {
+	YamaOAuthProvider.configure({
+		scope: 'read write',
 		clientId: 'yama',
-		clientSecret: 'yamameruvianorgsecret',
-		authorizePath: '/oauth/authorize',
-		grantPath: '/oauth/token',
-		revokePath: '/oauth/revoke'
+		redirectUri: '/'
 	});
 }).config(function($validationProvider) {
 	$validationProvider.showSuccessMessage = false;
@@ -82,42 +79,33 @@ angular.module('yamaApp', [
 	$validationProvider.setSuccessHTML(function (msg) {
 		return '<p class=\"text-success\">' + msg + '</p>';
 	});
-}).run(function($rootScope, $state, OAuth, OAuthToken, Users, ProfilePictures) {
+}).run(function($rootScope, YamaOAuth, Users, ProfilePictures) {
 	$rootScope.$state = {};
 
-	$rootScope.$on('$stateChangeSuccess', function(event, toState, toParams) {
-		$rootScope.$state.current = toState;
-		$rootScope.$state.current.params = toParams;
+	if (!YamaOAuth.isAuthorized()) {
+		YamaOAuth.login();
+	} else {
+		if (!$rootScope.currentUser) {
+			Users.one('me').get().then(function(user) {
+				$rootScope.currentUser = user;
 
-		if (OAuth.isAuthenticated()) {
-			if (!$rootScope.currentUser) {
-				Users.one('me').get().then(function(user) {
-					$rootScope.currentUser = user;
-
-					ProfilePictures.reloadPhoto();
-				});
-			}
+				ProfilePictures.reloadPhoto();
+			});
 		}
+	}
+
+	$rootScope.$on('oauth:unauthorized', function() {
+		YamaOAuth.login();
 	});
 
 	$rootScope.$on('$stateChangeStart', function(event, toState, toParams) {
-		if (!OAuth.isAuthenticated() && 'login' !== toState.name) {
+		if (!YamaOAuth.isAuthorized()) {
 			event.preventDefault();
 
 			$rootScope.$state.toState = toState;
 			$rootScope.$state.toState.params = toParams;
 
-			$state.go('login');
+			YamaOAuth.login();
 		}
-	});
-
-	$rootScope.$on('oauth:error', function() {
-		if (OAuthToken.getRefreshToken()) {
-			OAuth.getRefreshToken();
-		} else {
-			$state.go('main');
-		}
-
-		OAuthToken.removeToken();
 	});
 });

@@ -15,7 +15,7 @@
 	<!-- endbower -->
 	<!-- endbuild -->
 	<!-- build:css({.tmp,app}) styles/main.css -->
-	<link rel="stylesheet" href="main/main.css">
+	<link rel="stylesheet" href="main/main.css" />
 	<!-- endbuild -->
 </head>
 <body ng-app="yamaApp" class="skin-blue" ng-class="{'fixed' : $state.current.name !== 'login'}">
@@ -61,17 +61,17 @@
     <script src="bower_components/ng-file-upload-shim/angular-file-upload-shim.js"></script>
     <script src="bower_components/angular-translate-loader-url/angular-translate-loader-url.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-    <script src="bower_components/angular-base64/angular-base64.js"></script>
-    <script src="bower_components/query-string/query-string.js"></script>
-    <script src="bower_components/ngstorage/ngStorage.js"></script>
     <script src="bower_components/angular-validation/dist/angular-validation.js"></script>
     <script src="bower_components/angular-validation/dist/angular-validation-rule.js"></script>
     <script src="bower_components/angular-validation-schema/angular-validation-schema.js"></script>
+    <script src="bower_components/ngstorage/ngStorage.js"></script>
+    <script src="bower_components/oauth-ng/dist/oauth-ng.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
     <script src="main/app.js"></script>
+	<script src="components/oauth2/oauth2.js"></script>
 
     <!-- injector:js -->
     <script src="backend/account/profile/profile.controller.js"></script>
@@ -98,11 +98,12 @@
     <script src="backend/nav/header.directive.js"></script>
     <script src="backend/nav/sidenav.controller.js"></script>
     <script src="backend/nav/topnav.controller.js"></script>
+    <script src="components/oauth2/oauth2.interceptor.js"></script>
+    <script src="components/oauth2/oauth2.provider.js"></script>
     <script src="frontend/login/login.controller.js"></script>
     <script src="frontend/login/login.route.js"></script>
     <script src="main/main.controller.js"></script>
     <script src="main/main.route.js"></script>
-    <script src="main/oauth2.js"></script>
     <!-- endinjector -->
     <!-- endbuild -->
 

@@ -13,19 +13,20 @@
 	<link rel="stylesheet" href="bower_components/angular-ui-select/dist/select.css" />
 	<!-- endbower -->
 	<!-- endbuild -->
-	<!-- build:css(.tmp) styles/main.css -->
-	<link rel="stylesheet" href="styles/adminlte.css">
+	<!-- build:css({.tmp,app}) styles/main.css -->
+	<link rel="stylesheet" href="main/main.css" />
+	<link rel="stylesheet" href="frontend/login/login.css">
 	<!-- endbuild -->
 </head>
-<body class="">
+<body>
 	<div class="row">
 		<div class="col-md-8 col-md-offset-2 col-xs-12">
 			<div class="form-box" id="login-box">
-				<div class="header">
+				<div class="header text-center">
 					<img src="images/flat_meruvian_200px.png">
 				</div>
-				<br>
-				<form action="login" method="post">
+				<hr>
+				<form action="auth/login" method="post">
 					<div class="body">
 						<div class="row vertical-align">
 							<div class="col-md-5 vcenter">

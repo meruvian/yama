@@ -22,7 +22,7 @@ db:
     driver: com.mysql.jdbc.Driver
     datasource: com.mysql.jdbc.jdbc2.optional.MysqlDataSource
     username: root
-    password: meruvian
+    password: root
     max_pool_size: 100
     test_query: SELECT 1
     run_migration: true

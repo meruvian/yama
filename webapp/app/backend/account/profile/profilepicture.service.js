@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('yamaApp').factory('ProfilePictures', function (Users, OAuthToken, $upload, $rootScope) {
+angular.module('yamaApp').factory('ProfilePictures', function (Users, YamaOAuth, $upload, $rootScope) {
 	return {
 		uploadPhoto: function (file, progress, success, error) {
 			var fileReader = new FileReader();
@@ -16,7 +16,7 @@ angular.module('yamaApp').factory('ProfilePictures', function (Users, OAuthToken
 			};
 		},
 		getPhotoUrl: function() {
-			return Users.one('me').one('photo').getRequestedUrl() + '?access_token=' + OAuthToken.getAccessToken();
+			return Users.one('me').one('photo').getRequestedUrl() + '?access_token=' + YamaOAuth.getAccessToken().access_token;
 		},
 		reloadPhoto: function() {
 			$rootScope.currentUserPhoto = this.getPhotoUrl() + '&cache=' + (new Date()).getTime();

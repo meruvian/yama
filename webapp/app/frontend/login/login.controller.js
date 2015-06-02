@@ -31,9 +31,10 @@ angular.module('yamaApp').controller('LoginCtrl', function ($scope, $state, $roo
 			$scope.isAuthenticated = false;
 		});
 	};
-}).controller('LogoutCtrl', function($state, $http, OAuthToken) {
-	$http.get('logout').success(function() {
-		OAuthToken.removeToken();
+}).controller('LogoutCtrl', function($state, $http, YamaOAuth) {
+	$http.get('/auth/logout').success(function() {
+		YamaOAuth.logout();
+
 		$state.go('main');
 	});
 });

@@ -74,7 +74,7 @@ public class DefaultClientDetailsService implements ClientDetailsService {
 		if (defaultOauthApplications.containsKey(clientId)) {
 			application = defaultOauthApplications.get(clientId);
 		} else {
-			applicationRepository.findById(clientId);
+			application = applicationRepository.findById(clientId);
 		}
 		
 		if (application == null) return null;

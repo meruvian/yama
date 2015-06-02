@@ -73,7 +73,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 				.antMatchers("/**").fullyAuthenticated()
 				.and()
 			.sessionManagement()
-				.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 				.and()
 			.userDetailsService(clientDetailsUserDetailsService)
 			.anonymous().disable()
