@@ -12,13 +12,19 @@
 	<link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
 	<link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.css" />
 	<link rel="stylesheet" href="bower_components/angular-ui-select/dist/select.css" />
+	<link rel="stylesheet" href="bower_components/admin-lte/dist/css/AdminLTE.css" />
 	<!-- endbower -->
 	<!-- endbuild -->
+
+	<!-- build:css(.) styles/skin.css -->
+	<link rel="stylesheet" href="bower_components/admin-lte/dist/css/skins/skin-blue-light.css" />
+	<!-- endbuild -->
+
 	<!-- build:css({.tmp,app}) styles/main.css -->
-	<link rel="stylesheet" href="main/main.css" />
+	<link rel="stylesheet" href="frontend/login/login.css">
 	<!-- endbuild -->
 </head>
-<body ng-app="yamaApp" class="skin-blue" ng-class="{'fixed' : $state.current.name !== 'login'}">
+<body ng-app="yamaApp" class="sidebar-mini skin-blue-light" ng-class="{'fixed' : $state.current.name !== 'login'}">
 	<div ui-view></div>
 
 	<!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
@@ -93,7 +99,6 @@
     <script src="backend/admin/user/user.service.js"></script>
     <script src="backend/admin/user/user.validator.js"></script>
     <script src="backend/backend.controller.js"></script>
-    <script src="backend/backend.js"></script>
     <script src="backend/backend.route.js"></script>
     <script src="backend/nav/header.directive.js"></script>
     <script src="backend/nav/sidenav.controller.js"></script>
@@ -105,10 +110,6 @@
     <script src="main/main.controller.js"></script>
     <script src="main/main.route.js"></script>
     <!-- endinjector -->
-    <!-- endbuild -->
-
-    <!-- build:js({.tmp,app}) scripts/dashboard.js -->
-    <script src="backend/backend.js"></script>
     <!-- endbuild -->
 </body>
 </html>

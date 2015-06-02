@@ -1,19 +1,24 @@
 <!-- header logo: style can be found in header.less -->
-<header class="header" ng-controller="TopnavCtrl">
+<header class="main-header" ng-controller="TopnavCtrl">
 	<a href="#!/" class="logo">
 		<!-- Add the class icon to your logo image or logo icon to add the margining -->
-		Yama
+		<span class="logo-mini">
+			<strong>Y</strong>
+		</span>
+		<span class="logo-lg">
+			<strong>Yama</strong>
+		</span>
 	</a>
 	<!-- Header Navbar: style can be found in header.less -->
 	<nav class="navbar navbar-static-top" role="navigation">
 		<!-- Sidebar toggle button-->
-		<a href="#!/" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
+		<a href="#!/" class="sidebar-toggle" data-toggle="offcanvas" role="button">
 			<span class="sr-only">Navigation</span>
 			<span class="icon-bar"></span>
 			<span class="icon-bar"></span>
 			<span class="icon-bar"></span>
 		</a>
-		<div class="navbar-right">
+		<div class="navbar-custom-menu">
 			<ul class="nav navbar-nav">
 				<!-- User Account: style can be found in dropdown.less -->
 				<li class="dropdown user user-menu">
@@ -26,7 +31,7 @@
 					</a>
 					<ul class="dropdown-menu">
 						<!-- User image -->
-						<li class="user-header bg-light-blue">
+						<li class="user-header">
 							<img ng-src="{{ currentUserPhoto }}" class="img-circle" alt="User Image" />
 							<p>
 								<span ng-bind="currentUser.name.first + ' ' + currentUser.name.last"></span>
