@@ -83,10 +83,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public void configure(WebSecurity web) throws Exception {
 		web.ignoring()
 				.antMatchers("/oauth/uncache_approvals", "/oauth/cache_approvals")
-				.antMatchers("/views/**")
-				.antMatchers("/scripts/**")
-				.antMatchers("/styles/**")
-				.antMatchers("/images/**")
+				.antMatchers("*.html")
+				.antMatchers("*.js")
+				.antMatchers("*.css")
+				.antMatchers("*.jpg", "*.png", "*.gif")
 				.antMatchers("/bower_components/**");
 	}
 	
