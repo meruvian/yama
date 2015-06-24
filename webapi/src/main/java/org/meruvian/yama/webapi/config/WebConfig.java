@@ -19,9 +19,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.web.DispatcherServletAutoConfiguration;
-import org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration.WebMvcAutoConfigurationAdapter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /**
  * @author Dian Aditya
@@ -29,7 +29,7 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
  */
 @Configuration
 @AutoConfigureAfter(DispatcherServletAutoConfiguration.class)
-public class WebConfig extends WebMvcAutoConfigurationAdapter {	
+public class WebConfig extends WebMvcConfigurerAdapter {	
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	
 	@Override
