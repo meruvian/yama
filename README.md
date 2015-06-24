@@ -19,8 +19,7 @@ Generate from archetype
 mvn archetype:generate \
 -DarchetypeGroupId=org.meruvian.yama \
 -DarchetypeArtifactId=yama-starter-archetype \
--DarchetypeVersion=2.0.0-SNAPSHOT \
--DarchetypeRepository=https://maven.java.net/content/repositories/snapshots/
+-DarchetypeVersion=2.0.0.Beta1
 ```
 
 Change database configuration on `` webapi/src/main/resources/config/yama-dev.yml ``
