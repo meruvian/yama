@@ -237,6 +237,7 @@ module.exports = function (grunt) {
 						'<%= yama.app %>/**/*.js',
 						'!<%= yama.app %>/main/app.js',
 						'!<%= yama.app %>/components/oauth2/oauth2.js',
+						'!<%= yama.app %>/frontend/register/*.js',
 						'<%= yama.app %>/**/*.css'
 					],
 				}

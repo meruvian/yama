@@ -15,10 +15,14 @@
  */
 package org.meruvian.yama.web;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Dian Aditya
  *
  */
 public interface CredentialsService {
 	void registerAuthentication(String userId);
+	
+	void registerAuthentication(String userId, HttpServletRequest request);
 }

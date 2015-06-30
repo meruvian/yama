@@ -38,5 +38,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 		super.addViewControllers(registry);
 		
 		registry.addViewController("/login").setViewName("forward:/login.html");
+		registry.addViewController("/register").setViewName("forward:/register.html");
 	}
 }

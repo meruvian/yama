@@ -5,6 +5,5 @@ angular.module('yamaApp').controller('LoginCtrl', function () {
 }).controller('LogoutCtrl', function($state, $http, YamaOAuth) {
 	$http.get('/auth/logout').success(function() {
 		YamaOAuth.logout();
-		$state.go('main');
 	});
 });

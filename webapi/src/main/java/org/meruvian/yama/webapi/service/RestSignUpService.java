@@ -18,6 +18,8 @@ package org.meruvian.yama.webapi.service;
 import java.io.IOException;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.core.Context;
 
 import org.meruvian.yama.core.commons.FileInfo;
 import org.meruvian.yama.core.role.Role;
@@ -25,6 +27,7 @@ import org.meruvian.yama.core.role.RoleRepository;
 import org.meruvian.yama.core.user.User;
 import org.meruvian.yama.social.core.SocialService;
 import org.meruvian.yama.social.core.SocialServiceLocator;
+import org.meruvian.yama.web.CredentialsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.EnvironmentAware;
@@ -52,14 +55,32 @@ public class RestSignUpService implements SignUpService, ConnectionSignUp, Envir
 	@Inject
 	private RoleRepository roleRepository;
 	
+	@Inject
+	private CredentialsService credentialsService;
+	
+	@Context
+	private HttpServletRequest request;
+	
 	private String defaultRole;
 	
 	@Override
 	@Transactional
 	public User signUp(User user) {
-		return userService.saveUser(user);
+		user = userService.saveUser(user);
+		
+		if (user != null) {
+			LOG.debug("Registered {} ({}), signing in", user.getUsername(), user.getId());
+			credentialsService.registerAuthentication(user.getId(), request);
+		}
+		
+		return user;
 	}
 
+	@Override
+	public User isUserExist(String username) {
+		return userService.getUserByUsernameOrId(username);
+	}
+	
 	@Override
 	@Transactional
 	public String execute(Connection<?> connection) {

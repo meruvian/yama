@@ -81,6 +81,6 @@ public class UserTokenConverter extends DefaultUserAuthenticationConverter {
 					.collectionToCommaDelimitedString((Collection<?>) authorities));
 		}
 		
-		throw new IllegalArgumentException("Authorities must be either a String or a Collection");
+		return AuthorityUtils.commaSeparatedStringToAuthorityList("");
 	}
 }

@@ -98,6 +98,10 @@ angular.module('yamaApp', [
 		YamaOAuth.login();
 	});
 
+	$rootScope.$on('oauth:logout', function() {
+		YamaOAuth.login();
+	});
+
 	$rootScope.$on('$stateChangeStart', function(event, toState, toParams) {
 		if (!YamaOAuth.isAuthorized()) {
 			event.preventDefault();

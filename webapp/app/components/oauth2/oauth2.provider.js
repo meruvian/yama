@@ -14,6 +14,23 @@ angular.module('yamaOauth').provider('YamaOAuth', function() {
 	};
 
 	var config = {};
+	var $rootScope, $timeout, Endpoint, AccessToken, Storage;
+
+	var setup = function($injector) {
+		$rootScope = $injector.get('$rootScope');
+		$timeout = $injector.get('$timeout');
+		Endpoint = $injector.get('Endpoint');
+		AccessToken = $injector.get('AccessToken');
+		Storage = $injector.get('Storage');
+
+		Storage.use(config.storage);
+		Endpoint.set(config);
+		AccessToken.set(config);
+
+		$rootScope.$on('oauth:expired', function() {
+			AccessToken.destroy();
+		});
+	};
 
 	this.configure = function(params) {
 		if (!(params instanceof Object)) {
@@ -23,35 +40,39 @@ angular.module('yamaOauth').provider('YamaOAuth', function() {
 		config = angular.extend({}, defaultConfig, params);
 	};
 
-	this.$get = function($injector, Endpoint, AccessToken, Storage) {
-		var $rootScope = $injector.get('$rootScope');
+	this.login = function() {
+		AccessToken.destroy();
+		Endpoint.redirect();
+	};
 
-		Storage.use(config.storage);
-		Endpoint.set(config);
-		AccessToken.set(config);
+	this.logout = function() {
+		AccessToken.destroy();
+		$timeout(function() {
+			$rootScope.$broadcast('oauth:logout');
+		}, 500);
+	};
 
-		$rootScope.$on('oauth:expired', function() {
-			AccessToken.destroy();
-		});
+	this.isAuthorized =  function() {
+		return !(AccessToken.get() === null || AccessToken.expired());
+	};
+
+	this.getAccessToken = function() {
+		return AccessToken.get();
+	};
+
+	this.isExpired = function() {
+		return AccessToken.expired();
+	};
+
+	this.$get = function($injector) {
+		setup($injector);
 
 		return {
-			login: function() {
-				AccessToken.destroy();
-				Endpoint.redirect();
-			},
-			logout: function() {
-				AccessToken.destroy();
-				$rootScope.$broadcast('oauth:logout');
-			},
-			isAuthorized: function() {
-				return !(AccessToken.get() === null || AccessToken.expired());
-			},
-			getAccessToken: function() {
-				return AccessToken.get();
-			},
-			isExpired: function() {
-				return AccessToken.expired();
-			}
+			login: this.login,
+			logout: this.logout,
+			isAuthorized: this.isAuthorized,
+			getAccessToken: this.getAccessToken,
+			isExpired: this.isExpired
 		};
 	};
 });
