@@ -24,10 +24,12 @@ angular.module('yamaApp', [
 	'validation.rule',
 	'validation.schema',
 	'yamaOauth'
-]).config(function ($locationProvider, $urlRouterProvider) {
-	$locationProvider.html5Mode(false).hashPrefix('!');
+]).config(function ($locationProvider, $urlRouterProvider, $urlMatcherFactoryProvider) {
+	$locationProvider.html5Mode(true).hashPrefix('!');
 
 	$urlRouterProvider.otherwise('/');
+
+	$urlMatcherFactoryProvider.strictMode(false);
 }).config(function($httpProvider, RestangularProvider, uiSelectConfig) {
 	RestangularProvider.setBaseUrl('/api');
 	RestangularProvider.setDefaultHttpFields({cache: false});

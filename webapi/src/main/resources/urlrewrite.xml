@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE urlrewrite
+        PUBLIC "-//tuckey.org//DTD UrlRewrite 4.0//EN"
+        "http://www.tuckey.org/res/dtds/urlrewrite4.0.dtd">
+
+<urlrewrite>
+	<rule>
+		<condition type="request-uri" operator="notequal">[^\\]*\.(\w+)$</condition>
+		<condition type="request-uri" operator="notequal">^/$</condition>
+		<condition type="request-uri" operator="notequal">^/login$</condition>
+		<condition type="request-uri" operator="notequal">^/register$</condition>
+		<condition type="request-uri" operator="notequal">^/oauth_approval$</condition>
+		<condition type="request-uri" operator="notequal">^/auth/.*$</condition>
+		<condition type="request-uri" operator="notequal">^/info$</condition>
+		<condition type="request-uri" operator="notequal">^/health$</condition>
+		<condition type="request-uri" operator="notequal">^/env$</condition>
+		<condition type="request-uri" operator="notequal">^/beans$</condition>
+		<condition type="request-uri" operator="notequal">^/trace$</condition>
+		<condition type="request-uri" operator="notequal">^/dump$</condition>
+		<condition type="request-uri" operator="notequal">^/shutdown$</condition>
+		<condition type="request-uri" operator="notequal">^/metrics/.*$</condition>
+		<condition type="request-uri" operator="notequal">^/api/.*$</condition>
+		<condition type="request-uri" operator="notequal">^/oauth/.*$</condition>
+		<condition type="request-uri" operator="notequal">^/assets/.*$</condition>
+		<condition type="request-uri" operator="notequal">^/images/.*$</condition>
+		<condition type="request-uri" operator="notequal">^/fonts/.*$</condition>
+		<condition type="request-uri" operator="notequal">^/index.html*$</condition>
+
+		<to>/index.html</to>
+	</rule>
+</urlrewrite>
