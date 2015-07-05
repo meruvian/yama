@@ -25,6 +25,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
+import org.springframework.security.oauth2.provider.approval.UserApprovalHandler;
 import org.springframework.security.oauth2.provider.token.AccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 
@@ -49,6 +50,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	@Named("authenticationManagerBean")
 	private AuthenticationManager authenticationManager;
 	
+	@Inject
+	private UserApprovalHandler userApprovalHandler;
+	
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 		clients.withClientDetails(clientDetailsService);
@@ -58,6 +62,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
 		endpoints.authenticationManager(authenticationManager)
 			.tokenServices(tokenServices)
-			.accessTokenConverter(accessTokenConverter);
+			.accessTokenConverter(accessTokenConverter)
+			.userApprovalHandler(userApprovalHandler)
+			.pathMapping("/oauth/confirm_access", "/oauth/approval");
 	}
 }

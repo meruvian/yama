@@ -39,5 +39,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 		
 		registry.addViewController("/login").setViewName("forward:/login.html");
 		registry.addViewController("/register").setViewName("forward:/register.html");
+		registry.addRedirectViewController("/oauth/approval", "/oauth_approval").setKeepQueryParams(true);
+		registry.addViewController("/oauth_approval").setViewName("forward:/oauth_approval.html");
 	}
 }

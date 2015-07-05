@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html class="">
+<head>
+	<meta charset="UTF-8">
+	<title>Yama</title>
+	<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<!-- build:css(.) styles/vendor.css -->
+	<!-- bower:css -->
+	<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+	<link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
+	<link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.css" />
+	<link rel="stylesheet" href="bower_components/angular-ui-select/dist/select.css" />
+	<link rel="stylesheet" href="bower_components/admin-lte/dist/css/AdminLTE.css" />
+	<!-- endbower -->
+	<!-- endbuild -->
+	<!-- build:css({.tmp,app}) styles/main.css -->
+	<link rel="stylesheet" href="frontend/login/login.css">
+	<!-- endbuild -->
+</head>
+<body ng-app="yamaApp" ng-controller="OAuthCtrl" class="login-box">
+	<div class="row">
+		<div class="col-md-4 col-md-offset-4 col-xs-10 col-xs-offset-1">
+			<div class="form-box" id="login-box">
+				<div class="header text-center">
+					<img src="images/flat_meruvian_200px.png">
+				</div>
+				<hr>
+				<form method="POST" action="oauth/authorize">
+					<h4 class="text-center">Do you authorize <strong>{{ app.displayName }}</strong> to access your protected resources?</h4>
+					<br>
+					<input type="hidden" name="user_oauth_approval" value="true"/>
+					<table class="table table-striped">
+						<tr ng-repeat="scope in scopes">
+							<td class="text-right col-xs-6"><strong>{{ scope.scope | uppercase }}</strong> &nbsp;&nbsp;&nbsp;</td>
+							<td class="col-xs-6">
+								&nbsp;&nbsp;&nbsp;
+								<input type="checkbox" name="scope.{{ scope.scope }}" checked ng-model="scope.approved" value="{{ scope.approved }}" />
+							</td>
+						</tr>
+					</table>
+
+					<div>
+						<input type="submit" name="authorize" class="btn bg-blue col-xs-12" value="Authorize">
+					</div>
+				</form>
+			</div>
+		</div>
+
+	</div>
+
+	<script type="text/ng-template" id="appScopes">
+
+	</script>
+
+	<!-- build:js({.tmp,app}) scripts/oauth_approval.js -->
+	<script src="bower_components/jquery/dist/jquery.js"></script>
+	<script src="bower_components/angular/angular.js"></script>
+	<!-- endbuild -->
+
+	<script type="text/javascript">
+	angular.module('yamaApp', []).controller('OAuthCtrl', ['$scope', '$location', '$http', function($scope, $location, $http) {
+		var getParameterByName = function(name) {
+			name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+			var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+			results = regex.exec(location.search);
+			return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+		}
+
+		var scopes = getParameterByName('scope').split(' ');
+		$scope.scopes = [];
+
+		$http.get('api/oauth/clients/' + getParameterByName('client_id')).success(function(app) {
+			angular.forEach(scopes, function(val){
+				if (app.scopes.indexOf(val) < 0) {
+					location.href = 'oauth/authorize' + location.search;
+				}
+
+				$scope.scopes.push({scope: val, approved: true});
+			});
+
+			$scope.app = app;
+		});
+	}]);
+	</script>
+</body>
+</html>
