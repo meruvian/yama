@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.meruvian.yama</groupId>
 	<artifactId>yama</artifactId>
-	<version>2.0.0.Beta2</version>
+	<version>2.0.0.Beta3-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Meruvian Yama</name>
 	<description>Meruvian Yama is a part of Meruvian Integrated Platform. An integrated platform to create Java WebApp based on Struts2, SpringMVC, JPA and many others popular framework quickly and easily.</description>
