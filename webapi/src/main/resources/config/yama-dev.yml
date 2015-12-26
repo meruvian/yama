@@ -1,6 +1,6 @@
 spring:
     profiles: dev
-    jpa.hibernate.ddl-auto: validate
+    jpa.hibernate.ddl-auto: update
 
 server.port: 8080
 
@@ -18,11 +18,11 @@ rest:
 
 # database
 db:
-    url: jdbc:mysql://localhost:3306/yama2
+    url: jdbc:mysql://localhost:3306/yama_training
     driver: com.mysql.jdbc.Driver
     datasource: com.mysql.jdbc.jdbc2.optional.MysqlDataSource
     username: root
-    password: root
+    password: meruvian
     max_pool_size: 100
     test_query: SELECT 1
     run_migration: true
