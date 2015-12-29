@@ -15,8 +15,6 @@
  */
 package org.meruvian.yama.webapi.config;
 
-import javax.inject.Inject;
-
 import org.meruvian.yama.core.user.User;
 import org.meruvian.yama.social.connection.SocialConnectionRepository;
 import org.meruvian.yama.social.core.SocialConnectionService;
@@ -25,9 +23,12 @@ import org.meruvian.yama.social.core.SocialServiceRegistry;
 import org.meruvian.yama.social.core.SocialUsersConnectionService;
 import org.meruvian.yama.social.facebook.FacebookService;
 import org.meruvian.yama.social.google.GooglePlusService;
+import org.meruvian.yama.social.linkedin.LinkedInService;
 import org.meruvian.yama.social.mervid.MervidService;
 import org.meruvian.yama.social.mervid.connect.MervidConnectionFactory;
 import org.meruvian.yama.web.SessionCredentials;
+import org.springframework.boot.bind.RelaxedPropertyResolver;
+import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
@@ -36,15 +37,15 @@ import org.springframework.core.env.Environment;
 import org.springframework.social.connect.ConnectionSignUp;
 import org.springframework.social.facebook.connect.FacebookConnectionFactory;
 import org.springframework.social.google.connect.GoogleConnectionFactory;
+import org.springframework.social.linkedin.connect.LinkedInConnectionFactory;
 
 /**
  * @author Dian Aditya
  *
  */
 @Configuration
-public class SocialConfig {
-	@Inject
-	private Environment env;
+public class SocialConfig implements EnvironmentAware {
+	private RelaxedPropertyResolver env;
 	
 	@Bean
 	public SocialServiceLocator socialServiceLocator() {
@@ -52,6 +53,7 @@ public class SocialConfig {
 		registry.addSocialService(facebookService());
 		registry.addSocialService(googlePlusService());
 		registry.addSocialService(mervidService());
+		registry.addSocialService(linkedInService());
 		
 		return registry;
 	}
@@ -77,10 +79,10 @@ public class SocialConfig {
 	
 	@Bean
 	public FacebookService facebookService() {
-		String appId = env.getProperty("social.facebook.appId");
-		String appSecret = env.getProperty("social.facebook.appSecret");
-		String redirectUri = env.getProperty("social.facebook.redirectUri");
-		String scope = env.getProperty("social.facebook.scope");
+		String appId = env.getProperty("facebook.appId");
+		String appSecret = env.getProperty("facebook.appSecret");
+		String redirectUri = env.getProperty("facebook.redirectUri");
+		String scope = env.getProperty("facebook.scope");
 		
 		FacebookConnectionFactory factory = new FacebookConnectionFactory(appId, appSecret);
 		FacebookService facebookService = new FacebookService(factory);
@@ -92,10 +94,10 @@ public class SocialConfig {
 	
 	@Bean
 	public GooglePlusService googlePlusService() {
-		String appId = env.getProperty("social.google.appId");
-		String appSecret = env.getProperty("social.google.appSecret");
-		String redirectUri = env.getProperty("social.google.redirectUri");
-		String scope = env.getProperty("social.google.scope");
+		String appId = env.getProperty("google.appId");
+		String appSecret = env.getProperty("google.appSecret");
+		String redirectUri = env.getProperty("google.redirectUri");
+		String scope = env.getProperty("google.scope");
 		
 		GoogleConnectionFactory factory = new GoogleConnectionFactory(appId, appSecret);
 		GooglePlusService gPlusService = new GooglePlusService(factory);
@@ -107,10 +109,10 @@ public class SocialConfig {
 	
 	@Bean
 	public MervidService mervidService() {
-		String appId = env.getProperty("social.mervid.appId");
-		String appSecret = env.getProperty("social.mervid.appSecret");
-		String redirectUri = env.getProperty("social.mervid.redirectUri");
-		String scope = env.getProperty("social.mervid.scope");
+		String appId = env.getProperty("mervid.appId");
+		String appSecret = env.getProperty("mervid.appSecret");
+		String redirectUri = env.getProperty("mervid.redirectUri");
+		String scope = env.getProperty("mervid.scope");
 		
 		MervidConnectionFactory factory = new MervidConnectionFactory(appId, appSecret);
 		MervidService mervidService = new MervidService(factory);
@@ -118,5 +120,26 @@ public class SocialConfig {
 		mervidService.setScope(scope);
 		
 		return mervidService;
+	}
+	
+	@Bean
+	public LinkedInService linkedInService() {
+		String appId = env.getProperty("linkedin.appId");
+		String appSecret = env.getProperty("linkedin.appSecret");
+		String redirectUri = env.getProperty("linkedin.redirectUri");
+		String scope = env.getProperty("linkedin.scope");
+		
+		LinkedInConnectionFactory factory = new LinkedInConnectionFactory(appId, appSecret);
+		LinkedInService linkedInService = new LinkedInService(factory);
+		linkedInService.setRedirectUri(redirectUri);
+		linkedInService.setScope(scope);
+		linkedInService.setState("yama");
+		
+		return linkedInService;
+	}
+
+	@Override
+	public void setEnvironment(Environment env) {
+		this.env = new RelaxedPropertyResolver(env, "social.");
 	}
 }

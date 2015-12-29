@@ -27,5 +27,9 @@
 			<artifactId>spring-social-google</artifactId>
 			<version>${spring.social.google.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.social</groupId>
+			<artifactId>spring-social-linkedin</artifactId>
+		</dependency>
 	</dependencies>
 </project>

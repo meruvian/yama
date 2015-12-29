@@ -92,7 +92,8 @@ public class SocialConnection extends DefaultPersistence {
 		this.displayName = displayName;
 	}
 
-	@Column(length = 512, name = "profile_url")
+	@Lob
+	@Column(name = "profile_url")
 	public String getProfileUrl() {
 		return profileUrl;
 	}
@@ -101,7 +102,8 @@ public class SocialConnection extends DefaultPersistence {
 		this.profileUrl = profileUrl;
 	}
 
-	@Column(length = 512, name = "image_url")
+	@Lob
+	@Column(name = "image_url")
 	public String getImageUrl() {
 		return imageUrl;
 	}

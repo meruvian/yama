@@ -49,22 +49,24 @@ social:
         appSecret: j/jygXp6JczO5pIJ/PXNn/x9iFrOp7pibJ6SBjDeA87R1Fj+BaP/9rfqUTT9LGJr
         redirectUri: http://localhost:8080/login/social/mervid/callback
         scope: read write
-        state: 6234
     facebook:
         active: true
         appId: 645592102187632
         appSecret: 88ee3cdd671536f452879042a85ae780
         redirectUri: http://localhost:8080/login/social/facebook/callback
         scope: email,public_profile,user_friends
-        state: 6234
-
     google:
         active: true
         appId: 712009183750-9102gsasvgb7nklms2opuo3oknk2cgm1.apps.googleusercontent.com
         appSecret: tSN5B1QfGS0JIq69vHdNmRzt
         redirectUri: http://localhost:8080/login/social/google/callback
         scope: https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.me https://www.googleapis.com/auth/userinfo.email
-        state: 6234
+    linkedin:
+        active: true
+        appId: 75b6ivkawa0der
+        appSecret: WotBifIF7XIWNkM0
+        redirectUri: http://localhost:8080/login/social/linkedin/callback
+        scope: r_basicprofile r_emailaddress
 
 # email
 email:

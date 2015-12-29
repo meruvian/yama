@@ -9,6 +9,7 @@
 		<condition type="request-uri" operator="notequal">[^\\]*\.(\w+)$</condition>
 		<condition type="request-uri" operator="notequal">^/$</condition>
 		<condition type="request-uri" operator="notequal">^/login$</condition>
+		<condition type="request-uri" operator="notequal">^/login/.*$</condition>
 		<condition type="request-uri" operator="notequal">^/register$</condition>
 		<condition type="request-uri" operator="notequal">^/oauth_approval$</condition>
 		<condition type="request-uri" operator="notequal">^/auth/.*$</condition>
