@@ -68,6 +68,6 @@ public class DefaultUserDetailsService implements UserDetailsService {
 			return details;
 		}
 		
-		return null;
+		throw new UsernameNotFoundException(username);
 	}
 }
