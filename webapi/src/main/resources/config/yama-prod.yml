@@ -67,6 +67,12 @@ social:
         appSecret: WotBifIF7XIWNkM0
         redirectUri: http://localhost:8080/login/social/linkedin/callback
         scope: r_basicprofile r_emailaddress
+    github:
+        active: true
+        appId: c49df12b2dce950b4882
+        appSecret: ee66e74b67817eb63e96e6d08a37ab055c3f3402
+        redirectUri: http://localhost:8080/login/social/github/callback
+        scope: user
 
 # email
 email:

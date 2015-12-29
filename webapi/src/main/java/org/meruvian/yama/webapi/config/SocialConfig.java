@@ -15,6 +15,7 @@
  */
 package org.meruvian.yama.webapi.config;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.meruvian.yama.core.user.User;
 import org.meruvian.yama.social.connection.SocialConnectionRepository;
 import org.meruvian.yama.social.core.SocialConnectionService;
@@ -22,6 +23,7 @@ import org.meruvian.yama.social.core.SocialServiceLocator;
 import org.meruvian.yama.social.core.SocialServiceRegistry;
 import org.meruvian.yama.social.core.SocialUsersConnectionService;
 import org.meruvian.yama.social.facebook.FacebookService;
+import org.meruvian.yama.social.github.GithubService;
 import org.meruvian.yama.social.google.GooglePlusService;
 import org.meruvian.yama.social.linkedin.LinkedInService;
 import org.meruvian.yama.social.mervid.MervidService;
@@ -36,6 +38,7 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.core.env.Environment;
 import org.springframework.social.connect.ConnectionSignUp;
 import org.springframework.social.facebook.connect.FacebookConnectionFactory;
+import org.springframework.social.github.connect.GitHubConnectionFactory;
 import org.springframework.social.google.connect.GoogleConnectionFactory;
 import org.springframework.social.linkedin.connect.LinkedInConnectionFactory;
 
@@ -54,6 +57,7 @@ public class SocialConfig implements EnvironmentAware {
 		registry.addSocialService(googlePlusService());
 		registry.addSocialService(mervidService());
 		registry.addSocialService(linkedInService());
+		registry.addSocialService(githubService());
 		
 		return registry;
 	}
@@ -88,6 +92,7 @@ public class SocialConfig implements EnvironmentAware {
 		FacebookService facebookService = new FacebookService(factory);
 		facebookService.setRedirectUri(redirectUri);
 		facebookService.setScope(scope);
+		facebookService.setState(RandomStringUtils.randomAlphanumeric(20));
 		
 		return facebookService;
 	}
@@ -103,6 +108,7 @@ public class SocialConfig implements EnvironmentAware {
 		GooglePlusService gPlusService = new GooglePlusService(factory);
 		gPlusService.setRedirectUri(redirectUri);
 		gPlusService.setScope(scope);
+		gPlusService.setState(RandomStringUtils.randomAlphanumeric(20));
 		
 		return gPlusService;
 	}
@@ -118,6 +124,7 @@ public class SocialConfig implements EnvironmentAware {
 		MervidService mervidService = new MervidService(factory);
 		mervidService.setRedirectUri(redirectUri);
 		mervidService.setScope(scope);
+		mervidService.setState(RandomStringUtils.randomAlphanumeric(20));
 		
 		return mervidService;
 	}
@@ -133,9 +140,24 @@ public class SocialConfig implements EnvironmentAware {
 		LinkedInService linkedInService = new LinkedInService(factory);
 		linkedInService.setRedirectUri(redirectUri);
 		linkedInService.setScope(scope);
-		linkedInService.setState("yama");
+		linkedInService.setState(RandomStringUtils.randomAlphanumeric(20));
 		
 		return linkedInService;
+	}
+	
+	@Bean
+	public GithubService githubService() {
+		String appId = env.getProperty("github.appId");
+		String appSecret = env.getProperty("github.appSecret");
+		String redirectUri = env.getProperty("github.redirectUri");
+		String scope = env.getProperty("github.scope");
+		
+		GitHubConnectionFactory factory = new GitHubConnectionFactory(appId, appSecret);
+		GithubService githubService = new GithubService(factory);
+		githubService.setRedirectUri(redirectUri);
+		githubService.setState(RandomStringUtils.randomAlphanumeric(20));
+		
+		return githubService;
 	}
 
 	@Override
