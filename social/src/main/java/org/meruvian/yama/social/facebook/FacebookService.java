@@ -25,7 +25,6 @@ import org.meruvian.yama.social.core.AbstractSocialService;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.support.OAuth2ConnectionFactory;
 import org.springframework.social.facebook.api.Facebook;
-import org.springframework.social.facebook.api.FacebookProfile;
 import org.springframework.social.facebook.api.ImageType;
 
 /**
@@ -40,7 +39,7 @@ public class FacebookService extends AbstractSocialService<Facebook> {
 	@Override
 	public User createUser(Connection<?> connection) {
 		Facebook facebook = (Facebook) connection.getApi();
-		FacebookProfile profile = facebook.userOperations().getUserProfile();
+		org.springframework.social.facebook.api.User profile = facebook.userOperations().getUserProfile();
 		
 		String randomUsername = RandomStringUtils.randomAlphanumeric(6);
 		
@@ -52,7 +51,7 @@ public class FacebookService extends AbstractSocialService<Facebook> {
 		user.setEmail(profile.getEmail());
 		
 		if (StringUtils.isBlank(profile.getEmail())) {
-			user.setEmail(StringUtils.join(profile.getUsername(), "@facebook.com"));
+			user.setEmail(StringUtils.join(profile.getId(), "@facebook.com"));
 		}
 		
 		user.setPassword(RandomStringUtils.randomAlphanumeric(8));

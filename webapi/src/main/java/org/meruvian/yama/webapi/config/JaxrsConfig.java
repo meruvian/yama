@@ -16,54 +16,77 @@
 
 package org.meruvian.yama.webapi.config;
 
+import java.util.Properties;
+
+import javax.inject.Named;
+
+import org.jboss.resteasy.core.Dispatcher;
 import org.jboss.resteasy.plugins.providers.jackson.Jackson2JsonpInterceptor;
+import org.jboss.resteasy.plugins.spring.OptionalValueBeanFactory;
 import org.jboss.resteasy.plugins.spring.SpringBeanProcessor;
+import org.jboss.resteasy.spi.Registry;
 import org.jboss.resteasy.spi.ResteasyDeployment;
 import org.jboss.resteasy.spi.ResteasyProviderFactory;
 import org.jboss.resteasy.springmvc.ResteasyHandlerAdapter;
 import org.jboss.resteasy.springmvc.ResteasyHandlerMapping;
+import org.jboss.resteasy.springmvc.ResteasyNoResourceFoundView;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.core.Ordered;
+import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
+import org.springframework.web.servlet.view.BeanNameViewResolver;
 
 @Configuration
 @EnableConfigurationProperties
 @ConditionalOnClass(ResteasyHandlerMapping.class)
 public class JaxrsConfig {
-		
 	@Bean(initMethod="start", destroyMethod="stop")
 	@ConditionalOnMissingBean(ResteasyDeployment.class)
 	@ConfigurationProperties(prefix="resteasy.deployment")
-	public ResteasyDeployment resteasyDeployment(final SpringBeanProcessor springBeanProcessor) {
-		ResteasyDeployment resteasyDeployment = new ResteasyDeployment() {
-			public void start() {
-				super.start();
-				if (springBeanProcessor.getRegistry() == null) {
-					springBeanProcessor.setRegistry(this.getRegistry());
-				}
-			}
-		};
-		resteasyDeployment.setProviderFactory(springBeanProcessor.getProviderFactory());
-		return resteasyDeployment;
+	public ResteasyDeployment resteasyDeployment() {
+		return new ResteasyDeployment();
 	}
 
 	@Bean
+	@ConditionalOnMissingBean(Registry.class)
+	public Registry restEasyRegistry(ResteasyDeployment deployment) {
+		return deployment.getRegistry();
+	}
+
+	@Bean
+	@ConditionalOnMissingBean(Dispatcher.class)
+	public Dispatcher resteasyDispatcher(ResteasyDeployment deployment) {
+		return deployment.getDispatcher();
+	}
+
+	@Bean
+	@ConditionalOnMissingBean(ResteasyProviderFactory.class)
+	public ResteasyProviderFactory resteasyProviderFactory(ResteasyDeployment deployment) {
+		return deployment.getProviderFactory();
+	}
+
+	@Bean
+	@DependsOn("resteasyDeployment")
 	@ConditionalOnMissingBean(SpringBeanProcessor.class)
-	public SpringBeanProcessor springBeanProcessor() {
-		SpringBeanProcessor springBeanProcessor = new SpringBeanProcessor();
-		springBeanProcessor.setProviderFactory(new ResteasyProviderFactory());
-		return springBeanProcessor;
+	public SpringBeanProcessor resteasySpringBeanProcessor(ResteasyDeployment resteasyDeployment) {
+		return new SpringBeanProcessor(resteasyDeployment);
 	}
 
 	@Bean
+	@DependsOn("resteasyDeployment")
 	@ConditionalOnMissingBean(ResteasyHandlerMapping.class)
 	public ResteasyHandlerMapping resteasyHandlerMapper(ResteasyDeployment deployment) {
 		ResteasyHandlerMapping handlerMapping = new ResteasyHandlerMapping(deployment);
 		handlerMapping.setOrder(Ordered.LOWEST_PRECEDENCE - 10);
+		handlerMapping.setThrowNotFound(false);
+		handlerMapping.setPrefix("");
+		
 		return handlerMapping;
 	}
 
@@ -72,7 +95,42 @@ public class JaxrsConfig {
 	public ResteasyHandlerAdapter resteasyHandlerAdapter(ResteasyDeployment deployment) {
 		return new ResteasyHandlerAdapter(deployment);
 	}
-	
+
+	@Bean
+	@ConditionalOnMissingBean(SimpleMappingExceptionResolver.class)
+	public SimpleMappingExceptionResolver resteasyExceptionHandler() {
+		SimpleMappingExceptionResolver resolver = new SimpleMappingExceptionResolver();
+		resolver.setExceptionMappings(new Properties() {
+			{
+				setProperty("org.jboss.resteasy.spi.NoResourceFoundFailure", "resteasyNoResourceFoundView");
+			}
+		});
+		resolver.setExceptionAttribute("exception");
+		
+		return resolver;
+	}
+
+	@Bean
+	@ConditionalOnMissingBean(ResteasyNoResourceFoundView.class)
+	public ResteasyNoResourceFoundView resteasyNoResourceFoundView(ResteasyDeployment deployment) {
+		ResteasyNoResourceFoundView view = new ResteasyNoResourceFoundView();
+		view.setDeployment(deployment);
+		
+		return view;
+	}
+
+	@Bean
+	@ConditionalOnMissingBean(BeanNameViewResolver.class)
+	public BeanNameViewResolver resteasyErrorViewResolver() {
+		return new BeanNameViewResolver();
+	}
+
+	@Bean
+	@ConditionalOnMissingBean(OptionalValueBeanFactory.class)
+	public OptionalValueBeanFactory resteasyDispatcherInterceptors() {
+		return new OptionalValueBeanFactory();
+	}
+
 	@Bean
 	public Jackson2JsonpInterceptor jsonpInterceptor() {
 		return new Jackson2JsonpInterceptor();

@@ -6,7 +6,8 @@ server.port: 8080
 
 logging:
     level:
-        org.jboss.resteasy.springmvc.ResteasyHandlerMapping: ERROR
+        root: INFO
+        org.jboss.resteasy.plugins.spring.i18n: OFF
         org.meruvian.yama: DEBUG
 
 rest:
