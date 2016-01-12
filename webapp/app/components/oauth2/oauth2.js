@@ -1,3 +1,5 @@
-'use strict';
+(function() {
+	'use strict';
 
-angular.module('yamaOauth', ['oauth']);
+	angular.module('yamaOauth', ['oauth']);
+})();

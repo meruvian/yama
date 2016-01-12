@@ -1,0 +1,64 @@
+<!-- header logo: style can be found in header.less -->
+<header class="main-header">
+	<a ui-sref="app" ui-sref-opts="{ reload: true }" class="logo">
+		<!-- Add the class icon to your logo image or logo icon to add the margining -->
+		<span class="logo-mini">
+			<strong>Y</strong>
+		</span>
+		<span class="logo-lg">
+			<strong>Yama</strong>
+		</span>
+	</a>
+	<!-- Header Navbar: style can be found in header.less -->
+	<nav class="navbar navbar-static-top" role="navigation">
+		<!-- Sidebar toggle button-->
+		<a ui-sref="app" ui-sref-opts="{reload: true}" class="sidebar-toggle" data-toggle="offcanvas" role="button" push-menu>
+			<span class="sr-only">Navigation</span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		</a>
+		<div class="navbar-custom-menu">
+			<ul class="nav navbar-nav">
+				<!-- User Account: style can be found in dropdown.less -->
+				<li ng-repeat="menu in ctrl.menus">
+					<a ui-sref="{{ menu.ref }}" ui-sref-opts="{reload: true}">
+						<i class="fa fa-{{ menu.icon }}"></i>
+						<span class="hidden-xs" ng-bind="menu.menu"></span>
+					</a>
+				</li>
+				<li class="dropdown user user-menu" dropdown>
+					<a href="" class="dropdown-toggle" data-toggle="dropdown" dropdown-toggle>
+						<i class="fa fa-user"></i>
+						<span>
+							<span ng-bind="currentUser.name.first + ' ' + currentUser.name.last"></span>
+							<i class="caret"></i>
+						</span>
+					</a>
+					<ul class="dropdown-menu">
+						<!-- User image -->
+						<li class="user-header">
+							<div class="col-xs-12">
+								<img ng-src="{{ currentUserPhoto }}" class="thumbnail col-xs-12" alt="User Image" />
+							</div>
+							<p>
+								<span ng-bind="currentUser.name.first + ' ' + currentUser.name.last"></span>
+								<small ng-bind="currentUser.username"></small>
+							</p>
+						</li>
+
+						<!-- Menu Footer-->
+						<li class="user-footer">
+							<div class="pull-left">
+								<a ui-sref="app.profile" ui-sref-opts="{reload: true}" class="btn btn-default btn-flat">Profile</a>
+							</div>
+							<div class="pull-right">
+								<a ng-click="ctrl.logout()" class="btn btn-default btn-flat">Sign out</a>
+							</div>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</nav>
+</header>

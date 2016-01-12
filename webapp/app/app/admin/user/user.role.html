@@ -1,0 +1,26 @@
+<div class="modal-header">
+	<h3 class="modal-title">Add role <small ng-bind="'(' + ctrl.user.username + ')'"></small></h3>
+</div>
+<div class="modal-body">
+	<fieldset>
+		<div class="form-group">
+			<label class="control-label" for="roles">Roles</label>
+			<div class="controls">
+				<ui-select multiple ng-model="ctrl.user.roles" on-select="ctrl.addRole($item)" on-remove="ctrl.removeRole($item)">
+					<ui-select-match placeholder="Select roles...">{{ $item.name }}</ui-select-match>
+					<ui-select-choices repeat="role in ctrl.roles" refresh="ctrl.loadRoles($select.search)">
+						<div ng-bind-html="role.name | highlight: $select.search"></div>
+						<small ng-bind-html="role.description | highlight: $select.search"></small>
+					</ui-select-choices>
+				</ui-select>
+			</div>
+		</div>
+	</fieldset>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-primary col-md-3 col-xs-12" ng-click="ctrl.done()">
+			<i class="fa fa-check"></i>
+			Done
+		</button>
+		<span class="label label-danger" ng-show="error">Ops something went wrong!</span>
+	</div>
+</div>

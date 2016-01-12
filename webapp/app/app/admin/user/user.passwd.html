@@ -1,0 +1,34 @@
+<div class="modal-header">
+	<h3 class="modal-title">Change Password <small ng-bind="'(' + user.username + ')'"></small></h3>
+</div>
+<form name="userForm" ng-submit="ctrl.submit(user, userForm)" novalidate validation-schema schema="passwd" ng-init="user = ctrl.user">
+	<div class="modal-body">
+		<fieldset>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<label class="control-label" for="password">Password</label>
+						<div class="controls">
+							<input type="password" id="password" name="passwd" class="form-control" ng-model="user.password" required>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<label class="control-label" for="confirm-password">Confirm Password</label>
+						<div class="controls">
+							<input type="password" id="confirm-password" name="confpasswd" class="form-control" ng-model="confirmPassword" required>
+						</div>
+					</div>
+				</div>
+			</div>
+		</fieldset>
+	</div>
+	<div class="modal-footer">
+		<button type="submit" class="btn btn-primary col-md-4 col-xs-12">
+			<i class="fa fa-key"></i>
+			Change Password
+		</button>
+		<span class="label label-danger" ng-show="ctrl.error">Ops something went wrong!</span>
+	</div>
+</form>

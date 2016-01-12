@@ -13,19 +13,16 @@
 	<link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
 	<link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.css" />
 	<link rel="stylesheet" href="bower_components/angular-ui-select/dist/select.css" />
-	<link rel="stylesheet" href="bower_components/admin-lte/dist/css/AdminLTE.css" />
+	<link rel="stylesheet" href="bower_components/AdminLTE/dist/css/AdminLTE.css" />
+	<link rel="stylesheet" href="bower_components/AdminLTE/dist/css/skins/skin-blue-light.css" />
 	<!-- endbower -->
-	<!-- endbuild -->
-
-	<!-- build:css(.) styles/skin.css -->
-	<link rel="stylesheet" href="bower_components/admin-lte/dist/css/skins/skin-blue-light.css" />
 	<!-- endbuild -->
 
 	<!-- build:css({.tmp,app}) styles/main.css -->
 	<link rel="stylesheet" href="frontend/login/login.css">
 	<!-- endbuild -->
 </head>
-<body ng-app="yamaApp" class="sidebar-mini skin-blue-light" ng-class="{'fixed' : $state.current.name !== 'login'}">
+<body ng-app="yamaApp" class="sidebar-mini skin-blue-light" ng-class="{'fixed' : $state.current.name !== 'login'}" admin-lte-layout>
 	<div ui-view></div>
 
 	<!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
@@ -52,7 +49,6 @@
     <!-- bower:js -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
     <script src="bower_components/angular-animate/angular-animate.js"></script>
     <script src="bower_components/angular-cookies/angular-cookies.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
@@ -64,8 +60,8 @@
     <script src="bower_components/restangular/dist/restangular.js"></script>
     <script src="bower_components/angular-popup-box/angular-popup-boxes.js"></script>
     <script src="bower_components/angular-ui-select/dist/select.js"></script>
-    <script src="bower_components/ng-file-upload/angular-file-upload.js"></script>
-    <script src="bower_components/ng-file-upload-shim/angular-file-upload-shim.js"></script>
+    <script src="bower_components/ng-file-upload/ng-file-upload.js"></script>
+    <script src="bower_components/ng-file-upload-shim/ng-file-upload-shim.js"></script>
     <script src="bower_components/angular-translate-loader-url/angular-translate-loader-url.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="bower_components/angular-validation/dist/angular-validation.js"></script>
@@ -74,49 +70,60 @@
     <script src="bower_components/ngstorage/ngStorage.js"></script>
     <script src="bower_components/jsrsasign/jsrsasign-latest-all-min.js"></script>
     <script src="bower_components/oauth-ng/dist/oauth-ng.js"></script>
+    <script src="bower_components/AdminLTE/plugins/slimScroll/jquery.slimscroll.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
-    <script src="main/app.js"></script>
+    <script src="app.js"></script>
 	<script src="components/oauth2/oauth2.js"></script>
 
     <!-- injector:js -->
-    <script src="backend/account/profile/profile.controller.js"></script>
-    <script src="backend/account/profile/profile.route.js"></script>
-    <script src="backend/account/profile/profilepicture.service.js"></script>
-    <script src="backend/admin/application/application.controller.js"></script>
-    <script src="backend/admin/application/application.route.js"></script>
-    <script src="backend/admin/application/application.service.js"></script>
-    <script src="backend/admin/application/application.validator.js"></script>
-    <script src="backend/admin/dashboard/dashboard.controller.js"></script>
-    <script src="backend/admin/dashboard/dashboard.route.js"></script>
-    <script src="backend/admin/dashboard/dashboard.service.js"></script>
-    <script src="backend/admin/role/role.controller.js"></script>
-    <script src="backend/admin/role/role.route.js"></script>
-    <script src="backend/admin/role/role.service.js"></script>
-    <script src="backend/admin/role/role.validator.js"></script>
-    <script src="backend/admin/user/user.controller.js"></script>
-    <script src="backend/admin/user/user.route.js"></script>
-    <script src="backend/admin/user/user.service.js"></script>
-    <script src="backend/admin/user/user.validator.js"></script>
-    <script src="backend/backend.controller.js"></script>
-    <script src="backend/backend.route.js"></script>
-    <script src="backend/nav/header.directive.js"></script>
-    <script src="backend/nav/sidenav.controller.js"></script>
-    <script src="backend/nav/topnav.controller.js"></script>
+    <script src="app/admin/admin.controller.js"></script>
+    <script src="app/admin/admin.route.js"></script>
+    <script src="app/admin/application/application.form.controller.js"></script>
+    <script src="app/admin/application/application.list.controller.js"></script>
+    <script src="app/admin/application/application.route.js"></script>
+    <script src="app/admin/application/application.service.js"></script>
+    <script src="app/admin/application/application.validator.js"></script>
+    <script src="app/admin/role/role.form.controller.js"></script>
+    <script src="app/admin/role/role.list.controller.js"></script>
+    <script src="app/admin/role/role.route.js"></script>
+    <script src="app/admin/role/role.service.js"></script>
+    <script src="app/admin/role/role.validator.js"></script>
+    <script src="app/admin/user/user.form.controller.js"></script>
+    <script src="app/admin/user/user.list.controller.js"></script>
+    <script src="app/admin/user/user.passwd.controller.js"></script>
+    <script src="app/admin/user/user.role.controller.js"></script>
+    <script src="app/admin/user/user.route.js"></script>
+    <script src="app/admin/user/user.service.js"></script>
+    <script src="app/admin/user/user.validator.js"></script>
+    <script src="app/app.controller.js"></script>
+    <script src="app/app.route.js"></script>
+    <script src="app/app.service.js"></script>
+    <script src="app/profile/basic/basic.controller.js"></script>
+    <script src="app/profile/basic/basic.route.js"></script>
+    <script src="app/profile/passwd/passwd.controller.js"></script>
+    <script src="app/profile/passwd/passwd.route.js"></script>
+    <script src="app/profile/picture/picture.controller.js"></script>
+    <script src="app/profile/picture/picture.route.js"></script>
+    <script src="app/profile/picture/picture.service.js"></script>
+    <script src="app/profile/profile.controller.js"></script>
+    <script src="app/profile/profile.route.js"></script>
+    <script src="components/config/oauth.config.js"></script>
+    <script src="components/config/rest.config.js"></script>
+    <script src="components/config/route.config.js"></script>
+    <script src="components/config/uiselect.config.js"></script>
+    <script src="components/config/validation.config.js"></script>
+    <script src="components/directive/adminlte.layout.js"></script>
+    <script src="components/directive/pushmenu.js"></script>
+    <script src="components/directive/treeview.js"></script>
     <script src="components/oauth2/oauth2.interceptor.js"></script>
     <script src="components/oauth2/oauth2.provider.js"></script>
+    <script src="components/startup/authorization.js"></script>
     <script src="frontend/login/login.controller.js"></script>
     <script src="frontend/login/login.route.js"></script>
-    <script src="main/main.controller.js"></script>
-    <script src="main/main.route.js"></script>
     <!-- endinjector -->
     <!-- endbuild -->
-
-    <!-- build:js(.) scripts/app.js -->
-	<script src="bower_components/admin-lte/plugins/slimScroll/jquery.slimscroll.js"></script>
-	<script src="bower_components/admin-lte/dist/js/app.js"></script>
-	<!-- endbuild -->
 </body>
 </html>

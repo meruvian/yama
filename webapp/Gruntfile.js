@@ -36,10 +36,19 @@ module.exports = function (grunt) {
 				files: ['bower.json'],
 				tasks: ['wiredep']
 			},
-			js: {
+			jsChanged: {
 				files: ['<%= yama.app %>/**/*.js'],
-				tasks: ['injector', 'newer:jshint:all'],
+				tasks: ['newer:jshint:all'],
 				options: {
+					event: 'changed',
+					livereload: '<%= connect.options.livereload %>'
+				}
+			},
+			jsAddedOrDeleted: {
+				files: ['<%= yama.app %>/**/*.js'],
+				tasks: ['injector:js'],
+				options: {
+					event: [ 'added', 'deleted' ],
 					livereload: '<%= connect.options.livereload %>'
 				}
 			},
@@ -49,28 +58,20 @@ module.exports = function (grunt) {
 			},
 			styles: {
 				files: ['<%= yama.app %>/**/*.css'],
-				tasks: [ 'injector', 'newer:copy:styles', 'autoprefixer']
-			},
-			dev: {
-				files: [
-						'<%= yama.app %>/*.{ico,png,txt}',
-						'<%= yama.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
-						'<%= yama.app %>/fonts/{,*/}*.*'
-				],
-				tasks: ['newer:copy:dev']
+				tasks: [ 'injector:css', 'newer:copy:styles', 'autoprefixer']
 			},
 			gruntfile: {
 				files: ['Gruntfile.js']
 			},
 			livereload: {
-				options: {
-					livereload: '<%= connect.options.livereload %>'
-				},
 				files: [
 					'<%= yama.app %>/**/*.html',
 					'.tmp/**/*.css',
 					'<%= yama.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
-				]
+				],
+				options: {
+					livereload: '<%= connect.options.livereload %>'
+				}
 			}
 		},
 
@@ -180,20 +181,12 @@ module.exports = function (grunt) {
 		// Add vendor prefixed styles
 		autoprefixer: {
 			options: {
-				browsers: ['last 1 version']
+				browsers: ['last 2 version']
 			},
 			server: {
 				options: {
 					map: true,
 				},
-				files: [{
-					expand: true,
-					cwd: '.tmp/styles/',
-					src: '**/*.css',
-					dest: '.tmp/styles/'
-				}]
-			},
-			dist: {
 				files: [{
 					expand: true,
 					cwd: '.tmp/styles/',
@@ -233,13 +226,19 @@ module.exports = function (grunt) {
 				ignorePath: '<%= yama.app %>',
 				addRootSlash: false
 			},
-			local_dependencies: {
+			js: {
 				files: {
 					'<%= yama.app %>/index.html': [
 						'<%= yama.app %>/**/*.js',
-						'!<%= yama.app %>/main/app.js',
+						'!<%= yama.app %>/app.js',
 						'!<%= yama.app %>/components/oauth2/oauth2.js',
-						'!<%= yama.app %>/frontend/register/*.js',
+						'!<%= yama.app %>/frontend/register/*.js'
+					],
+				}
+			},
+			css: {
+				files: {
+					'<%= yama.app %>/index.html': [
 						'<%= yama.app %>/**/*.css'
 					],
 				}
@@ -447,7 +446,7 @@ module.exports = function (grunt) {
 			'wiredep',
 			'injector',
 			'jshint:config',
-			'autoprefixer:server',
+			'autoprefixer',
 			'configureProxies',
 			'connect:livereload',
 			'watch'
