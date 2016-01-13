@@ -3,7 +3,7 @@
 
 	angular.module('yamaApp').controller('AdminUserListCtrl', userListController);
 
-	function userListController($location, $modal, angularPopupBoxes, RestUserService) {
+	function userListController($location, $modal, $translate, angularPopupBoxes, RestUserService) {
 		// jshint validthis: true
 		var ctrl = this;
 		ctrl.addRole = openAddRoleForm;
@@ -79,8 +79,8 @@
 		}
 
 		function removeUser(user) {
-			angularPopupBoxes.confirm('Are you sure want to delete this data?')
-					.result.then(remove);
+			angularPopupBoxes.confirm($translate.instant('admin.user.label.delete_confirm'))
+				.result.then(remove);
 
 			function remove() {
 				user.remove().then(ctrl.search);

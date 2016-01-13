@@ -6,6 +6,7 @@
 	function appController($state, AppService) {
 		// jshint validthis: true
 		var ctrl = this;
+		ctrl.date = new Date();
 		ctrl.menus = [
 			{ menu: 'Admin', icon: 'gears', ref: 'app.admin' }
 		];

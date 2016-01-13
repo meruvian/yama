@@ -1,0 +1,162 @@
+{
+	"app": {
+		"version": "2.0.0.RC1",
+		"title": "Yama",
+		"header": "Yama",
+		"header_short": "Y",
+		"site": "http://yama2.meruvian.org",
+		"company": {
+			"name": "Meruvian",
+			"site": "http://meruvian.org"
+		},
+		"greeting": "Hello"
+	},
+	"login": {
+		"title": "Login",
+		"header": "Login",
+		"header_social": "Login using social networks",
+		"label": {
+			"username": "Username",
+			"password": "Password",
+			"remember_me": "Remember Me",
+			"button_login": "Login",
+			"create_account": "Create Account",
+			"or": "OR"
+		}
+	},
+	"admin": {
+		"title": "ADMIN",
+		"user": {
+			"header": "Users",
+			"subheader": "Manage or create user",
+			"label": {
+				"action": "Action",
+				"add": "Add User",
+				"add_role": "Add Role",
+				"change_passwd": "Change Password",
+				"delete": "Delete {{ username }}",
+				"delete_confirm": "Are you sure want to delete this data?",
+				"done": "Done",
+				"save": "Save",
+				"save_error": "Ops, something went wrong!",
+				"search": "Search",
+				"total_entries": "Found {{ total }} users",
+
+				"confirm_passwd": "Confirm Password",
+				"email": "Email",
+				"firstname": "First Name",
+				"fullname": "Full Name",
+				"lastname": "Last Name",
+				"passwd": "Password",
+				"roles": "Roles",
+				"username": "Username"
+			},
+			"validation": {
+				"confirm_passwd_match": "Password and confirm password did not match",
+				"email_exist": "Email address already exist",
+				"email_required": "Email cannot be blank",
+				"email_valid": "Not a valid email address",
+				"firstname_required": "First name cannot be blank",
+				"lastname_required": "Last name cannot be blank",
+				"passwd_required": "Password cannot be blank",
+				"passwd_length": "Must be longer than 6 character",
+				"username_alphanumeric": "Only alphanumeric are allowed",
+				"username_exist": "Username already exist",
+				"username_length": "Must be longer than 5 character",
+				"username_required": "Username cannot be blank"
+			}
+		},
+		"role": {
+			"header": "Roles",
+			"subheader": "Manage or create role",
+			"label": {
+				"action": "Action",
+				"add": "Add Role",
+				"delete": "Delete {{ name }}",
+				"delete_confirm": "Are you sure want to delete this data?",
+				"done": "Done",
+				"save": "Save",
+				"save_error": "Ops, something went wrong!",
+				"search": "Search",
+				"total_entries": "Found {{ total }} roles",
+
+				"name": "Name",
+				"description": "Description"
+			},
+			"validation": {
+				"name_required": "Name cannot be blank",
+				"name_length": "Must be longer than 3 character"
+			}
+		},
+		"application": {
+			"header": "Applications",
+			"subheader": "Manage or create new application",
+			"label": {
+				"action": "Action",
+				"add": "Add Application",
+				"delete": "Delete {{ name }}",
+				"delete_confirm": "Are you sure want to delete this data?",
+				"done": "Done",
+				"generate_secret": "Generate New Secret Key",
+				"save": "Save",
+				"save_error": "Ops, something went wrong!",
+				"search": "Search",
+				"total_entries": "Found {{ total }} apps",
+
+				"app_id": "App ID",
+				"app_name": "Application Name",
+				"auto_approve": "Auto Approve",
+				"name": "Name",
+				"redirect_uri": "Redirect URI",
+				"secret": "Secret Key",
+				"website": "Website"
+			},
+			"validation": {
+				"name_required": "Name cannot be blank",
+				"redirect_required": "Redirect URI cannot be blank",
+				"redirect_url": "Not a valid URL",
+				"site_required": "Site cannot be blank",
+				"site_url": "Not a valid URL"
+			}
+		}
+	},
+	"profile": {
+		"title": "PROFILE",
+		"basic": {
+			"header": "Basic Profile",
+			"subheader": "Update your basic profile",
+			"label": {
+				"update": "Update",
+				"update_error": "Ops, something went wrong!",
+
+				"confirm_passwd": "Confirm Password",
+				"email": "Email",
+				"firstname": "First Name",
+				"fullname": "Full Name",
+				"lastname": "Last Name",
+				"passwd": "Password",
+				"roles": "Roles",
+				"username": "Username"
+			}
+		},
+		"password": {
+			"header": "Password",
+			"subheader": "Change your password",
+			"label": {
+				"update": "Update",
+				"update_error": "Ops, something went wrong!",
+
+				"confirm_passwd": "Confirm Password",
+				"passwd": "Password"
+			}
+		},
+		"picture": {
+			"header": "Picture",
+			"subheader": "Update your profile picture",
+			"label": {
+				"choose_file": "Choose File",
+				"drag_drop_not_supported": "File Drag/Drop is not supported for this browser"
+			}
+		}
+	}
+}

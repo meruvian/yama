@@ -1,7 +1,7 @@
 <h3>
-	Password
+	{{ 'profile.password.header' | translate }}
 	<br>
-	<small>Change your password</small>
+	<small translate="profile.password.subheader"></small>
 </h3>
 
 <div class="row">
@@ -11,13 +11,13 @@
 				<form name="passwdForm" ng-submit="ctrl.submit(ctrl.user, passwdForm)" novalidate validation-schema schema="passwd">
 					<fieldset>
 						<div class="form-group">
-							<label class="control-label" for="password">Password</label>
+							<label class="control-label" for="password" translate="profile.basic.label.passwd"></label>
 							<div class="controls">
 								<input type="password" id="password" name="passwd" class="form-control" ng-model="ctrl.user.password" required>
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="control-label" for="confirm-password">Confirm Password</label>
+							<label class="control-label" for="confirm-password" translate="profile.basic.label.confirm_passwd"></label>
 							<div class="controls">
 								<input type="password" id="confirm-password" name="confpasswd" class="form-control" ng-model="ctrl.confirmPassword" required>
 							</div>
@@ -25,9 +25,9 @@
 
 						<hr>
 						<button type="submit" class="btn btn-primary col-md-3 col-xs-12">
-							<i class="fa fa-key"></i> Update
+							<i class="fa fa-key"></i> {{ 'profile.basic.label.update' | translate }}
 						</button>
-						<span class="label label-danger" ng-show="ctrl.error">Ops something went wrong!</span>
+						<span class="label label-danger" ng-show="ctrl.error" translate="profile.basic.label.update_error"></span>
 					</fieldset>
 				</form>
 			</div>

@@ -1,17 +1,17 @@
 <div class="modal-header">
-	<h3 class="modal-title">Add Role</h3>
+	<h3 class="modal-title" translate="admin.role.label.add"></h3>
 </div>
 <form name="roleForm" ng-submit="ctrl.submit(role, roleForm)" novalidate validation-schema schema="role" ng-init="role = ctrl.role">
 	<div class="modal-body">
 		<fieldset>
 			<div class="form-group">
-				<label class="control-label" for="name">Name</label>
+				<label class="control-label" for="name" translate="admin.role.label.name"></label>
 				<div class="controls">
 					<input type="text" id="name" name="name" class="form-control" ng-model="role.name" required>
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="control-label" for="description">Description</label>
+				<label class="control-label" for="description" translate="admin.role.label.description"></label>
 				<div class="controls">
 					<textarea rows="2" id="description" name="description" class="form-control" ng-model="role.description"></textarea>
 				</div>
@@ -20,8 +20,8 @@
 	</div>
 	<div class="modal-footer">
 		<button type="submit" class="btn btn-primary col-md-3 col-xs-12">
-			<i class="fa fa-save"></i> Save
+			<i class="fa fa-save"></i> {{ 'admin.role.label.save' | translate }}
 		</button>
-		<span class="label label-danger" ng-show="ctrl.error">Ops something went wrong!</span>
+		<span class="label label-danger" ng-show="ctrl.error" translate="admin.role.label.save_error"></span>
 	</div>
 </form>

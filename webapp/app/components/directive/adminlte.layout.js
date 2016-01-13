@@ -80,7 +80,7 @@
 			}
 
 			function slimscroll() {
-				$(".navbar .menu").slimscroll({
+				$('.navbar .menu').slimscroll({
 					height: '250px',
 					alwaysVisible: false,
 					size: '3px'

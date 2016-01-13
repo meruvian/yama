@@ -1,7 +1,7 @@
 <h3>
-	Profile Picture
+	{{ 'profile.picture.header' | translate }}
 	<br>
-	<small>Update your profile picture</small>
+	<small translate="profile.picture.subheader"></small>
 </h3>
 
 <div class="row">
@@ -17,7 +17,7 @@
 								</div>
 							</div>
 						</div>
-						<div ngf-no-file-drop>File Drag/Drop is not supported for this browser</div>
+						<div ngf-no-file-drop translate="profile.picture.label.drag_drop_not_supported"></div>
 
 						<div class="form-group">
 							<label class="control-label" for="profile-picture"></label>
@@ -28,7 +28,7 @@
 									</progressbar>
 								</div>
 								<div class="btn btn-default" ngf-drop="ctrl.upload($file)" ngf-select="ctrl.upload($file)" ngf-pattern="'image/*'">
-									<i class="fa fa-paperclip"></i> Choose file...
+									<i class="fa fa-paperclip"></i> {{ 'profile.picture.label.choose_file' | translate }}...
 								</div>
 							</div>
 						</div>

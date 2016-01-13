@@ -16,6 +16,7 @@ angular.module('yamaApp', [
 	'ngFileUpload',
 	'ngSanitize',
 	'ngTouch',
+	'pascalprecht.translate',
 	'restangular',
 	'ui.bootstrap',
 	'ui.router',

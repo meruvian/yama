@@ -5,7 +5,7 @@
 	<div class="modal-body">
 		<fieldset>
 			<div class="form-group">
-				<label class="control-label" for="username">Username</label>
+				<label class="control-label" for="username" translate="admin.user.label.username"></label>
 				<div class="controls">
 					<input type="text" id="username" name="username" class="form-control" ng-model="user.username" required>
 				</div>
@@ -13,7 +13,7 @@
 			<div class="row" ng-show="!user.id">
 				<div class="col-md-6">
 					<div class="form-group">
-						<label class="control-label" for="password">Password</label>
+						<label class="control-label" translate="admin.user.label.passwd"></label>
 						<div class="controls">
 							<input type="password" id="password" name="passwd" class="form-control" ng-model="user.password" required>
 						</div>
@@ -21,7 +21,7 @@
 				</div>
 				<div class="col-md-6">
 					<div class="form-group">
-						<label class="control-label" for="confirm-password">Confirm Password</label>
+						<label class="control-label" for="confirm-password" translate="admin.user.label.confirm_passwd"></label>
 						<div class="controls">
 							<input type="password" id="confirm-password" name="confpasswd" class="form-control" ng-model="user.confirmPassword" required>
 						</div>
@@ -31,7 +31,7 @@
 			<div class="row">
 				<div class="col-md-6">
 					<div class="form-group">
-						<label class="control-label" for="first-name">First Name</label>
+						<label class="control-label" for="first-name" translate="admin.user.label.firstname"></label>
 						<div class="controls">
 							<input type="text" id="first-name" name="firstname" class="form-control" ng-model="user.name.first" required>
 						</div>
@@ -39,7 +39,7 @@
 				</div>
 				<div class="col-md-6">
 					<div class="form-group">
-						<label class="control-label" for="last-name">Last Name</label>
+						<label class="control-label" for="last-name" translate="admin.user.label.lastname"></label>
 						<div class="controls">
 							<input type="text" id="last-name" name="lastname" class="form-control" ng-model="user.name.last">
 						</div>
@@ -47,7 +47,7 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="control-label" for="email">Email</label>
+				<label class="control-label" for="email" translate="admin.user.label.email"></label>
 				<div class="controls">
 					<input type="email" id="email" name="email" class="form-control" ng-model="user.email" required>
 				</div>
@@ -56,8 +56,8 @@
 	</div>
 	<div class="modal-footer">
 		<button type="submit" class="btn btn-primary col-md-3 col-xs-12">
-			<i class="fa fa-save"></i> Save
+			<i class="fa fa-save"></i> {{ 'admin.user.label.save' | translate }}
 		</button>
-		<span class="label label-danger" ng-show="ctrl.error">Ops something went wrong!</span>
+		<span class="label label-danger" ng-show="ctrl.error">{{ 'admin.user.label.save_error' | translate }}</span>
 	</div>
 </form>

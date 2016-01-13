@@ -1,3 +1,10 @@
 <ng-include src="'app/nav/topnav.html'"></ng-include>
 
 <div layout="row" ui-view></div>
+
+<footer class="main-footer">
+	<div class="pull-right hidden-xs">
+		<span translate="app.version"></span>
+	</div>
+	<strong>&copy; {{ ctrl.date | date: 'yyyy' }} - <a ng-href="{{ 'app.company.site' | translate }}" translate="app.company.name"></a></strong>
+</footer>

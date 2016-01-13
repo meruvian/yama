@@ -1,24 +1,28 @@
 (function() {
 	'use strict';
 
-	angular.module('yamaApp').config(roleValidator);
+	angular.module('yamaApp').run(roleValidator);
 
-	function roleValidator(validationSchemaProvider) {
-		validationSchemaProvider.set('role', {
-			name: {
-				'validations': 'required, minlength=4',
-				'validate-on': 'blur',
-				'messages': {
-					'required': {
-						'error': 'Name cannot be blank',
-						'success': 'Ok'
-					},
-					'minlength': {
-						'error': 'Must be longer than 3 character',
-						'success': 'Ok'
+	function roleValidator($rootScope, $translate, validationSchema) {
+		$rootScope.$on('$translateChangeSuccess', validate);
+
+		function validate() {
+			validationSchema.set('role', {
+				name: {
+					'validations': 'required, minlength=4',
+					'validate-on': 'blur',
+					'messages': {
+						'required': {
+							'error': $translate.instant('admin.role.validation.name_required'),
+							'success': 'Ok'
+						},
+						'minlength': {
+							'error': $translate.instant('admin.role.validation.name_length'),
+							'success': 'Ok'
+						}
 					}
 				}
-			}
-		});
+			});
+		}
 	}
 })();

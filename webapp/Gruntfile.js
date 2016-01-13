@@ -34,7 +34,7 @@ module.exports = function (grunt) {
 		watch: {
 			bower: {
 				files: ['bower.json'],
-				tasks: ['wiredep']
+				tasks: ['newer:jsonlint:bower', 'wiredep']
 			},
 			jsChanged: {
 				files: ['<%= yama.app %>/**/*.js'],
@@ -55,6 +55,13 @@ module.exports = function (grunt) {
 			jsTest: {
 				files: ['<%= yama.app %>/**/*.spec.js'],
 				tasks: ['newer:jshint:test', 'karma']
+			},
+			json: {
+				files: ['<%= yama.app %>/i18n/*.json'],
+				tasks: ['newer:jsonlint:app'],
+				options: {
+					livereload: '<%= connect.options.livereload %>'
+				}
 			},
 			styles: {
 				files: ['<%= yama.app %>/**/*.css'],
@@ -160,6 +167,21 @@ module.exports = function (grunt) {
 					jshintrc: 'test/.jshintrc'
 				},
 				src: ['<%= yama.app %>/**/*.spec.js']
+			}
+		},
+
+		jsonlint: {
+			bower: {
+				src: [ 'bower.json' ]
+			},
+			app: {
+				src: [ '<%= yama.app %>/i18n/*.json' ]
+			}
+		},
+
+		'json-minify': {
+			dist: {
+				files: '<%= yama.dist %>/i18n/*.json'
 			}
 		},
 
@@ -383,7 +405,8 @@ module.exports = function (grunt) {
 						'*.html',
 						'**/*.html',
 						'images/{,*/}*.{webp}',
-						'styles/fonts/{,*/}*.*'
+						'styles/fonts/{,*/}*.*',
+						'i18n/*.json'
 					]
 				}, {
 					expand: true,
@@ -446,6 +469,7 @@ module.exports = function (grunt) {
 			'wiredep',
 			'injector',
 			'jshint:config',
+			'jsonlint',
 			'autoprefixer',
 			'configureProxies',
 			'connect:livereload',
@@ -480,6 +504,7 @@ module.exports = function (grunt) {
 		'copy:dist',
 		'cssmin',
 		'uglify',
+		'json-minify:dist',
 		'filerev',
 		'usemin',
 		'htmlmin'
