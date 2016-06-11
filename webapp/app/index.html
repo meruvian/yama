@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js">
+<html class="no-js" ng-app="yamaApp">
 <head>
 	<meta charset="utf-8">
 	<title translate="app.title"></title>
@@ -18,11 +18,11 @@
 	<!-- endbower -->
 	<!-- endbuild -->
 
-	<!-- build:css({.tmp,app}) styles/main.css -->
-	<link rel="stylesheet" href="frontend/login/login.css">
+	<!-- build:css({.tmp,app}) styles/app.css -->
+	<link rel="stylesheet" href="app/app.css">
 	<!-- endbuild -->
 </head>
-<body ng-app="yamaApp" class="sidebar-mini skin-blue-light" ng-class="{'fixed' : $state.current.name !== 'login'}" admin-lte-layout>
+<body class="sidebar-mini skin-blue-light" ng-class="{'fixed' : $state.current.name !== 'login'}" admin-lte-layout>
 	<div ui-view></div>
 
 	<!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
@@ -47,8 +47,10 @@
 
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
-    <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/json3/lib/json3.js"></script>
+    <script src="bower_components/es5-shim/es5-shim.js"></script>
+    <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/angular-animate/angular-animate.js"></script>
     <script src="bower_components/angular-cookies/angular-cookies.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
@@ -56,9 +58,8 @@
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <script src="bower_components/angular-translate/angular-translate.js"></script>
     <script src="bower_components/angular-loading-bar/build/loading-bar.js"></script>
-    <script src="bower_components/lodash/dist/lodash.compat.js"></script>
+    <script src="bower_components/lodash/lodash.js"></script>
     <script src="bower_components/restangular/dist/restangular.js"></script>
-    <script src="bower_components/angular-popup-box/angular-popup-boxes.js"></script>
     <script src="bower_components/angular-ui-select/dist/select.js"></script>
     <script src="bower_components/ng-file-upload/ng-file-upload.js"></script>
     <script src="bower_components/ng-file-upload-shim/ng-file-upload-shim.js"></script>
@@ -116,6 +117,8 @@
     <script src="components/config/translation.config.js"></script>
     <script src="components/config/uiselect.config.js"></script>
     <script src="components/config/validation.config.js"></script>
+    <script src="components/dialog/dialog.js"></script>
+    <script src="components/dialog/dialog.provider.js"></script>
     <script src="components/directive/adminlte.layout.js"></script>
     <script src="components/directive/pushmenu.js"></script>
     <script src="components/directive/treeview.js"></script>

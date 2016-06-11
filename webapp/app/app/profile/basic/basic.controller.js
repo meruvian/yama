@@ -3,7 +3,7 @@
 
 	angular.module('yamaApp').controller('ProfileBasicCtrl', profileBasicController);
 
-	function profileBasicController($rootScope, $timeout, $validation, angularPopupBoxes, AppService, RestUserService) {
+	function profileBasicController($rootScope, $timeout, $validation, Dialog, AppService, RestUserService) {
 		// jshint validthis: true
 		var ctrl = this;
 		ctrl.submit = submitUser;

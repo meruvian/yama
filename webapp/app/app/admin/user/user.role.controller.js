@@ -3,11 +3,11 @@
 
 	angular.module('yamaApp').controller('AdminUserRoleCtrl', userRoleController);
 
-	function userRoleController($cacheFactory, $modalInstance, user, RestRoleService) {
+	function userRoleController($cacheFactory, $uibModalInstance, user, RestRoleService) {
 		// jshint validthis: true
 		var ctrl = this;
 		ctrl.addRole = addUserRole;
-		ctrl.done = $modalInstance.close;
+		ctrl.done = $uibModalInstance.close;
 		ctrl.loadRoles = loadUserRoles;
 		ctrl.removeRole = removeUserRole;
 		ctrl.roles = [];

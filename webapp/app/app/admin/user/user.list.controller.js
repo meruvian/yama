@@ -3,7 +3,7 @@
 
 	angular.module('yamaApp').controller('AdminUserListCtrl', userListController);
 
-	function userListController($location, $modal, $translate, angularPopupBoxes, RestUserService) {
+	function userListController($location, $uibModal, $translate, Dialog, RestUserService) {
 		// jshint validthis: true
 		var ctrl = this;
 		ctrl.addRole = openAddRoleForm;
@@ -34,7 +34,7 @@
 		}
 
 		function openAddRoleForm(user) {
-			var modal = $modal.open({
+			var modal = $uibModal.open({
 				templateUrl: 'app/admin/user/user.role.html',
 				controller: 'AdminUserRoleCtrl as ctrl',
 				size: 'md',
@@ -47,7 +47,7 @@
 		}
 
 		function openChangeUserPasswdForm(user) {
-			var modal = $modal.open({
+			var modal = $uibModal.open({
 				templateUrl: 'app/admin/user/user.passwd.html',
 				controller: 'AdminUserPasswdCtrl as ctrl',
 				size: 'md',
@@ -60,7 +60,7 @@
 		}
 
 		function openUserForm(user, changeSecret) {
-			var modal = $modal.open({
+			var modal = $uibModal.open({
 				templateUrl: 'app/admin/user/user.form.html',
 				controller: 'AdminUserFormCtrl as ctrl',
 				size: 'md',
@@ -79,7 +79,7 @@
 		}
 
 		function removeUser(user) {
-			angularPopupBoxes.confirm($translate.instant('admin.user.label.delete_confirm'))
+			Dialog.confirm($translate.instant('admin.user.label.delete_confirm'))
 				.result.then(remove);
 
 			function remove() {

@@ -3,7 +3,7 @@
 
 	angular.module('yamaApp').controller('AdminApplicationFormCtrl', applicationFormController);
 
-	function applicationFormController($modalInstance, $validation, application, changeSecret, RestApplicationService) {
+	function applicationFormController($uibModalInstance, $validation, application, changeSecret, RestApplicationService) {
 		// jshint validthis: true
 		var ctrl = this;
 		ctrl.application = application;
@@ -43,7 +43,7 @@
 		}
 
 		function success(application) {
-			$modalInstance.close(application);
+			$uibModalInstance.close(application);
 		}
 	}
 })();

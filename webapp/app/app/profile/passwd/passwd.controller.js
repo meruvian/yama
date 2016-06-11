@@ -3,7 +3,7 @@
 
 	angular.module('yamaApp').controller('ProfilePasswdCtrl', profilePasswdController);
 
-	function profilePasswdController($validation, angularPopupBoxes, RestUserService) {
+	function profilePasswdController($validation, Dialog, RestUserService) {
 		// jshint validthis: true
 		var ctrl = this;
 		ctrl.submit = submitUser;
@@ -17,7 +17,7 @@
 			ctrl.user = user;
 			ctrl.confirmPassword = user.password;
 
-			angularPopupBoxes.alert('Update success');
+			Dialog.alert('Update success');
 		}
 
 		function submitUser(user, form) {

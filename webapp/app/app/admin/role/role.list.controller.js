@@ -3,7 +3,7 @@
 
 	angular.module('yamaApp').controller('AdminRoleListCtrl', roleListController);
 
-	function roleListController($location, $modal, angularPopupBoxes, RestRoleService) {
+	function roleListController($location, $uibModal, Dialog, RestRoleService) {
 		// jshint validthis: true
 		var ctrl = this;
 		ctrl.openForm = openRoleForm;
@@ -20,7 +20,7 @@
 		}
 
 		function openRoleForm(role, changeSecret) {
-			var modal = $modal.open({
+			var modal = $uibModal.open({
 				templateUrl: 'app/admin/role/role.form.html',
 				controller: 'AdminRoleFormCtrl as ctrl',
 				size: 'md',
@@ -39,7 +39,7 @@
 		}
 
 		function removeRole(role) {
-			angularPopupBoxes.confirm('Are you sure want to delete this data?')
+			Dialog.confirm('Are you sure want to delete this data?')
 					.result.then(remove);
 
 			function remove() {

@@ -65,7 +65,10 @@ module.exports = function (grunt) {
 			},
 			styles: {
 				files: ['<%= yama.app %>/**/*.css'],
-				tasks: [ 'injector:css', 'newer:copy:styles', 'autoprefixer']
+				tasks: [ 'newer:copy:styles', 'autoprefixer'],
+				options: {
+					livereload: '<%= connect.options.livereload %>'
+				}
 			},
 			gruntfile: {
 				files: ['Gruntfile.js']
@@ -284,7 +287,7 @@ module.exports = function (grunt) {
 		// concat, minify and revision files. Creates configurations in memory so
 		// additional tasks can operate on them
 		useminPrepare: {
-			html: '<%= yama.app %>/index.html',
+			html: '<%= yama.app %>/**/*.html',
 			options: {
 				dest: '<%= yama.dist %>',
 				flow: {

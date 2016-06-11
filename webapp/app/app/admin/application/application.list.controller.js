@@ -3,7 +3,7 @@
 
 	angular.module('yamaApp').controller('AdminApplicationListCtrl', applicationListController);
 
-	function applicationListController($location, $modal, angularPopupBoxes, RestApplicationService) {
+	function applicationListController($location, $uibModal, Dialog, RestApplicationService) {
 		// jshint validthis: true
 		var ctrl = this;
 		ctrl.openForm = openApplicationForm;
@@ -20,7 +20,7 @@
 		}
 
 		function openApplicationForm(application, changeSecret) {
-			var modal = $modal.open({
+			var modal = $uibModal.open({
 				templateUrl: 'app/admin/application/application.form.html',
 				controller: 'AdminApplicationFormCtrl as ctrl',
 				size: 'md',
@@ -39,7 +39,7 @@
 		}
 
 		function removeApplication(application) {
-			angularPopupBoxes.confirm('Are you sure want to delete this data?')
+			Dialog.confirm('Are you sure want to delete this data?')
 					.result.then(remove);
 
 			function remove() {

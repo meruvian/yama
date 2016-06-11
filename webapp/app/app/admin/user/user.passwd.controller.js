@@ -3,7 +3,7 @@
 
 	angular.module('yamaApp').controller('AdminUserPasswdCtrl', userPasswdController);
 
-	function userPasswdController($modalInstance, $validation, user) {
+	function userPasswdController($uibModalInstance, $validation, user) {
 		// jshint validthis: true
 		var ctrl = this;
 		ctrl.user = user;
@@ -15,7 +15,7 @@
 
 			function submit() {
 				ctrl.error = false;
-				user.post('password').then($modalInstance.close, function() {
+				user.post('password').then($uibModalInstance.close, function() {
 					ctrl.error = true;
 				});
 			}

@@ -27,15 +27,15 @@
 						<span class="hidden-xs" ng-bind="menu.menu"></span>
 					</a>
 				</li>
-				<li class="dropdown user user-menu" dropdown>
-					<a href="" class="dropdown-toggle" data-toggle="dropdown" dropdown-toggle>
+				<li class="dropdown user user-menu" uib-dropdown>
+					<a href="" class="dropdown-toggle" data-toggle="dropdown" uib-dropdown-toggle>
 						<i class="fa fa-user"></i>
 						<span>
 							<span ng-bind="currentUser.name.first + ' ' + currentUser.name.last"></span>
 							<i class="caret"></i>
 						</span>
 					</a>
-					<ul class="dropdown-menu">
+					<ul class="dropdown-menu" uib-dropdown-menu>
 						<!-- User image -->
 						<li class="user-header">
 							<div class="col-xs-12">

@@ -10,7 +10,6 @@
  */
 angular.module('yamaApp', [
 	'angular-loading-bar',
-	'angularPopupBoxes',
 	'ngAnimate',
 	'ngCookies',
 	'ngFileUpload',
@@ -24,5 +23,6 @@ angular.module('yamaApp', [
 	'validation',
 	'validation.rule',
 	'validation.schema',
+	'yamaDialog',
 	'yamaOauth'
 ]);

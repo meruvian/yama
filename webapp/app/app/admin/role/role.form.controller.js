@@ -3,7 +3,7 @@
 
 	angular.module('yamaApp').controller('AdminRoleFormCtrl', roleFormController);
 
-	function roleFormController($modalInstance, $validation, changeSecret, role, RestRoleService) {
+	function roleFormController($uibModalInstance, $validation, changeSecret, role, RestRoleService) {
 		// jshint validthis: true
 		var ctrl = this;
 		ctrl.role = role;
@@ -28,7 +28,7 @@
 		}
 
 		function success(role) {
-			$modalInstance.close(role);
+			$uibModalInstance.close(role);
 		}
 	}
 })();
